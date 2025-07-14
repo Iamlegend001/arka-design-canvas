@@ -88,7 +88,7 @@ const UIShowcase = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-32 bg-gray-50/30">
+    <section className="py-20 lg:py-32 bg-blue-50/30">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-portfolio-dark mb-6">
@@ -108,7 +108,7 @@ const UIShowcase = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Image */}
-              <div className={`${work.height} bg-gradient-to-br from-portfolio-violet/10 to-portfolio-mint/10 relative overflow-hidden`}>
+              <div className={`${work.height} bg-gradient-to-br from-blue-100 to-blue-200 relative overflow-hidden`}>
                 <img
                   src={work.image}
                   alt={work.title}
@@ -122,7 +122,7 @@ const UIShowcase = () => {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-lg font-semibold text-portfolio-dark mb-2 group-hover:text-portfolio-violet transition-colors duration-200">
+                <h3 className="text-lg font-semibold text-portfolio-dark mb-2 group-hover:text-blue-600 transition-colors duration-200">
                   {work.title}
                 </h3>
                 <p className="text-sm text-portfolio-gray mb-4 leading-relaxed">
@@ -134,7 +134,7 @@ const UIShowcase = () => {
                   {work.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-portfolio-violet/10 text-portfolio-violet text-xs font-medium rounded-full"
+                      className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full"
                     >
                       {tag}
                     </span>
@@ -170,7 +170,7 @@ const UIShowcase = () => {
               href="https://dribbble.com" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-portfolio-violet font-semibold hover:underline transition-all duration-200"
+              className="text-blue-600 font-semibold hover:underline transition-all duration-200"
             >
               Visit my Dribbble
             </a>
