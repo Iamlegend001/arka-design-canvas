@@ -1,0 +1,202 @@
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+
+const CaseStudies = () => {
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+
+  const projects = [
+    {
+      id: 1,
+      title: 'FinTech Mobile App',
+      summary: 'Redesigning personal finance management for Gen Z users',
+      tags: ['UX Research', 'Mobile Design', 'Prototyping'],
+      image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop',
+      problem: 'Young adults struggle with financial literacy and money management, leading to poor spending habits and financial stress.',
+      role: 'Lead UX/UI Designer',
+      tools: ['Figma', 'Miro', 'Principle', 'Maze'],
+      research: 'Conducted 15 user interviews and surveys with 200+ participants aged 18-25 to understand financial behaviors and pain points.',
+      outcome: '40% increase in user engagement and 60% improvement in financial goal completion rates.',
+      color: 'from-purple-400 to-purple-600'
+    },
+    {
+      id: 2,
+      title: 'Healthcare Dashboard',
+      summary: 'Streamlining patient data visualization for medical professionals',
+      tags: ['Dashboard Design', 'Data Visualization', 'Accessibility'],
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+      problem: 'Medical professionals were spending too much time navigating complex interfaces to access critical patient information.',
+      role: 'Senior UX Designer',
+      tools: ['Sketch', 'InVision', 'Principle', 'UserTesting'],
+      research: 'Shadowed 8 healthcare professionals and conducted usability testing with 25 medical staff members.',
+      outcome: '50% reduction in time to access patient data and 90% user satisfaction improvement.',
+      color: 'from-blue-400 to-blue-600'
+    },
+    {
+      id: 3,
+      title: 'E-learning Platform',
+      summary: 'Creating engaging online learning experiences for remote education',
+      tags: ['Education', 'Interactive Design', 'User Testing'],
+      image: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop',
+      problem: 'Students were disengaged with traditional online learning platforms, leading to high dropout rates.',
+      role: 'Product Designer',
+      tools: ['Figma', 'After Effects', 'Lottie', 'Hotjar'],
+      research: 'Analyzed learning patterns of 500+ students and conducted A/B tests on key interface elements.',
+      outcome: '35% increase in course completion rates and 25% improvement in student satisfaction scores.',
+      color: 'from-green-400 to-green-600'
+    }
+  ];
+
+  return (
+    <section id="work" className="py-20 lg:py-32 bg-gray-50/50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-portfolio-dark mb-6">
+            Case Studies
+          </h2>
+          <p className="text-lg text-portfolio-gray max-w-2xl mx-auto">
+            Deep dives into projects where I solved complex user problems through thoughtful design and research.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <Dialog key={project.id}>
+              <DialogTrigger asChild>
+                <div 
+                  className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer hover:-translate-y-2"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
+                  {/* Project Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}></div>
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <ArrowRight className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Project Info */}
+                  <div className="p-8">
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-bold text-portfolio-dark group-hover:text-portfolio-violet transition-colors duration-300">
+                        {project.title}
+                      </h3>
+                      
+                      <p className="text-portfolio-gray leading-relaxed">
+                        {project.summary}
+                      </p>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span 
+                            key={tag}
+                            className="px-3 py-1 bg-gray-100 text-portfolio-gray text-sm rounded-full font-medium"
+                          >
+                            #{tag.replace(' ', '')}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </DialogTrigger>
+
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <div className="space-y-8 p-6">
+                  {/* Header */}
+                  <div className="space-y-4">
+                    <h2 className="text-3xl font-bold text-portfolio-dark">{project.title}</h2>
+                    <p className="text-lg text-portfolio-gray">{project.summary}</p>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span 
+                          key={tag}
+                          className="px-3 py-1 bg-portfolio-violet/10 text-portfolio-violet text-sm rounded-full font-medium"
+                        >
+                          #{tag.replace(' ', '')}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Project Details */}
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-portfolio-dark mb-2">Problem Statement</h3>
+                        <p className="text-portfolio-gray">{project.problem}</p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-portfolio-dark mb-2">My Role</h3>
+                        <p className="text-portfolio-gray">{project.role}</p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-portfolio-dark mb-2">Tools Used</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tools.map((tool) => (
+                            <span key={tool} className="px-2 py-1 bg-gray-100 text-portfolio-gray text-sm rounded">
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-portfolio-dark mb-2">Research Summary</h3>
+                        <p className="text-portfolio-gray">{project.research}</p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-portfolio-dark mb-2">Outcome & Impact</h3>
+                        <p className="text-portfolio-gray">{project.outcome}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Project Image */}
+                  <div className="relative h-64 rounded-2xl overflow-hidden">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-90`}></div>
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          ))}
+        </div>
+
+        {/* View More Button */}
+        <div className="text-center mt-12">
+          <Button 
+            variant="outline"
+            size="lg"
+            className="border-2 border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white px-8 py-6 text-lg font-medium group"
+          >
+            View All Projects
+            <ExternalLink className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CaseStudies;
