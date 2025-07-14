@@ -1,7 +1,6 @@
-
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Menu, X, Download } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X, Download } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,27 +10,29 @@ const Navigation = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navItems = [
-    { name: 'About', href: '#about' },
-    { name: 'Work', href: '#work' },
-    { name: 'Process', href: '#process' },
-    { name: 'Contact', href: '#contact' }
+    { name: "About", href: "#about" },
+    { name: "Work", href: "#work" },
+    { name: "Process", href: "#process" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
-    }`}>
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="#" className="text-2xl font-bold text-portfolio-dark">
-              Arka
+              Arkaprava
             </a>
           </div>
 
@@ -47,14 +48,14 @@ const Navigation = () => {
                   {item.name}
                 </a>
               ))}
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white"
+              <a
+                href=""
+                download
+                className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Resume
-              </Button>
+              </a>
             </div>
           </div>
 
@@ -65,7 +66,11 @@ const Navigation = () => {
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -85,14 +90,14 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="px-3 py-2">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="w-full border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white"
+                <a
+                  href="/resume.pdf"
+                  download
+                  className="w-full inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Resume
-                </Button>
+                </a>
               </div>
             </div>
           </div>
