@@ -1,74 +1,73 @@
-
-import React from 'react';
-import { 
-  Palette, 
-  Search, 
-  Layers, 
-  MousePointer, 
-  Smartphone, 
-  Zap, 
-  Grid3X3, 
-  Users 
-} from 'lucide-react';
+import React from "react";
+import {
+  Palette,
+  Search,
+  Layers,
+  MousePointer,
+  Smartphone,
+  Zap,
+  Grid3X3,
+  Users,
+} from "lucide-react";
 
 const Skills = () => {
   const skills = [
     {
-      name: 'UI Design',
+      name: "UI Design",
       icon: Palette,
-      description: 'Creating beautiful, intuitive interfaces',
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50'
+      description: "Creating beautiful, intuitive interfaces",
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
     },
     {
-      name: 'UX Research',
+      name: "UX Research",
       icon: Search,
-      description: 'Understanding user needs and behaviors',
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50'
+      description: "Understanding user needs and behaviors",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
     },
     {
-      name: 'Wireframing',
+      name: "Wireframing",
       icon: Layers,
-      description: 'Structuring information and layout',
-      color: 'text-green-600',
-      bgColor: 'bg-green-50'
+      description: "Structuring information and layout",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
     },
     {
-      name: 'Interaction Design',
+      name: "Interaction Design",
       icon: MousePointer,
-      description: 'Designing meaningful user interactions',
-      color: 'text-pink-600',
-      bgColor: 'bg-pink-50'
+      description: "Designing meaningful user interactions",
+      color: "text-pink-600",
+      bgColor: "bg-pink-50",
     },
     {
-      name: 'Responsive Layouts',
+      name: "Responsive Layouts",
       icon: Smartphone,
-      description: 'Adapting designs for all devices',
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50'
+      description: "Adapting designs for all devices",
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
     },
     {
-      name: 'Microinteractions',
+      name: "Microinteractions",
       icon: Zap,
-      description: 'Adding delightful details and feedback',
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-50'
+      description: "Adding delightful details and feedback",
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
     },
     {
-      name: 'Design Systems',
+      name: "Design Systems",
       icon: Grid3X3,
-      description: 'Building scalable design foundations',
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-50'
+      description: "Building scalable design foundations",
+      color: "text-indigo-600",
+      bgColor: "bg-indigo-50",
     },
     {
-      name: 'Usability Testing',
+      name: "Usability Testing",
       icon: Users,
-      description: 'Validating designs with real users',
-      color: 'text-teal-600',
-      bgColor: 'bg-teal-50'
-    }
+      description: "Validating designs with real users",
+      color: "text-teal-600",
+      bgColor: "bg-teal-50",
+    },
   ];
 
   return (
@@ -79,7 +78,8 @@ const Skills = () => {
             What I Do
           </h2>
           <p className="text-lg text-portfolio-gray max-w-2xl mx-auto">
-            I specialize in creating user-centered digital experiences that balance functionality with aesthetic appeal.
+            I specialize in creating user-centered digital experiences that
+            balance functionality with aesthetic appeal.
           </p>
         </div>
 
@@ -92,7 +92,9 @@ const Skills = () => {
             >
               <div className="flex flex-col items-center text-center space-y-4">
                 {/* Icon */}
-                <div className={`w-16 h-16 ${skill.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:shadow-lg`}>
+                <div
+                  className={`w-16 h-16 ${skill.bgColor} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:shadow-lg`}
+                >
                   <skill.icon className={`w-8 h-8 ${skill.color}`} />
                 </div>
 
@@ -114,8 +116,8 @@ const Skills = () => {
         <div className="text-center mt-16">
           <div className="inline-flex items-center space-x-2 text-portfolio-gray">
             <span>Ready to work together?</span>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               className="text-portfolio-violet font-semibold hover:underline transition-all duration-200"
             >
               Let's talk

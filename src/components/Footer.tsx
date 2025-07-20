@@ -31,11 +31,11 @@ const Footer = () => {
             <div>
               <h3 className="text-2xl font-bold text-portfolio-dark mb-4">Arka</h3>
               <p className="text-portfolio-gray leading-relaxed max-w-md">
-                A UI/UX designer crafting seamless digital experiences with empathy and clarity. 
+                A UI/UX designer crafting seamless digital experiences with empathy and clarity.
                 Let's build something beautiful together.
               </p>
             </div>
-            
+
             {/* Social Links */}
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
@@ -71,8 +71,8 @@ const Footer = () => {
           <div className="space-y-6">
             <h4 className="text-lg font-semibold text-portfolio-dark">Get In Touch</h4>
             <div className="space-y-3">
-              <a 
-                href="mailto:hello@arka.design" 
+              <a
+                href="mailto:hello@arka.design"
                 className="block text-portfolio-gray hover:text-portfolio-violet transition-colors duration-200"
               >
                 hello@arka.design
@@ -87,9 +87,9 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-12 mt-12 border-t border-gray-100">
           <p className="text-portfolio-gray text-sm">
-            © 2025 Arka Santra — All rights reserved.
+            © 2025 Arkaprava Santra — All rights reserved.
           </p>
-          
+
           <Button
             variant="ghost"
             size="sm"

@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { ExternalLink, Heart, MessageCircle } from 'lucide-react';
+import React from "react";
+import { ExternalLink, Heart, MessageCircle } from "lucide-react";
 
 const UIShowcase = () => {
   // Sample UI work data - you can replace with real data
@@ -13,7 +12,7 @@ const UIShowcase = () => {
       tags: ["UI Design", "Dashboard", "Fintech"],
       likes: 124,
       comments: 18,
-      height: "h-64"
+      height: "h-64",
     },
     {
       id: 2,
@@ -23,7 +22,7 @@ const UIShowcase = () => {
       tags: ["Mobile", "E-commerce", "UX"],
       likes: 89,
       comments: 12,
-      height: "h-80"
+      height: "h-80",
     },
     {
       id: 3,
@@ -33,7 +32,7 @@ const UIShowcase = () => {
       tags: ["Social", "Feed", "Mobile"],
       likes: 156,
       comments: 24,
-      height: "h-72"
+      height: "h-72",
     },
     {
       id: 4,
@@ -43,7 +42,7 @@ const UIShowcase = () => {
       tags: ["Mobile", "Food", "UX"],
       likes: 98,
       comments: 15,
-      height: "h-56"
+      height: "h-56",
     },
     {
       id: 5,
@@ -53,7 +52,7 @@ const UIShowcase = () => {
       tags: ["Web", "Travel", "Booking"],
       likes: 134,
       comments: 21,
-      height: "h-96"
+      height: "h-96",
     },
     {
       id: 6,
@@ -63,7 +62,7 @@ const UIShowcase = () => {
       tags: ["Health", "Dashboard", "Mobile"],
       likes: 76,
       comments: 9,
-      height: "h-64"
+      height: "h-64",
     },
     {
       id: 7,
@@ -73,7 +72,7 @@ const UIShowcase = () => {
       tags: ["Music", "Player", "UI"],
       likes: 187,
       comments: 32,
-      height: "h-72"
+      height: "h-72",
     },
     {
       id: 8,
@@ -83,19 +82,20 @@ const UIShowcase = () => {
       tags: ["Productivity", "Web", "Dashboard"],
       likes: 112,
       comments: 17,
-      height: "h-80"
-    }
+      height: "h-80",
+    },
   ];
 
   return (
-    <section className="py-20 lg:py-32 bg-blue-50/30">
+    <section className="py-20 lg:py-32 bg-gradient-to-br from-sky-100 via-sky-200 to-sky-300">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-portfolio-dark mb-6">
             UI Explorations
           </h2>
           <p className="text-lg text-portfolio-gray max-w-2xl mx-auto">
-            A collection of interface designs, explorations, and visual experiments I've shared with the design community.
+            A collection of interface designs, explorations, and visual
+            experiments I've shared with the design community.
           </p>
         </div>
 
@@ -108,7 +108,9 @@ const UIShowcase = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Image */}
-              <div className={`${work.height} bg-gradient-to-br from-blue-100 to-blue-200 relative overflow-hidden`}>
+              <div
+                className={`${work.height} bg-gradient-to-br from-blue-100 to-blue-200 relative overflow-hidden`}
+              >
                 <img
                   src={work.image}
                   alt={work.title}
@@ -166,8 +168,8 @@ const UIShowcase = () => {
         <div className="text-center mt-16">
           <div className="inline-flex items-center space-x-2 text-portfolio-gray">
             <span>Want to see more UI work?</span>
-            <a 
-              href="https://dribbble.com" 
+            <a
+              href="https://dribbble.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 font-semibold hover:underline transition-all duration-200"

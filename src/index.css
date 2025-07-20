@@ -1,11 +1,10 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL.
 */
 
@@ -51,11 +50,13 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Custom Portfolio Colors */
-    --portfolio-bg: 248 251 252; /* #F8FBFC */
-    --portfolio-dark: 32 33 36; /* #202124 */
-    --portfolio-violet: 260 91% 62%; /* #7F5AF0 */
-    --portfolio-mint: 158 64% 68%; /* #6EE7B7 */
-    --portfolio-gray: 215 14% 34%; /* #525B75 */
+    --portfolio-bg: 216 100% 97%; /* #F0F6FF */
+    --portfolio-dark: 222 47% 10%; /* #0F172A, very dark navy */
+    --portfolio-violet: 243 75% 59%; /* #6366F1, vivid indigo */
+    --portfolio-mint: 198 93% 60%; /* #38BDF8 */
+    --portfolio-gray: 215 19% 38%; /* #475569, darker slate */
+    --portfolio-primary: 221 70% 56%; /* #2563EB */
+    --portfolio-surface: 0 0% 100%; /* #FFFFFF */
   }
 
   .dark {
@@ -96,7 +97,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-[hsl(var(--portfolio-bg))] text-[hsl(var(--portfolio-dark))] font-inter;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   html {
@@ -106,57 +107,58 @@ All colors MUST be HSL.
 
 @layer utilities {
   .font-inter {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
-  
+
   .text-portfolio-dark {
     color: hsl(var(--portfolio-dark));
   }
-  
+
   .text-portfolio-violet {
     color: hsl(var(--portfolio-violet));
   }
-  
+
   .text-portfolio-mint {
     color: hsl(var(--portfolio-mint));
   }
-  
+
   .text-portfolio-gray {
     color: hsl(var(--portfolio-gray));
   }
-  
+
   .bg-portfolio-violet {
     background-color: hsl(var(--portfolio-violet));
   }
-  
+
   .bg-portfolio-mint {
     background-color: hsl(var(--portfolio-mint));
   }
-  
+
   .border-portfolio-violet {
     border-color: hsl(var(--portfolio-violet));
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
   }
-  
+
   .animate-fade-in-delay {
     animation: fadeIn 0.8s ease-out 0.2s forwards;
     opacity: 0;
   }
-  
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   .hover-lift {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 }
 
@@ -172,7 +174,8 @@ All colors MUST be HSL.
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {

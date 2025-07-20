@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-portfolio-bg via-white to-portfolio-bg"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-sky-200 to-sky-300"></div>
       <div className="absolute top-20 left-10 w-20 h-20 bg-portfolio-mint/20 rounded-full blur-xl animate-float"></div>
       <div
         className="absolute bottom-32 right-16 w-32 h-32 bg-portfolio-violet/20 rounded-full blur-xl animate-float"
@@ -80,7 +80,7 @@ const Hero = () => {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                   </div>
                   <div className="flex space-x-2">
