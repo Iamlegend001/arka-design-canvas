@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CaseStudies = () => {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+
+  const headerRef = useRef(null);
+  const cardRefs = useRef([]);
+  const viewMoreRef = useRef(null);
+  const sectionRef = useRef(null);
 
   const projects = [
     {
@@ -45,7 +54,7 @@ const CaseStudies = () => {
     },
     {
       id: 3,
-      title: "E-learning Platform",
+      title: "Focus-Flow Study Companion App",
       summary:
         "Creating engaging online learning experiences for remote education",
       tags: ["Education", "Interactive Design", "User Testing"],
@@ -54,22 +63,61 @@ const CaseStudies = () => {
       problem:
         "Students were disengaged with traditional online learning platforms, leading to high dropout rates.",
       role: "Product Designer",
-      tools: ["Figma", "After Effects", "Lottie", "Hotjar"],
+      tools: ["Figma", "Notion"],
       research:
         "Analyzed learning patterns of 500+ students and conducted A/B tests on key interface elements.",
-      outcome:
-        "35% increase in course completion rates and 25% improvement in student satisfaction scores.",
+      outcome: "better focus on the study",
       color: "from-green-400 to-green-600",
     },
   ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(headerRef.current, {
+        opacity: 0,
+        y: -40,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 85%",
+        },
+      });
+      cardRefs.current.forEach((el, i) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 40,
+          duration: 0.7,
+          delay: i * 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+          },
+        });
+      });
+      gsap.from(viewMoreRef.current, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: viewMoreRef.current,
+          start: "top 95%",
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id="work"
       className="py-20 lg:py-32 bg-gradient-to-br from-sky-100 via-sky-200 to-sky-300"
+      ref={sectionRef}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16" ref={headerRef}>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-portfolio-dark mb-6">
             Case Studies
           </h2>
@@ -86,6 +134,7 @@ const CaseStudies = () => {
                 <div
                   className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer hover:-translate-y-2"
                   style={{ animationDelay: `${index * 0.2}s` }}
+                  ref={(el) => (cardRefs.current[index] = el)}
                 >
                   {/* Project Image */}
                   <div className="relative h-48 overflow-hidden">
@@ -237,7 +286,7 @@ const CaseStudies = () => {
         </div>
 
         {/* View More Button */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-12" ref={viewMoreRef}>
           <Button
             variant="outline"
             size="lg"

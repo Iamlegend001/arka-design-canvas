@@ -1,10 +1,73 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, ChevronDown } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
+  const sectionRef = useRef(null);
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+  const valuesRef = useRef([]);
+  const scrollIndicatorRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(leftRef.current, {
+        opacity: 0,
+        x: -60,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: leftRef.current,
+          start: "top 80%",
+        },
+      });
+      gsap.from(rightRef.current, {
+        opacity: 0,
+        x: 60,
+        duration: 1,
+        delay: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: rightRef.current,
+          start: "top 80%",
+        },
+      });
+      valuesRef.current.forEach((el, i) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          delay: i * 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+          },
+        });
+      });
+      gsap.from(scrollIndicatorRef.current, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: scrollIndicatorRef.current,
+          start: "top 95%",
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      ref={sectionRef}
+    >
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-sky-200 to-sky-300"></div>
       <div className="absolute top-20 left-10 w-20 h-20 bg-portfolio-mint/20 rounded-full blur-xl animate-float"></div>
@@ -16,7 +79,7 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-8" ref={leftRef}>
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-portfolio-dark leading-tight">
                 Designing Interfaces
@@ -61,7 +124,11 @@ const Hero = () => {
             {/* Values */}
             <div className="flex flex-wrap gap-6 pt-8">
               {["Empathy", "Function", "Elegance"].map((value, index) => (
-                <div key={value} className="flex items-center space-x-2">
+                <div
+                  key={value}
+                  className="flex items-center space-x-2"
+                  ref={(el) => (valuesRef.current[index] = el)}
+                >
                   <div className="w-2 h-2 bg-portfolio-mint rounded-full"></div>
                   <span className="text-portfolio-gray font-medium">
                     {value}
@@ -72,7 +139,7 @@ const Hero = () => {
           </div>
 
           {/* Right Content - Abstract Illustration */}
-          <div className="relative animate-fade-in-delay">
+          <div className="relative" ref={rightRef}>
             <div className="relative w-full h-96 lg:h-[500px]">
               {/* Main UI Frame */}
               <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl p-8 hover-lift">
@@ -112,7 +179,10 @@ const Hero = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+          ref={scrollIndicatorRef}
+        >
           <ChevronDown className="w-6 h-6 text-portfolio-gray" />
         </div>
       </div>

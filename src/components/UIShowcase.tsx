@@ -8,7 +8,7 @@ const UIShowcase = () => {
       id: 1,
       title: "Banking App Dashboard",
       description: "Clean fintech interface with data visualization",
-      image: "/placeholder.svg",
+      image: "https://cdn.dribbble.com/userupload/44184570/file/original-3bea9d1e7cbec14e0ba09716eb7c14e4.png?resize=2048x1445&vertical=center",
       tags: ["UI Design", "Dashboard", "Fintech"],
       likes: 124,
       comments: 18,
@@ -18,17 +18,17 @@ const UIShowcase = () => {
       id: 2,
       title: "E-commerce Mobile App",
       description: "Shopping experience redesign",
-      image: "/placeholder.svg",
-      tags: ["Mobile", "E-commerce", "UX"],
+      image: "https://cdn.dribbble.com/userupload/43901235/file/original-c3db763da08a7ae2596c450f6a48ca03.png?resize=1200x900&vertical=center",
+      tags: ["Desktop", "E-commerce", "UX"],
       likes: 89,
       comments: 12,
       height: "h-80",
     },
     {
       id: 3,
-      title: "Social Media Feed",
-      description: "Modern social platform interface",
-      image: "/placeholder.svg",
+      title: "Social Media Card",
+      description: "Modern social card interface",
+      image: "https://cdn.dribbble.com/userupload/44184641/file/original-f712db523c26b5a2a9fe625558c706db.png?resize=1504x2418&vertical=center",
       tags: ["Social", "Feed", "Mobile"],
       likes: 156,
       comments: 24,
@@ -36,9 +36,9 @@ const UIShowcase = () => {
     },
     {
       id: 4,
-      title: "Food Delivery App",
-      description: "Intuitive ordering experience",
-      image: "/placeholder.svg",
+      title: "Animated Background",
+      description: "Crazy background",
+      image: "https://cdn.dribbble.com/userupload/44184408/file/original-a8bcec15fd661eea6ba3faa46b19fcf8.png?resize=1200x855&vertical=center",
       tags: ["Mobile", "Food", "UX"],
       likes: 98,
       comments: 15,
@@ -46,9 +46,9 @@ const UIShowcase = () => {
     },
     {
       id: 5,
-      title: "Travel Booking Platform",
+      title: "Train Booking",
       description: "Seamless booking flow design",
-      image: "/placeholder.svg",
+      image: "https://cdn.dribbble.com/userupload/44184457/file/original-fb717d8fc6ffdbc68293fb458b279c9e.png?resize=1200x853&vertical=center",
       tags: ["Web", "Travel", "Booking"],
       likes: 134,
       comments: 21,
@@ -56,9 +56,9 @@ const UIShowcase = () => {
     },
     {
       id: 6,
-      title: "Health App Interface",
-      description: "Wellness tracking dashboard",
-      image: "/placeholder.svg",
+      title: "Shopping Cart",
+      description: "Logitech",
+      image: "https://cdn.dribbble.com/userupload/43498696/file/original-fcf7c8c765fdfa72bc7f0073a3ac8e9c.png?resize=1504x972&vertical=center",
       tags: ["Health", "Dashboard", "Mobile"],
       likes: 76,
       comments: 9,
@@ -68,7 +68,7 @@ const UIShowcase = () => {
       id: 7,
       title: "Music Player Redesign",
       description: "Modern audio streaming interface",
-      image: "/placeholder.svg",
+      image: "https://cdn.dribbble.com/userupload/43333525/file/original-437e42737751dd8b0ac8203d96819a3f.png?resize=1200x1171&vertical=center",
       tags: ["Music", "Player", "UI"],
       likes: 187,
       comments: 32,
@@ -76,9 +76,9 @@ const UIShowcase = () => {
     },
     {
       id: 8,
-      title: "Task Management Tool",
-      description: "Productivity app interface",
-      image: "/placeholder.svg",
+      title: "Beautiful Hero Section",
+      description: "Creative",
+      image: "https://cdn.dribbble.com/userupload/44184506/file/original-39608b93fbed9e0d03609bd6cbe3930a.png?resize=2048x1584&vertical=center",
       tags: ["Productivity", "Web", "Dashboard"],
       likes: 112,
       comments: 17,
@@ -87,7 +87,7 @@ const UIShowcase = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-br from-sky-100 via-sky-200 to-sky-300">
+    <section className="py-20 lg:py-32 bg-gradient-to-br bg-slate-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-portfolio-dark mb-6">
@@ -169,7 +169,7 @@ const UIShowcase = () => {
           <div className="inline-flex items-center space-x-2 text-portfolio-gray">
             <span>Want to see more UI work?</span>
             <a
-              href="https://dribbble.com"
+              href="https://dribbble.com/imkuttu123"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 font-semibold hover:underline transition-all duration-200"

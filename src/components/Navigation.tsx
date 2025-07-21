@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download } from "lucide-react";
+import gsap from "gsap";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef(null);
+  const mobileMenuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +16,25 @@ const Navigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    gsap.from(navRef.current, {
+      opacity: 0,
+      y: -40,
+      duration: 0.8,
+      ease: "power3.out",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isOpen && mobileMenuRef.current) {
+      gsap.fromTo(
+        mobileMenuRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
+      );
+    }
+  }, [isOpen]);
 
   const navItems = [
     { name: "About", href: "#about" },
@@ -26,6 +48,7 @@ const Navigation = () => {
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
+      ref={navRef}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -77,7 +100,10 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden bg-white/95 backdrop-blur-md border-t">
+          <div
+            className="md:hidden bg-white/95 backdrop-blur-md border-t"
+            ref={mobileMenuRef}
+          >
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
                 <a

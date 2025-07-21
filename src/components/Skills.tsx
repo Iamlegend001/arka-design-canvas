@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   Palette,
   Search,
@@ -9,6 +9,10 @@ import {
   Grid3X3,
   Users,
 } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Skills = () => {
   const skills = [
@@ -70,10 +74,54 @@ const Skills = () => {
     },
   ];
 
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const cardsRef = useRef([]);
+  const ctaRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(headerRef.current, {
+        opacity: 0,
+        y: -40,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 85%",
+        },
+      });
+      cardsRef.current.forEach((el, i) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 40,
+          duration: 0.7,
+          delay: i * 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+          },
+        });
+      });
+      gsap.from(ctaRef.current, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ctaRef.current,
+          start: "top 95%",
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-20 lg:py-32 bg-white" ref={sectionRef}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16" ref={headerRef}>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-portfolio-dark mb-6">
             What I Do
           </h2>
@@ -89,6 +137,7 @@ const Skills = () => {
               key={skill.name}
               className="group bg-gray-50/50 rounded-2xl p-8 hover-lift cursor-pointer transition-all duration-300 hover:bg-white hover:shadow-lg"
               style={{ animationDelay: `${index * 0.1}s` }}
+              ref={(el) => (cardsRef.current[index] = el)}
             >
               <div className="flex flex-col items-center text-center space-y-4">
                 {/* Icon */}
@@ -113,7 +162,7 @@ const Skills = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-16" ref={ctaRef}>
           <div className="inline-flex items-center space-x-2 text-portfolio-gray">
             <span>Ready to work together?</span>
             <a
