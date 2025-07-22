@@ -7,20 +7,39 @@ import Skills from "@/components/Skills";
 import UIShowcase from "@/components/UIShowcase";
 import CaseStudies from "@/components/CaseStudies";
 import Footer from "@/components/Footer";
-import gsap from "gsap";
 import ContactMe from "@/components/ContactMe";
-// import ContactMe from "@/components/ContactMe";
-
+import gsap from "gsap";
+import Lenis from 'lenis'
 
 const Index = () => {
   const pageRef = useRef(null);
 
   useEffect(() => {
+    // Page fade-in animation
     gsap.fromTo(
       pageRef.current,
       { opacity: 0, scale: 0.98 },
       { opacity: 1, scale: 1, duration: 1, ease: "power3.out" }
     );
+
+    // Lenis Smooth Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
+      smooth: true,
+    });
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      // Cleanup if needed
+      lenis.destroy();
+    };
   }, []);
 
   return (
@@ -32,7 +51,7 @@ const Index = () => {
       <Skills />
       <UIShowcase />
       <CaseStudies />
-      <ContactMe/>
+      <ContactMe />
       <Footer />
     </div>
   );
