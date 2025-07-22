@@ -76,7 +76,7 @@ const CaseStudies = () => {
       gsap.from(headerRef.current, {
         opacity: 0,
         y: -40,
-        duration: 0.9,
+        duration: 0.5, // faster
         ease: "power3.out",
         scrollTrigger: {
           trigger: headerRef.current,
@@ -87,8 +87,8 @@ const CaseStudies = () => {
         gsap.from(el, {
           opacity: 0,
           y: 40,
-          duration: 0.7,
-          delay: i * 0.12,
+          duration: 0.35, // faster
+          delay: i * 0.07, // keep stagger but faster
           ease: "power3.out",
           scrollTrigger: {
             trigger: el,
@@ -99,7 +99,7 @@ const CaseStudies = () => {
       gsap.from(viewMoreRef.current, {
         opacity: 0,
         y: 30,
-        duration: 0.8,
+        duration: 0.4, // faster
         ease: "power3.out",
         scrollTrigger: {
           trigger: viewMoreRef.current,

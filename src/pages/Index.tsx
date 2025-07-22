@@ -8,6 +8,9 @@ import UIShowcase from "@/components/UIShowcase";
 import CaseStudies from "@/components/CaseStudies";
 import Footer from "@/components/Footer";
 import gsap from "gsap";
+import ContactMe from "@/components/ContactMe";
+// import ContactMe from "@/components/ContactMe";
+
 
 const Index = () => {
   const pageRef = useRef(null);
@@ -29,6 +32,7 @@ const Index = () => {
       <Skills />
       <UIShowcase />
       <CaseStudies />
+      <ContactMe/>
       <Footer />
     </div>
   );
