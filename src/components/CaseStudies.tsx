@@ -50,7 +50,7 @@ const CaseStudies = () => {
       team: "Solo",
       color: "from-emerald-50 to-teal-50",
       accentColor: "text-emerald-600",
-      link: "#",
+      link: "https://medium.com/@arkapravasantra17/mindmosaic-revolutionizing-personal-knowledge-management-with-ai-a332f1e36c75",
     },
     {
       id: 3,
