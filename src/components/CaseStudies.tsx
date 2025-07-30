@@ -280,15 +280,7 @@ const CaseStudies = () => {
                       </div>
                     </div>
 
-                    {/* Title Overlay */}
-                    <div className="absolute bottom-6 left-6 right-6 z-30 transform transition-all duration-500 group-hover:translate-y-[-4px]">
-                      <h3 className="text-2xl lg:text-3xl font-semibold text-slate-800 mb-2 drop-shadow-sm transition-all duration-500 group-hover:text-slate-900">
-                        {project.title}
-                      </h3>
-                      <p className="text-base lg:text-lg text-slate-700 font-light drop-shadow-sm transition-all duration-500 group-hover:text-slate-800">
-                        {project.subtitle}
-                      </p>
-                    </div>
+                    {/* Removed title overlay from image */}
                   </div>
 
                   {/* Content Section */}
@@ -297,6 +289,16 @@ const CaseStudies = () => {
                       index % 2 === 1 ? "lg:order-1" : ""
                     }`}
                   >
+                    {/* Project Title & Subtitle */}
+                    <div className="mb-8">
+                      <h3 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-3">
+                        {project.title}
+                      </h3>
+                      <p className="text-lg lg:text-xl text-slate-600 font-light">
+                        {project.subtitle}
+                      </p>
+                    </div>
+
                     {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-8">
                       {project.tags.map((tag, tagIndex) => (
