@@ -152,10 +152,10 @@ const Footer = () => {
             <div className="space-y-6">
               <a
                 href="mailto:arkapravasantra17@gmail.com"
-                className="group flex items-center gap-3 text-slate-400 hover:text-violet-400 transition-all duration-300"
+                className="group flex items-center gap-4 text-slate-400 hover:text-violet-400 transition-all duration-300 p-3 rounded-xl hover:bg-gray-50"
               >
-                <div className="w-10 h-10 bg-violet-500/20 rounded-xl flex items-center justify-center group-hover:bg-violet-500/30 transition-colors duration-300">
-                  <Mail className="w-5 h-5" />
+                <div className="w-12 h-12 bg-violet-500/20 rounded-3xl flex items-center justify-center group-hover:bg-violet-500/30 transition-colors p-2.5 duration-300">
+                  <Mail className="w-6 h-6" />
                 </div>
                 <div>
                   <div className="text-sm text-slate-500">Email me at</div>
