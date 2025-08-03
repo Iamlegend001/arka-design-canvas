@@ -32,25 +32,30 @@ const CaseStudies = () => {
     },
     {
       id: 2,
-      title: "AI-Powered Knowledge Base",
-      subtitle: "Personal Knowledge Management Reimagined",
+      title: "MindMosaic – AI-Powered Knowledge Base",
+      subtitle: "Featured on UX Collective’s Bootcamp Publication",
       summary:
-        "An AI-powered personal knowledge base for seamless information organization.",
-      tags: ["Dashboard Design", "Data Visualization", "Accessibility"],
+        "An AI-powered personal knowledge base published on Medium’s top UX publication — designed to solve content overload for modern learners.",
+      tags: [
+        "Dashboard Design",
+        "UX Publication",
+        "AI Integration",
+        "Accessibility",
+      ],
       image: "/Images/Image2.png",
       problem:
-        "Users struggle with scattered notes and information across multiple platforms, making knowledge retrieval inefficient and frustrating.",
+        "Learners were overwhelmed by scattered notes and unstructured content across platforms, making knowledge retention difficult.",
       role: "Senior UX Designer",
-      tools: ["Figma", "Notion", "Python"],
+      tools: ["Figma", "Notion"],
       research:
-        "Research found users struggle with scattered notes across 7+ different platforms, spending 2+ hours daily searching for information.",
+        "Interviewed learners from 5+ regions, identifying that 80% struggled with organizing and retrieving their learning materials efficiently.",
       outcome:
-        "The outcome is an AI-powered knowledge base that increased productivity by 60% and reduced information search time by 75%.",
+        "Designed a clean, focused AI-curated experience that reduced information search time by 75%. Featured by Fabricio Teixeira on Bootcamp (UX Collective).",
       duration: "2 weeks",
       team: "Solo",
       color: "from-emerald-50 to-teal-50",
       accentColor: "text-emerald-600",
-      link: "https://medium.com/@arkapravasantra17/mindmosaic-revolutionizing-personal-knowledge-management-with-ai-a332f1e36c75",
+      link: "https://medium.com/design-bootcamp/mindmosaic-revolutionizing-personal-knowledge-management-with-ai-a332f1e36c75",
     },
     {
       id: 3,
@@ -63,13 +68,13 @@ const CaseStudies = () => {
       problem:
         "Students were disengaged with traditional online learning platforms, showing low completion rates and poor knowledge retention.",
       role: "Product Designer",
-      tools: ["Figma", "Notion", "Adobe XD"],
+      tools: ["Figma", "Notion"],
       research:
         "Analyzed learning patterns of 500+ students across different age groups and identified key engagement and retention factors.",
       outcome:
         "Improved student engagement by 75% and course completion rates by 55% through personalized learning pathways and gamification.",
       duration: "4 weeks",
-      team: "3 members",
+      team: "2 members",
       color: "from-orange-50 to-amber-50",
       accentColor: "text-orange-600",
       link: "https://medium.com/@arkapravasantra17/focus-flow-designing-a-unified-study-companion-for-the-digital-age-2b53db4b0558",
@@ -268,18 +273,6 @@ const CaseStudies = () => {
                     />
                     {/* Removed shadow overlay for clear images */}
 
-                    {/* Project Stats */}
-                    <div className="absolute top-6 left-6 z-30 flex flex-col gap-2">
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-slate-600 text-sm font-medium shadow-sm transform transition-all duration-500 hover:scale-105 hover:bg-white">
-                        <Users className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-12" />
-                        <span>{project.team}</span>
-                      </div>
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-slate-600 text-sm font-medium shadow-sm transform transition-all duration-500 hover:scale-105 hover:bg-white">
-                        <Target className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-12" />
-                        <span>{project.duration}</span>
-                      </div>
-                    </div>
-
                     {/* Removed title overlay from image */}
                   </div>
 
@@ -300,7 +293,7 @@ const CaseStudies = () => {
                     </div>
 
                     {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-8">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {project.tags.map((tag, tagIndex) => (
                         <span
                           key={tag}
@@ -312,11 +305,23 @@ const CaseStudies = () => {
                       ))}
                     </div>
 
+                    {/* Project Stats */}
+                    <div className="flex flex-wrap gap-3 mb-8">
+                      <div className="flex items-center gap-2 px-4 py-2 bg-slate-100/80 text-slate-700 text-sm font-medium rounded-lg border border-slate-200/60 transition-all duration-300 hover:bg-slate-200/80 hover:scale-105">
+                        <Users className="w-4 h-4" />
+                        <span>{project.team}</span>
+                      </div>
+                      <div className="flex items-center gap-2 px-4 py-2 bg-slate-100/80 text-slate-700 text-sm font-medium rounded-lg border border-slate-200/60 transition-all duration-300 hover:bg-slate-200/80 hover:scale-105">
+                        <Target className="w-4 h-4" />
+                        <span>{project.duration}</span>
+                      </div>
+                    </div>
+
                     {/* Project Details */}
                     <div className="space-y-8 text-slate-700 leading-relaxed">
                       <div className="transform transition-all duration-500 hover:translate-x-1">
                         <h4 className="font-medium text-slate-800 flex items-center gap-2 mb-3">
-                          <div className="w-2 h-2 rounded-full bg-blue-500 transition-all duration-300 hover:scale-150 hover:bg-blue-600"></div>
+                          <div className="w-2 h-2 rounded-full bg-slate-800 transition-all duration-300 hover:scale-150 hover:bg-slate-900"></div>
                           Problem
                         </h4>
                         <p className="text-slate-600 pl-4 font-light transition-colors duration-300 hover:text-slate-700">
@@ -326,7 +331,7 @@ const CaseStudies = () => {
 
                       <div className="transform transition-all duration-500 hover:translate-x-1">
                         <h4 className="font-medium text-slate-800 flex items-center gap-2 mb-3">
-                          <div className="w-2 h-2 rounded-full bg-emerald-500 transition-all duration-300 hover:scale-150 hover:bg-emerald-600"></div>
+                          <div className="w-2 h-2 rounded-full bg-slate-800 transition-all duration-300 hover:scale-150 hover:bg-slate-900"></div>
                           Research
                         </h4>
                         <p className="text-slate-600 pl-4 font-light transition-colors duration-300 hover:text-slate-700">
@@ -336,7 +341,7 @@ const CaseStudies = () => {
 
                       <div className="transform transition-all duration-500 hover:translate-x-1">
                         <h4 className="font-medium text-slate-800 flex items-center gap-2 mb-3">
-                          <div className="w-2 h-2 rounded-full bg-orange-500 transition-all duration-300 hover:scale-150 hover:bg-orange-600"></div>
+                          <div className="w-2 h-2 rounded-full bg-slate-800 transition-all duration-300 hover:scale-150 hover:bg-slate-900"></div>
                           Outcome
                         </h4>
                         <p className="text-slate-600 pl-4 font-light transition-colors duration-300 hover:text-slate-700">
