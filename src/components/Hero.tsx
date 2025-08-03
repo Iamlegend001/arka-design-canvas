@@ -105,7 +105,7 @@ const Hero = () => {
               </Button>
 
               <a
-                href="https://drive.google.com/uc?export=download&id=1-3lF_1jXQrMf8kSEF0UjtORomFKvk3K8"
+                href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
                 download
                 target="_blank"
                 rel="noopener noreferrer"

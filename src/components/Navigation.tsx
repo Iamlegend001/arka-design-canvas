@@ -72,7 +72,7 @@ const Navigation = () => {
                 </a>
               ))}
               <a
-                href=""
+                href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
                 download
                 className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
               >
@@ -117,7 +117,7 @@ const Navigation = () => {
               ))}
               <div className="px-3 py-2">
                 <a
-                  href="/resume.pdf"
+                  href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
                   download
                   className="w-full inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
                 >

@@ -203,12 +203,19 @@ const About = () => {
             {/* CTA Button */}
             <div className="pt-4" ref={buttonRef}>
               <Button
+                asChild
                 variant="outline"
                 size="lg"
                 className="group border-2 border-violet-500 text-violet-600 hover:bg-violet-500 hover:text-white px-10 py-6 text-lg font-semibold rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105"
               >
-                <Download className="mr-3 h-5 w-5 group-hover:animate-bounce" />
-                Download Resume
+                <a
+                  href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Download className="mr-3 h-5 w-5 group-hover:animate-bounce" />
+                  Download Resume
+                </a>
               </Button>
             </div>
           </div>
