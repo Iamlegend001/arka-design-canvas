@@ -209,7 +209,8 @@ const About = () => {
                 className="group border-2 border-violet-500 text-violet-600 hover:bg-violet-500 hover:text-white px-10 py-6 text-lg font-semibold rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105"
               >
                 <a
-                  href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
+                  href="/Resume/Arkprava Resume.pdf"
+                  download="Arkaprava Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

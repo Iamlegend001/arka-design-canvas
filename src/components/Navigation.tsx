@@ -72,8 +72,8 @@ const Navigation = () => {
                 </a>
               ))}
               <a
-                href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
-                download
+                href="/Resume/Arkprava Resume.pdf"
+                download="Arkaprava Resume.pdf"
                 className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
               >
                 <Download className="w-4 h-4 mr-2" />
@@ -117,8 +117,8 @@ const Navigation = () => {
               ))}
               <div className="px-3 py-2">
                 <a
-                  href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
-                  download
+                  href="/Resume/Arkprava Resume.pdf"
+                  download="Arkaprava Resume.pdf"
                   className="w-full inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
                 >
                   <Download className="w-4 h-4 mr-2" />

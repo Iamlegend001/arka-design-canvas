@@ -105,8 +105,8 @@ const Hero = () => {
               </Button>
 
               <a
-                href="https://drive.google.com/file/d/1MzpRrBR7TbCrr8aiYZW1mezfTE3eHy-k/view?usp=sharing"
-                download
+                href="/Resume/Arkprava Resume.pdf"
+                download="Arkaprava Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
