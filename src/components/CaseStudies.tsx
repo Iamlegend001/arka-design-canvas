@@ -72,7 +72,7 @@ const CaseStudies = () => {
       team: "3 members",
       color: "from-orange-50 to-amber-50",
       accentColor: "text-orange-600",
-      link: "#",
+      link: "https://medium.com/@arkapravasantra17/focus-flow-designing-a-unified-study-companion-for-the-digital-age-2b53db4b0558",
     },
   ];
 
