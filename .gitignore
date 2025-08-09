@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
+tailwind.config.js
+vite.config.js
+package.json

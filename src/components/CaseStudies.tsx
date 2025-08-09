@@ -60,7 +60,7 @@ const CaseStudies = () => {
     {
       id: 3,
       title: "Focus-Flow Study Companion",
-      subtitle: "Creating Engaging Online Learning Experiences",
+      subtitle: "Featured on UX Collective’s Bootcamp Publication",
       summary:
         "Creating engaging online learning experiences that adapt to individual learning styles.",
       tags: ["Education", "Interactive Design", "User Testing"],

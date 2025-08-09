@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Basic Meta -->
+    <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arkaprava Santra | Portfolio</title>
-    <meta name="description" content="Explore the portfolio of Arkaprava Santra – a creative frontend developer and designer passionate about modern web experiences." />
+    <meta name="description" content="Explore the portfolio of Arkaprava Santra – a frontend developer and designer crafting modern, user-focused web experiences." />
     <meta name="author" content="Arkaprava Santra" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph (Facebook & LinkedIn) -->
     <meta property="og:title" content="Arkaprava Santra | Portfolio" />
     <meta property="og:description" content="Showcasing projects, UI/UX case studies, and creative web development by Arkaprava Santra." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yourdomain.com" />
     <meta property="og:image" content="https://yourdomain.com/image.png" />
 
-    <!-- Twitter -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Arkaprava Santra | Portfolio" />
-    <meta name="twitter:description" content="Frontend developer and designer building delightful, responsive web experiences." />
-    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:description" content="Frontend developer and designer building responsive, engaging web experiences." />
     <meta name="twitter:image" content="https://yourdomain.com/image.png" />
 
-    <!-- Icons and Fonts -->
+    <!-- Favicon -->
+    <link rel="icon" href="/image.png" type="image/png" />
+
+    <!-- Fonts & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <!-- Add favicon if available -->
-    <link rel="icon" href="/image.png" />
+
+    <!-- Preload Main Styles (Performance Optimization) -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#ffffff" />
   </head>
 
   <body>
+    <noscript>
+      Please enable JavaScript to view this site properly.
+    </noscript>
     <div id="root"></div>
+
+    <!-- Main App Script -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
