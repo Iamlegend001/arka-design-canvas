@@ -98,10 +98,19 @@ All colors MUST be HSL.
   body {
     @apply bg-[hsl(var(--portfolio-bg))] text-[hsl(var(--portfolio-dark))] font-inter;
     font-family: "Inter", sans-serif;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Prevent horizontal overflow on all elements */
+  * {
+    box-sizing: border-box;
   }
 }
 
