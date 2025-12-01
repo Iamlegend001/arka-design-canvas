@@ -6,9 +6,9 @@ const UIShowcase = () => {
   const uiWork = [
     {
       id: 1,
-      title: "Banking App Dashboard",
+      title: "Banking payment App",
       description: "Clean fintech interface with data visualization",
-      image: "https://cdn.dribbble.com/userupload/44184570/file/original-3bea9d1e7cbec14e0ba09716eb7c14e4.png?resize=2048x1445&vertical=center",
+      image: "https://cdn.dribbble.com/userupload/45306271/file/04aec125120e543eb022621d1160496c.png?resize=400x869&vertical=center",
       tags: ["UI Design", "Dashboard", "Fintech"],
       likes: 124,
       comments: 18,
@@ -26,9 +26,9 @@ const UIShowcase = () => {
     },
     {
       id: 3,
-      title: "Social Media Card",
+      title: "Modern Dashboard",
       description: "Modern social card interface",
-      image: "https://cdn.dribbble.com/userupload/44184641/file/original-f712db523c26b5a2a9fe625558c706db.png?resize=1504x2418&vertical=center",
+      image: "https://cdn.dribbble.com/userupload/45289592/file/3b81ff5711fd4eeb32ad8b3105efc15c.png?resize=1440x1024&vertical=center",
       tags: ["Social", "Feed", "Mobile"],
       likes: 156,
       comments: 24,

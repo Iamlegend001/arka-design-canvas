@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   ArrowUp,
   Linkedin,
@@ -7,10 +7,27 @@ import {
   Mail,
   MapPin,
   Heart,
+  Copy,
+  Check,
+  Twitter
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
+  const footerRef = useRef(null);
+  const [copied, setCopied] = useState(false);
+
+  // Function to copy email
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("arkapravasantra17@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -27,173 +44,183 @@ const Footer = () => {
       name: "LinkedIn",
       icon: Linkedin,
       href: "https://www.linkedin.com/in/arkapravadevux/",
-      color: "hover:text-blue-600",
     },
     {
       name: "GitHub",
       icon: Github,
       href: "https://github.com/Iamlegend001",
-      color: "hover:text-gray-800",
     },
     {
       name: "Dribbble",
       icon: Dribbble,
       href: "https://dribbble.com/imkuttu123",
-      color: "hover:text-pink-600",
     },
+    // Using a placeholder for Behance since Lucide doesn't strictly support it
     {
-      name: "Behance",
-      icon: () => <i className="ri-behance-line text-xl" />,
-      href: "https://www.behance.net/arkapravasantra",
-      color: "hover:text-blue-500",
+      name: "Twitter",
+      icon: Twitter,
+      href: "#",
     },
   ];
 
-  const sectionRef = useRef(null);
-  const gridRef = useRef(null);
-  const socialRefs = useRef([]);
-  const bottomBarRef = useRef(null);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 80%",
+        },
+      });
 
-    if (gridRef.current) observer.observe(gridRef.current);
-    socialRefs.current.forEach((ref) => ref && observer.observe(ref));
-    if (bottomBarRef.current) observer.observe(bottomBarRef.current);
+      // 1. Divider Line Grows
+      tl.from(".footer-divider", {
+        scaleX: 0,
+        duration: 1,
+        ease: "power3.out",
+      })
+      // 2. Content Fades Up
+      .from(
+        ".footer-content",
+        {
+          y: 50,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out",
+        },
+        "-=0.5"
+      );
+    }, footerRef);
 
-    return () => observer.disconnect();
+    return () => ctx.revert();
   }, []);
 
   return (
-    <footer className="bg-white border-t border-gray-200" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        <div
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-12"
-          ref={gridRef}
-        >
-          {/* Brand */}
-          <div className="lg:col-span-2 space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Arkaprava
-              </h3>
-              <div className="w-16 h-1 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full mb-6"></div>
-              <p className="text-gray-700 leading-relaxed max-w-md">
-                A UI/UX designer crafting seamless digital experiences with
-                <span className="text-violet-400 font-semibold">
-                  {" "}
-                  empathy
-                </span>{" "}
-                and
-                <span className="text-purple-400 font-semibold"> clarity</span>.
-                Let's build something beautiful together.
-              </p>
+    <footer 
+      ref={footerRef} 
+      className="relative bg-slate-950 text-slate-300 overflow-hidden pt-20 pb-10"
+    >
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent footer-divider" />
+        <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-violet-900/20 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[100px] pointer-events-none" />
 
-              <div className="flex items-center gap-2 text-slate-400">
-                <MapPin className="w-4 h-4" />
-                <span>Available worldwide • Remote friendly</span>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex space-x-4">
-              {socialLinks.map((social, i) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  className={`w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-600 transition-all duration-300 hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-violet-400 ${social.color}`}
-                  aria-label={social.name}
-                  ref={(el) => (socialRefs.current[i] = el)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {React.createElement(social.icon, {
-                    className: `w-5 h-5 transition-colors duration-200 ${social.color}`,
-                  })}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-gray-900">Quick Links</h4>
-            <nav className="space-y-4">
-              {quickLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="group flex items-center text-slate-400 hover:text-violet-400 transition-all duration-300"
-                >
-                  <div className="w-0 group-hover:w-6 h-0.5 bg-gradient-to-r from-violet-400 to-purple-400 rounded-full transition-all duration-300 mr-0 group-hover:mr-3"></div>
-                  <span className="group-hover:translate-x-2 transition-transform duration-300">
-                    {link.name}
-                  </span>
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <h4 className="text-lg font-semibold text-gray-900">
-              Get In Touch
-            </h4>
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        
+        {/* TOP SECTION: CTA */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-20 footer-content">
             <div className="space-y-6">
-              <a
-                href="mailto:arkapravasantra17@gmail.com"
-                className="group flex items-center gap-4 text-slate-400 hover:text-violet-400 transition-all duration-300 p-3 rounded-xl hover:bg-gray-50"
-              >
-                <div className="w-12 h-12 bg-violet-500/20 rounded-3xl flex items-center justify-center group-hover:bg-violet-500/30 transition-colors p-2.5 duration-300">
-                  <Mail className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-sm text-slate-500">Email me at</div>
-                  <div className="font-medium">arkapravasantra17@gmail.com</div>
-                </div>
-              </a>
-
-              <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl">
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  <span className="text-green-400 font-semibold">
-                    • Available
-                  </span>{" "}
-                  for freelance projects and full-time opportunities
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
+                    Have an idea? <br/>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-400">
+                        Let's build it.
+                    </span>
+                </h2>
+                <p className="text-lg text-slate-400 max-w-md">
+                    I'm currently available for freelance projects and open to full-time opportunities.
                 </p>
-              </div>
             </div>
-          </div>
+
+            <div className="flex flex-col justify-center items-start lg:items-end">
+                 {/* Email Copy Card */}
+                 <div 
+                    onClick={handleCopyEmail}
+                    className="group cursor-pointer relative overflow-hidden bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 rounded-2xl p-6 transition-all duration-300 w-full max-w-md"
+                 >
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 bg-violet-500/20 rounded-xl text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                                <Mail size={24} />
+                            </div>
+                            <div>
+                                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Drop me a line</p>
+                                <p className="text-lg font-semibold text-white">arkapravasantra17@gmail.com</p>
+                            </div>
+                        </div>
+                        <div className="text-slate-500 group-hover:text-white transition-colors">
+                            {copied ? <Check size={20} className="text-green-400" /> : <Copy size={20} />}
+                        </div>
+                    </div>
+                    {/* Success Message overlay */}
+                    <div className={`absolute inset-0 bg-green-500/90 flex items-center justify-center transition-transform duration-300 ${copied ? 'translate-y-0' : 'translate-y-full'}`}>
+                         <span className="font-bold text-white flex items-center gap-2">
+                             <Check size={20} /> Copied to clipboard!
+                         </span>
+                    </div>
+                 </div>
+            </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div
-          className="flex flex-col md:flex-row items-center justify-between pt-12 mt-12 border-t border-gray-200"
-          ref={bottomBarRef}
-        >
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
-            <span>© 2025 Arkaprava Santra — Crafted with</span>
-            <Heart className="w-4 h-4 text-red-400 animate-pulse" />
-            <span>and lots of coffee</span>
+        {/* MIDDLE SECTION: Links */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-12 border-t border-slate-800 footer-content">
+            
+            {/* Brand */}
+            <div className="space-y-4">
+                <h3 className="text-xl font-bold text-white">Arkaprava.</h3>
+                <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+                    Crafting digital experiences with empathy, clarity, and precision.
+                </p>
+                <div className="flex items-center gap-2 text-slate-500 text-sm pt-2">
+                    <MapPin size={16} />
+                    <span>West Bengal, India</span>
+                </div>
+            </div>
+
+            {/* Links */}
+            <div className="space-y-4">
+                <h4 className="text-white font-semibold">Explore</h4>
+                <ul className="space-y-2">
+                    {quickLinks.map((link) => (
+                        <li key={link.name}>
+                            <a 
+                                href={link.href} 
+                                className="text-slate-400 hover:text-violet-400 transition-colors flex items-center gap-2 group w-fit"
+                            >
+                                <span className="w-1.5 h-1.5 rounded-full bg-violet-500 scale-0 group-hover:scale-100 transition-transform" />
+                                <span className="group-hover:translate-x-1 transition-transform">{link.name}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Socials */}
+            <div className="space-y-4">
+                <h4 className="text-white font-semibold">Connect</h4>
+                <div className="flex gap-2">
+                    {socialLinks.map((social) => (
+                        <a
+                            key={social.name}
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-violet-600 hover:text-white transition-all duration-300 hover:-translate-y-1"
+                            aria-label={social.name}
+                        >
+                            <social.icon size={18} />
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </div>
+
+        {/* BOTTOM SECTION */}
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-800 footer-content">
+          <div className="flex items-center gap-2 text-slate-500 text-sm">
+             <span>© 2025 Arkaprava</span>
+             <span className="w-1 h-1 bg-slate-500 rounded-full" />
+             <span className="flex items-center gap-1">
+                Made with <Heart size={12} className="text-red-500 fill-red-500 animate-pulse" />
+             </span>
           </div>
 
           <Button
             variant="ghost"
-            size="sm"
             onClick={scrollToTop}
-            className="group mt-6 md:mt-0 text-slate-400 hover:text-violet-400 hover:bg-white/10 border border-white/20 rounded-xl px-6 py-3 transition-all duration-300"
+            className="group mt-4 md:mt-0 text-slate-400 hover:text-white hover:bg-white/5"
           >
-            <span>Back to Top</span>
-            <ArrowUp className="ml-2 h-4 w-4 group-hover:-translate-y-1 group-hover:text-violet-400 transition-all duration-300" />
+            Back to Top
+            <ArrowUp className="ml-2 h-4 w-4 group-hover:-translate-y-1 transition-transform" />
           </Button>
         </div>
       </div>

@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Mail, Send } from "lucide-react";
-import emailjs from "@emailjs/browser";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-const SERVICE_ID = "your_service_id";
-const TEMPLATE_ID = "your_template_id";
-const USER_ID = "your_user_id";
+// Email sending is disabled; the form will just show a success message.
 
 const ContactMe = () => {
   const {
@@ -59,17 +56,17 @@ const ContactMe = () => {
     );
   }, []);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async () => {
     setLoading(true);
     setSuccess(null);
     setError(null);
 
     try {
-      await emailjs.send(SERVICE_ID, TEMPLATE_ID, data, USER_ID);
-      setSuccess("✅ Message sent successfully!");
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      setSuccess("✅ Message submitted (email sending disabled).");
       reset();
-    } catch (err) {
-      setError("❌ Failed to send. Try again later.");
+    } catch {
+      setError("❌ Failed to submit.");
     } finally {
       setLoading(false);
     }
@@ -114,7 +111,10 @@ const ContactMe = () => {
 
             {/* Email */}
             <div>
-              <label htmlFor="user_email" className="font-medium text-slate-700">
+              <label
+                htmlFor="user_email"
+                className="font-medium text-slate-700"
+              >
                 Email
               </label>
               <input

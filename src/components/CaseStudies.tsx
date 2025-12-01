@@ -1,484 +1,212 @@
 import React, { useRef, useEffect } from "react";
-import { ArrowRight, ExternalLink, Eye, Users, Target } from "lucide-react";
+import { ArrowRight, ExternalLink, Sparkles } from "lucide-react";
 
 const CaseStudies = () => {
-  const sectionRef = useRef(null);
-  const headerRef = useRef(null);
-  const cardRefs = useRef([]);
-  const viewMoreRef = useRef(null);
   const containerRef = useRef(null);
 
   const projects = [
     {
       id: 1,
-      title: "Emergency Health Access App",
-      subtitle: "Designing Life-Saving Digital Solutions for Critical Moments",
-      summary: "Emergency app for instant help, alerts & medical assistance.",
-      tags: ["UX Research", "Mobile Design", "Prototyping"],
-      image: "/Images/Image1.png",
-      problem:
-        "Many people lack instant access to medical help during emergencies, leading to delayed response times and potentially life-threatening situations.",
-      role: "Lead UX/UI Designer",
-      tools: ["Figma", "Notion"],
-      research:
-        "Conducted 15 user interviews and surveys with emergency responders and healthcare professionals to understand critical pain points.",
-      outcome:
-        "Created a comprehensive emergency response system that reduced average response time by 40% and improved user satisfaction by 85%.",
-      duration: "2 Weeks",
-      team: "Solo",
-      color: "from-blue-50 to-indigo-50",
-      accentColor: "text-blue-600",
-      link: "https://medium.com/@arkapravasantra17/emergency-health-access-app-designing-life-saving-digital-solutions-for-critical-moments-e2cafa514a9c",
+      title: "Emergency Health Access",
+      subtitle: "Critical Care on Demand",
+      summary: "Reducing ambulance response times by 40% through intelligent routing.",
+      tags: ["UX Research", "Mobile App"],
+      image: "https://miro.medium.com/v2/resize:fit:2000/format:webp/1*JegOt-TRWBsIWvpYzuhSaA.png",
+      stats: { label: "Response Time", value: "-40%" },
+      role: "Lead Designer",
+      color: "from-blue-500 to-teal-500",
+      shadow: "shadow-blue-200",
+      bg: "bg-blue-50",
+      border: "border-blue-200",
+      link: "https://medium.com/design-bootcamp/emergency-health-access-app-designing-life-saving-digital-solutions-for-critical-moments-e2cafa514a9c",
     },
     {
       id: 2,
-      title: "MindMosaic – AI-Powered Knowledge Base",
-      subtitle: "Featured on UX Collective’s Bootcamp Publication",
-      summary:
-        "An AI-powered personal knowledge base published on Medium’s top UX publication — designed to solve content overload for modern learners.",
-      tags: [
-        "Dashboard Design",
-        "UX Publication",
-        "AI Integration",
-        "Accessibility",
-      ],
-      image: "/Images/Image2.png",
-      problem:
-        "Learners were overwhelmed by scattered notes and unstructured content across platforms, making knowledge retention difficult.",
-      role: "Senior UX Designer",
-      tools: ["Figma", "Notion"],
-      research:
-        "Interviewed learners from 5+ regions, identifying that 80% struggled with organizing and retrieving their learning materials efficiently.",
-      outcome:
-        "Designed a clean, focused AI-curated experience that reduced information search time by 75%. Featured by Fabricio Teixeira on Bootcamp (UX Collective).",
-      duration: "2 weeks",
-      team: "Solo",
-      color: "from-emerald-50 to-teal-50",
-      accentColor: "text-emerald-600",
+      title: "MindMosaic AI",
+      subtitle: "Knowledge Management Evolved",
+      summary: "An AI-powered second brain that organizes your digital chaos automatically.",
+      tags: ["AI Integration", "Dashboard"],
+      image: "https://miro.medium.com/v2/resize:fit:2000/format:webp/1*RFDLhTgON1eIXMCj-4DZ4w.png",
+      stats: { label: "Search Speed", value: "4x" },
+      role: "Senior UX",
+      color: "from-green-500 to-lime-600",
+      shadow: "shadow-green-200",
+      bg: "bg-green-50",
+      border: "border-green-200",
       link: "https://medium.com/design-bootcamp/mindmosaic-revolutionizing-personal-knowledge-management-with-ai-a332f1e36c75",
     },
     {
       id: 3,
-      title: "Focus-Flow Study Companion",
-      subtitle: "Featured on UX Collective’s Bootcamp Publication",
-      summary:
-        "Creating engaging online learning experiences that adapt to individual learning styles.",
-      tags: ["Education", "Interactive Design", "User Testing"],
-      image: "/Images/Images3.png",
-      problem:
-        "Students were disengaged with traditional online learning platforms, showing low completion rates and poor knowledge retention.",
+      title: "Focus-Flow",
+      subtitle: "Hyper-Personalized Learning",
+      summary: "Gamified learning pathways that adapt to student attention spans in real-time.",
+      tags: ["EdTech", "Gamification"],
+      image: "https://miro.medium.com/v2/resize:fit:2000/format:webp/1*XM9gPYjk3y5nsiyOMVG_CQ.png",
+      stats: { label: "Engagement", value: "+75%" },
       role: "Product Designer",
-      tools: ["Figma", "Notion"],
-      research:
-        "Analyzed learning patterns of 500+ students across different age groups and identified key engagement and retention factors.",
-      outcome:
-        "Improved student engagement by 75% and course completion rates by 55% through personalized learning pathways and gamification.",
-      duration: "4 weeks",
-      team: "2 members",
-      color: "from-orange-50 to-amber-50",
-      accentColor: "text-orange-600",
-      link: "https://medium.com/@arkapravasantra17/focus-flow-designing-a-unified-study-companion-for-the-digital-age-2b53db4b0558",
+      color: "from-purple-500 to-pink-500",
+      shadow: "shadow-purple-200",
+      bg: "bg-purple-50",
+      border: "border-purple-200",
+      link: "https://medium.com/design-bootcamp/focus-flow-designing-a-unified-study-companion-for-the-digital-age-2b53db4b0558",
+    },
+    {
+      id: 4,
+      title: "Campus Recruit",
+      subtitle: "Frictionless Onboarding",
+      summary: "Transforming a 20-minute registration process into a 4-step guided journey.",
+      tags: ["B2B SaaS", "Onboarding"],
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*mfoC5d2hMc-gDYkpZI2cZA.jpeg",
+      stats: { label: "Drop-off Rate", value: "-68%" },
+      role: "UX Researcher",
+      color: "from-orange-500 to-red-500",
+      shadow: "shadow-orange-200",
+      bg: "bg-orange-50",
+      border: "border-orange-200",
+      link: "https://medium.com/design-bootcamp/ux-case-study-reimagining-college-placement-onboarding-7cce17fe71ed",
     },
   ];
 
-  useEffect(() => {
-    let scrollTimeout;
-    let ticking = false;
-
-    const smoothScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-
-          // Parallax effect for cards
-          cardRefs.current.forEach((card, index) => {
-            if (card) {
-              const rect = card.getBoundingClientRect();
-              const isVisible =
-                rect.top < window.innerHeight && rect.bottom > 0;
-
-              if (isVisible) {
-                const scrollProgress =
-                  (window.innerHeight - rect.top) /
-                  (window.innerHeight + rect.height);
-                const parallaxOffset = (scrollProgress - 0.5) * 20;
-
-                // Smooth parallax transform
-                card.style.transform = `translateY(${parallaxOffset}px) scale(${
-                  0.98 + scrollProgress * 0.02
-                })`;
-
-                // Image parallax
-                const image = card.querySelector(".parallax-image");
-                if (image) {
-                  image.style.transform = `translateY(${
-                    parallaxOffset * -0.5
-                  }px) scale(1.05)`;
-                }
-              }
-            }
-          });
-
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    const handleScroll = () => {
-      clearTimeout(scrollTimeout);
-      smoothScroll();
-
-      scrollTimeout = setTimeout(() => {
-        // Debounced scroll handler
-      }, 100);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    // Intersection Observer for smooth animations
-    const observerOptions = {
-      threshold: 0.15,
-      rootMargin: "0px 0px -80px 0px",
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0px) scale(1)";
-          }, index * 150); // Staggered animation
-        }
-      });
-    }, observerOptions);
-
-    // Card-specific observer for individual card animations
-    const cardObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("card-animate-in");
-
-            // Animate card content elements
-            const contentElements =
-              entry.target.querySelectorAll(".card-content > *");
-            contentElements.forEach((el, index) => {
-              setTimeout(() => {
-                el.style.opacity = "1";
-                el.style.transform = "translateY(0px)";
-              }, index * 100);
-            });
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    // Observe all animated elements
-    const animatedElements = document.querySelectorAll(".animate-on-scroll");
-    animatedElements.forEach((el, index) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(40px) scale(0.95)";
-      el.style.transition = "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
-      observer.observe(el);
-    });
-
-    // Observe cards for individual animations
-    cardRefs.current.forEach((card) => {
-      if (card) {
-        cardObserver.observe(card);
-
-        // Set initial state for card content
-        const contentElements = card.querySelectorAll(".card-content > *");
-        contentElements.forEach((el) => {
-          el.style.opacity = "0";
-          el.style.transform = "translateY(20px)";
-          el.style.transition = "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
-        });
-      }
-    });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-      cardObserver.disconnect();
-      clearTimeout(scrollTimeout);
-    };
-  }, []);
-
   return (
-    <section
-      id="work"
-      ref={sectionRef}
-      className="py-16 lg:py-24 min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50"
-    >
-      {/* Subtle Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-100/40 to-indigo-100/30 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-emerald-100/40 to-teal-100/30 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-orange-100/30 to-amber-100/20 rounded-full blur-3xl"></div>
+    <section className="relative bg-white py-24 lg:py-32 overflow-hidden selection:bg-blue-100">
+
+      {/* --- Ambient Background Effects (Lighter) --- */}
+      <div className="absolute inset-0 z-0 opacity-50">
+        {/* Subtle Noise Texture */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+        </div>
+        
+        {/* Gentle Glowing Orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-sky-200/50 rounded-full blur-[100px] mix-blend-multiply animate-pulse duration-10000"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-indigo-200/50 rounded-full blur-[100px] mix-blend-multiply animation-delay-2000"></div>
       </div>
 
-      <div className="relative z-10">
-        {/* Header */}
-        <div ref={headerRef} className="text-center mb-20 px-6 lg:px-12">
-          <div className="animate-on-scroll">
-            <span className="inline-block px-5 py-2 bg-white/70 backdrop-blur-sm text-slate-600 rounded-full text-sm font-medium tracking-wide border border-slate-200/60 mb-6 shadow-sm">
-              Featured Work
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* --- Header --- */}
+        <div className="mb-24 md:mb-32 max-w-4xl text-center mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-ping"></span>
+            <span className="text-blue-600 font-mono text-sm tracking-widest uppercase">Our Impactful Journeys</span>
+          </div>
+          <h2 className="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-[0.95]">
+            Innovating Solutions, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+              Delivering Excellence.
             </span>
-          </div>
-          <div className="animate-on-scroll">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-slate-800 mb-6 tracking-tight">
-              Case{" "}
-              <span className="font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
-                Studies
-              </span>
-            </h2>
-          </div>
-          <div className="animate-on-scroll">
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-light">
-              Deep dives into real-world projects where I transformed user pain
-              points into intuitive, impactful design solutions.
-            </p>
-          </div>
+          </h2>
+          <p className="mt-8 text-lg text-gray-600 max-w-2xl mx-auto">
+            Explore our recent case studies where design thinking meets cutting-edge technology to create measurable impact and delightful user experiences.
+          </p>
         </div>
 
-        {/* Cards Container */}
-        <div
-          ref={containerRef}
-          className="space-y-16 px-6 lg:px-12 max-w-7xl mx-auto"
-        >
+        {/* --- Sticky Stacking Cards Container --- */}
+        <div ref={containerRef} className="flex flex-col gap-16 lg:gap-12 relative">
           {projects.map((project, index) => (
             <div
               key={project.id}
-              ref={(el) => {
-                if (el) cardRefs.current[index] = el;
+              className="sticky top-28 lg:top-36" // Adjusted sticky top for better visibility in light theme
+              style={{
+                marginBottom: index === projects.length - 1 ? 0 : '4rem',
+                zIndex: projects.length - index, // Corrected zIndex for proper stacking order
               }}
-              className="group animate-on-scroll"
             >
-              <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-white/80 shadow-lg hover:shadow-2xl transition-all duration-700 overflow-hidden hover:-translate-y-2 hover:scale-[1.02] card-hover-effect">
-                <div className="grid lg:grid-cols-5 gap-0">
-                  {/* Image Section */}
-                  <div
-                    className={`relative overflow-hidden lg:col-span-2 ${
-                      index % 2 === 1 ? "lg:order-5" : ""
-                    }`}
-                  >
-                    {/* Removed color overlay for clear images */}
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="parallax-image w-full h-80 lg:h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
-                    />
-                    {/* Removed shadow overlay for clear images */}
+              <div className={`group relative overflow-hidden rounded-[2.5rem] bg-white border ${project.border} ${project.shadow} shadow-lg transition-all duration-700 hover:-translate-y-3 hover:shadow-xl`}>
 
-                    {/* Removed title overlay from image */}
-                  </div>
+                {/* Card Subtle Gradient Background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.bg} opacity-50 group-hover:opacity-100 transition-opacity duration-700`}></div>
 
-                  {/* Content Section */}
-                  <div
-                    className={`card-content p-8 lg:p-16 flex flex-col justify-center lg:col-span-3 ${
-                      index % 2 === 1 ? "lg:order-1" : ""
-                    }`}
-                  >
-                    {/* Project Title & Subtitle */}
-                    <div className="mb-8">
-                      <h3 className="text-3xl lg:text-4xl font-bold text-slate-800 mb-3">
+                <div className="grid lg:grid-cols-12 gap-0 relative z-10">
+
+                  {/* Text Content */}
+                  <div className="lg:col-span-5 p-8 md:p-12 lg:p-14 flex flex-col justify-between min-h-[400px] lg:min-h-[580px]">
+                    <div>
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 border border-gray-200 text-gray-700 backdrop-blur-sm">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
                         {project.title}
                       </h3>
-                      <p className="text-lg lg:text-xl text-slate-600 font-light">
+                      <p className={`text-lg font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>
                         {project.subtitle}
+                      </p>
+                      <p className="text-gray-600 leading-relaxed text-base md:text-lg mb-8 max-w-sm">
+                        {project.summary}
                       </p>
                     </div>
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tag}
-                          style={{ animationDelay: `${tagIndex * 100}ms` }}
-                          className="px-3 py-1 bg-slate-100/80 text-slate-600 text-sm rounded-full border border-slate-200/60 font-medium transition-all duration-300 hover:bg-slate-200/80 hover:scale-105 hover:-translate-y-0.5 cursor-default animate-tag"
-                        >
-                          #{tag}
+                    {/* Meta Data & Button */}
+                    <div>
+                      <div className="grid grid-cols-2 gap-6 mb-10 py-6 border-t border-gray-200">
+                        <div>
+                          <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Impact</p>
+                          <p className="text-3xl font-bold text-gray-800">{project.stats.value} <span className="text-base font-normal text-gray-500">{project.stats.label}</span></p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Role</p>
+                          <p className="text-gray-800 font-semibold">{project.role}</p>
+                        </div>
+                      </div>
+
+                      <a href={project.link} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 text-blue-700 font-semibold group/btn cursor-pointer transition-all duration-300 hover:text-blue-900">
+                        <span className="relative text-lg">
+                          Read Full Case Study
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-700 transition-all duration-300 group-hover/btn:w-full"></span>
                         </span>
-                      ))}
-                    </div>
-
-                    {/* Project Stats */}
-                    <div className="flex flex-wrap gap-3 mb-8">
-                      <div className="flex items-center gap-2 px-4 py-2 bg-slate-100/80 text-slate-700 text-sm font-medium rounded-lg border border-slate-200/60 transition-all duration-300 hover:bg-slate-200/80 hover:scale-105">
-                        <Users className="w-4 h-4" />
-                        <span>{project.team}</span>
-                      </div>
-                      <div className="flex items-center gap-2 px-4 py-2 bg-slate-100/80 text-slate-700 text-sm font-medium rounded-lg border border-slate-200/60 transition-all duration-300 hover:bg-slate-200/80 hover:scale-105">
-                        <Target className="w-4 h-4" />
-                        <span>{project.duration}</span>
-                      </div>
-                    </div>
-
-                    {/* Project Details */}
-                    <div className="space-y-8 text-slate-700 leading-relaxed">
-                      <div className="transform transition-all duration-500 hover:translate-x-1">
-                        <h4 className="font-medium text-slate-800 flex items-center gap-2 mb-3">
-                          <div className="w-2 h-2 rounded-full bg-slate-800 transition-all duration-300 hover:scale-150 hover:bg-slate-900"></div>
-                          Problem
-                        </h4>
-                        <p className="text-slate-600 pl-4 font-light transition-colors duration-300 hover:text-slate-700">
-                          {project.problem}
-                        </p>
-                      </div>
-
-                      <div className="transform transition-all duration-500 hover:translate-x-1">
-                        <h4 className="font-medium text-slate-800 flex items-center gap-2 mb-3">
-                          <div className="w-2 h-2 rounded-full bg-slate-800 transition-all duration-300 hover:scale-150 hover:bg-slate-900"></div>
-                          Research
-                        </h4>
-                        <p className="text-slate-600 pl-4 font-light transition-colors duration-300 hover:text-slate-700">
-                          {project.research}
-                        </p>
-                      </div>
-
-                      <div className="transform transition-all duration-500 hover:translate-x-1">
-                        <h4 className="font-medium text-slate-800 flex items-center gap-2 mb-3">
-                          <div className="w-2 h-2 rounded-full bg-slate-800 transition-all duration-300 hover:scale-150 hover:bg-slate-900"></div>
-                          Outcome
-                        </h4>
-                        <p className="text-slate-600 pl-4 font-light transition-colors duration-300 hover:text-slate-700">
-                          {project.outcome}
-                        </p>
-                      </div>
-
-                      {/* Role & Tools */}
-                      <div className="pt-8 border-t border-slate-200/60 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="transform transition-all duration-300 hover:translate-y-[-2px]">
-                          <h5 className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
-                            Role
-                          </h5>
-                          <p className="font-medium text-slate-800 transition-colors duration-300 hover:text-slate-900">
-                            {project.role}
-                          </p>
+                        <div className={`p-2 rounded-full border border-blue-300 bg-blue-100 group-hover/btn:bg-blue-600 group-hover/btn:text-white transition-all duration-300`}>
+                          <ArrowRight className="w-5 h-5 -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300" />
                         </div>
-                        <div className="transform transition-all duration-300 hover:translate-y-[-2px]">
-                          <h5 className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
-                            Tools
-                          </h5>
-                          <p className="text-slate-600 font-light transition-colors duration-300 hover:text-slate-700">
-                            {project.tools.join(", ")}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* CTA Button */}
-                    <div className="mt-12">
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-slate-900 hover:to-slate-800 text-white px-6 py-3 rounded-xl font-medium transition-all duration-500 hover:shadow-xl hover:-translate-y-1 hover:scale-105 text-sm group active:scale-95"
-                      >
-                        <Eye className="w-4 h-4 transition-all duration-300 group-hover:scale-110" />
-                        View Case Study
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300" />
                       </a>
                     </div>
                   </div>
+
+                  {/* Image/Visual Section */}
+                  <div className="lg:col-span-7 relative h-72 lg:h-auto overflow-hidden bg-gray-100 rounded-bl-[2.5rem] lg:rounded-bl-none lg:rounded-tr-[2.5rem]">
+                    {/* Decorative gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 lg:bg-gradient-to-l`}></div>
+
+                    {/* The Image */}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+
+                    {/* Floating Badge (Decorative) */}
+                    <div className="absolute top-8 right-8 z-20 hidden lg:flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-md rounded-full border border-gray-200 shadow-md">
+                      <Sparkles className="w-4 h-4 text-amber-500" />
+                      <span className="text-sm text-gray-800 font-medium">Highlight</span>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* View More Button */}
-        <div
-          ref={viewMoreRef}
-          className="text-center mt-20 px-6 lg:px-12 animate-on-scroll"
-        >
+        {/* --- Footer / CTA --- */}
+        <div className="mt-32 text-center relative z-10">
+          <p className="text-gray-600 mb-6 text-lg">Ready to transform your ideas into reality?</p>
           <a
             href="/projects"
-            className="inline-flex items-center gap-3 bg-white/70 hover:bg-white/90 text-slate-800 border border-slate-200/60 hover:border-slate-300/80 px-8 py-4 text-lg font-medium rounded-xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 hover:scale-105 backdrop-blur-sm group active:scale-95"
+            className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-white"
           >
-            View All Projects
-            <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:scale-110 transition-all duration-300" />
+            <span className="mr-3 text-lg">View All Projects</span>
+            <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+            <div className="absolute inset-0 rounded-full ring-2 ring-blue-500/50 group-hover:ring-blue-500/80 transition-all duration-300"></div>
           </a>
         </div>
+
       </div>
-
-      <style jsx>{`
-        .card-hover-effect {
-          position: relative;
-          overflow: hidden;
-        }
-
-        .card-hover-effect::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent
-          );
-          transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          z-index: 1;
-        }
-
-        .card-hover-effect:hover::before {
-          left: 100%;
-        }
-
-        .animate-tag {
-          animation: tagFloat 2s ease-in-out infinite;
-        }
-
-        .animate-tag:nth-child(even) {
-          animation-direction: reverse;
-        }
-
-        .card-animate-in {
-          animation: cardSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-            forwards;
-        }
-
-        @keyframes tagFloat {
-          0%,
-          100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-2px);
-          }
-        }
-
-        @keyframes cardSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0px) scale(1);
-          }
-        }
-
-        .parallax-image {
-          transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .card-hover-effect::before,
-          .animate-tag,
-          .parallax-image {
-            animation: none;
-            transition: none;
-          }
-        }
-      `}</style>
     </section>
   );
 };
