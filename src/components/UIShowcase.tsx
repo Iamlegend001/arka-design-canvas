@@ -8,7 +8,8 @@ const UIShowcase = () => {
       id: 1,
       title: "Banking payment App",
       description: "Clean fintech interface with data visualization",
-      image: "https://cdn.dribbble.com/userupload/45306271/file/04aec125120e543eb022621d1160496c.png?resize=400x869&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/45306271/file/04aec125120e543eb022621d1160496c.png?resize=400x869&vertical=center",
       tags: ["UI Design", "Dashboard", "Fintech"],
       likes: 124,
       comments: 18,
@@ -18,7 +19,8 @@ const UIShowcase = () => {
       id: 2,
       title: "E-commerce Mobile App",
       description: "Shopping experience redesign",
-      image: "https://cdn.dribbble.com/userupload/43901235/file/original-c3db763da08a7ae2596c450f6a48ca03.png?resize=1200x900&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/43901235/file/original-c3db763da08a7ae2596c450f6a48ca03.png?resize=1200x900&vertical=center",
       tags: ["Desktop", "E-commerce", "UX"],
       likes: 89,
       comments: 12,
@@ -28,7 +30,8 @@ const UIShowcase = () => {
       id: 3,
       title: "Modern Dashboard",
       description: "Modern social card interface",
-      image: "https://cdn.dribbble.com/userupload/45289592/file/3b81ff5711fd4eeb32ad8b3105efc15c.png?resize=1440x1024&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/45289592/file/3b81ff5711fd4eeb32ad8b3105efc15c.png?resize=1440x1024&vertical=center",
       tags: ["Social", "Feed", "Mobile"],
       likes: 156,
       comments: 24,
@@ -38,7 +41,8 @@ const UIShowcase = () => {
       id: 4,
       title: "Animated Background",
       description: "Crazy background",
-      image: "https://cdn.dribbble.com/userupload/44184408/file/original-a8bcec15fd661eea6ba3faa46b19fcf8.png?resize=1200x855&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/44184408/file/original-a8bcec15fd661eea6ba3faa46b19fcf8.png?resize=1200x855&vertical=center",
       tags: ["Mobile", "Food", "UX"],
       likes: 98,
       comments: 15,
@@ -48,7 +52,8 @@ const UIShowcase = () => {
       id: 5,
       title: "Train Booking",
       description: "Seamless booking flow design",
-      image: "https://cdn.dribbble.com/userupload/44184457/file/original-fb717d8fc6ffdbc68293fb458b279c9e.png?resize=1200x853&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/44184457/file/original-fb717d8fc6ffdbc68293fb458b279c9e.png?resize=1200x853&vertical=center",
       tags: ["Web", "Travel", "Booking"],
       likes: 134,
       comments: 21,
@@ -58,7 +63,8 @@ const UIShowcase = () => {
       id: 6,
       title: "Shopping Cart",
       description: "Logitech",
-      image: "https://cdn.dribbble.com/userupload/43498696/file/original-fcf7c8c765fdfa72bc7f0073a3ac8e9c.png?resize=1504x972&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/43498696/file/original-fcf7c8c765fdfa72bc7f0073a3ac8e9c.png?resize=1504x972&vertical=center",
       tags: ["Health", "Dashboard", "Mobile"],
       likes: 76,
       comments: 9,
@@ -68,7 +74,8 @@ const UIShowcase = () => {
       id: 7,
       title: "Music Player Redesign",
       description: "Modern audio streaming interface",
-      image: "https://cdn.dribbble.com/userupload/43333525/file/original-437e42737751dd8b0ac8203d96819a3f.png?resize=1200x1171&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/43333525/file/original-437e42737751dd8b0ac8203d96819a3f.png?resize=1200x1171&vertical=center",
       tags: ["Music", "Player", "UI"],
       likes: 187,
       comments: 32,
@@ -78,7 +85,8 @@ const UIShowcase = () => {
       id: 8,
       title: "Beautiful Hero Section",
       description: "Creative",
-      image: "https://cdn.dribbble.com/userupload/44184506/file/original-39608b93fbed9e0d03609bd6cbe3930a.png?resize=2048x1584&vertical=center",
+      image:
+        "https://cdn.dribbble.com/userupload/44184506/file/original-39608b93fbed9e0d03609bd6cbe3930a.png?resize=2048x1584&vertical=center",
       tags: ["Productivity", "Web", "Dashboard"],
       likes: 112,
       comments: 17,
