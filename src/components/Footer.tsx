@@ -1,230 +1,648 @@
-import React, { useRef, useEffect, useState } from "react";
-import {
-  ArrowUp,
-  Linkedin,
-  Github,
-  Dribbble,
-  Mail,
-  MapPin,
-  Heart,
-  Copy,
-  Check,
-  Twitter
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useState } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+const quickLinks = [
+  { name: "About", href: "#about" },
+  { name: "Work", href: "#work" },
+  { name: "Skills", href: "#skills" },
+  { name: "Contact", href: "#contact" },
+];
+
+const socials = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/arkapravadevux/",
+    short: "LI",
+  },
+  { name: "GitHub", href: "https://github.com/Iamlegend001", short: "GH" },
+  { name: "Dribbble", href: "https://dribbble.com/imkuttu123", short: "DR" },
+  { name: "Twitter", href: "https://x.com/DevLegend008", short: "TW" },
+];
+
+const EMAIL = "arkapravasantra17@gmail.com";
 
 const Footer = () => {
-  const footerRef = useRef(null);
   const [copied, setCopied] = useState(false);
+  const [hovSoc, setHovSoc] = useState(null);
 
-  // Function to copy email
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("arkapravasantra17@gmail.com");
+  const copyEmail = () => {
+    navigator.clipboard.writeText(EMAIL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const quickLinks = [
-    { name: "About", href: "#about" },
-    { name: "Work", href: "#work" },
-    { name: "Process", href: "#process" },
-    { name: "Contact", href: "#contact" },
-  ];
-
-  const socialLinks = [
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/arkapravadevux/",
-    },
-    {
-      name: "GitHub",
-      icon: Github,
-      href: "https://github.com/Iamlegend001",
-    },
-    {
-      name: "Dribbble",
-      icon: Dribbble,
-      href: "https://dribbble.com/imkuttu123",
-    },
-    // Using a placeholder for Behance since Lucide doesn't strictly support it
-    {
-      name: "Twitter",
-      icon: Twitter,
-      href: "https://x.com/DevLegend008",
-    },
-  ];
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: "top 80%",
-        },
-      });
-
-      // 1. Divider Line Grows
-      tl.from(".footer-divider", {
-        scaleX: 0,
-        duration: 1,
-        ease: "power3.out",
-      })
-      // 2. Content Fades Up
-      .from(
-        ".footer-content",
-        {
-          y: 50,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-        "-=0.5"
-      );
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer 
-      ref={footerRef} 
-      className="relative bg-slate-950 text-slate-300 overflow-hidden pt-20 pb-10"
-    >
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent footer-divider" />
-        <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-violet-900/20 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[100px] pointer-events-none" />
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        
-        {/* TOP SECTION: CTA */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-20 footer-content">
-            <div className="space-y-6">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-                    Have an idea? <br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-400">
-                        Let's build it.
-                    </span>
-                </h2>
-                <p className="text-lg text-slate-400 max-w-md">
-                    I'm currently available for freelance projects and open to full-time opportunities.
-                </p>
-            </div>
+        :root {
+          --ink:    #111010;
+          --paper:  #f0ece3;
+          --red:    #c0392b;
+          --mid:    #6b6560;
+          --border: rgba(17,16,16,0.1);
+          /* footer uses inverted palette */
+          --f-bg:   #0e0d0d;
+          --f-text: #f0ece3;
+          --f-mid:  rgba(240,236,227,0.45);
+          --f-bdr:  rgba(240,236,227,0.1);
+        }
 
-            <div className="flex flex-col justify-center items-start lg:items-end">
-                 {/* Email Copy Card */}
-                 <div 
-                    onClick={handleCopyEmail}
-                    className="group cursor-pointer relative overflow-hidden bg-white/5 hover:bg-white/10 border border-white/10 hover:border-violet-500/50 rounded-2xl p-6 transition-all duration-300 w-full max-w-md"
-                 >
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-violet-500/20 rounded-xl text-violet-400 group-hover:scale-110 transition-transform duration-300">
-                                <Mail size={24} />
-                            </div>
-                            <div>
-                                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Drop me a line</p>
-                                <p className="text-lg font-semibold text-white">arkapravasantra17@gmail.com</p>
-                            </div>
-                        </div>
-                        <div className="text-slate-500 group-hover:text-white transition-colors">
-                            {copied ? <Check size={20} className="text-green-400" /> : <Copy size={20} />}
-                        </div>
-                    </div>
-                    {/* Success Message overlay */}
-                    <div className={`absolute inset-0 bg-green-500/90 flex items-center justify-center transition-transform duration-300 ${copied ? 'translate-y-0' : 'translate-y-full'}`}>
-                         <span className="font-bold text-white flex items-center gap-2">
-                             <Check size={20} /> Copied to clipboard!
-                         </span>
-                    </div>
-                 </div>
-            </div>
-        </div>
+        :root.dark {
+          --ink:    #f0ece3;
+          --paper:  #0f0e0d;
+          --red:    #ff5247;
+          --mid:    #9b9490;
+          --border: rgba(240,236,227,0.1);
+          /* footer inverts back to light in dark mode */
+          --f-bg:   #f0ece3;
+          --f-text: #111010;
+          --f-mid:  rgba(17,16,16,0.45);
+          --f-bdr:  rgba(17,16,16,0.1);
+        }
 
-        {/* MIDDLE SECTION: Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-12 border-t border-slate-800 footer-content">
-            
-            {/* Brand */}
-            <div className="space-y-4">
-                <h3 className="text-xl font-bold text-white">Arkaprava.</h3>
-                <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-                    Crafting digital experiences with empathy, clarity, and precision.
-                </p>
-                <div className="flex items-center gap-2 text-slate-500 text-sm pt-2">
-                    <MapPin size={16} />
-                    <span>West Bengal, India</span>
-                </div>
-            </div>
+        .footer {
+          background: var(--f-bg);
+          font-family: 'DM Mono', monospace;
+          color: var(--f-text);
+        }
 
-            {/* Links */}
-            <div className="space-y-4">
-                <h4 className="text-white font-semibold">Explore</h4>
-                <ul className="space-y-2">
-                    {quickLinks.map((link) => (
-                        <li key={link.name}>
-                            <a 
-                                href={link.href} 
-                                className="text-slate-400 hover:text-violet-400 transition-colors flex items-center gap-2 group w-fit"
-                            >
-                                <span className="w-1.5 h-1.5 rounded-full bg-violet-500 scale-0 group-hover:scale-100 transition-transform" />
-                                <span className="group-hover:translate-x-1 transition-transform">{link.name}</span>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+        /* ── Big CTA ── */
+        .footer-cta {
+          padding: 80px 48px 64px;
+          border-bottom: 1px solid var(--f-bdr);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          align-items: end;
+        }
 
-            {/* Socials */}
-            <div className="space-y-4">
-                <h4 className="text-white font-semibold">Connect</h4>
-                <div className="flex gap-2">
-                    {socialLinks.map((social) => (
-                        <a
-                            key={social.name}
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-violet-600 hover:text-white transition-all duration-300 hover:-translate-y-1"
-                            aria-label={social.name}
-                        >
-                            <social.icon size={18} />
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </div>
+        .footer-cta-headline {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(56px, 8vw, 110px);
+          line-height: 0.9;
+          letter-spacing: 2px;
+          color: var(--f-text);
+        }
+        .footer-cta-headline em {
+          font-family: 'DM Serif Display', serif;
+          font-style: italic;
+          color: var(--red);
+          font-size: 0.62em;
+          display: block;
+          line-height: 1.2;
+          letter-spacing: 0;
+          margin-top: 8px;
+        }
 
-        {/* BOTTOM SECTION */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-slate-800 footer-content">
-          <div className="flex items-center gap-2 text-slate-500 text-sm">
-             <span>© 2025 Arkaprava</span>
-             <span className="w-1 h-1 bg-slate-500 rounded-full" />
-             <span className="flex items-center gap-1">
-                Made with <Heart size={12} className="text-red-500 fill-red-500 animate-pulse" />
-             </span>
+        .footer-cta-right {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          align-items: flex-start;
+        }
+        .footer-cta-sub {
+          font-size: 12px;
+          line-height: 1.9;
+          color: var(--f-mid);
+          max-width: 340px;
+          font-weight: 300;
+        }
+
+        /* Email copy block */
+        .email-block {
+          border: 1px solid var(--f-bdr);
+          padding: 20px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          cursor: pointer;
+          width: 100%;
+          position: relative;
+          overflow: hidden;
+          transition: border-color 0.2s;
+          background: none;
+          text-align: left;
+        }
+        .email-block:hover { border-color: rgba(240,236,227,0.3); }
+
+        .email-block::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--red);
+          transform: translateY(101%);
+          transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
+          z-index: 0;
+        }
+        .email-block:hover::after { transform: translateY(0); }
+
+        .email-label {
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          display: block;
+          margin-bottom: 4px;
+          position: relative;
+          z-index: 1;
+        }
+        .email-addr {
+          font-size: 13px;
+          letter-spacing: 0.5px;
+          color: var(--f-text);
+          font-weight: 400;
+          position: relative;
+          z-index: 1;
+        }
+        .email-action {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          position: relative;
+          z-index: 1;
+          transition: color 0.2s;
+          flex-shrink: 0;
+        }
+        .email-block:hover .email-action { color: var(--f-text); }
+        .email-copied {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #2ecc71;
+          position: relative;
+          z-index: 1;
+          flex-shrink: 0;
+        }
+
+        /* ── Middle row ── */
+        .footer-mid {
+          display: grid;
+          grid-template-columns: 1.4fr 1fr 1fr 1fr;
+          border-bottom: 1px solid var(--f-bdr);
+        }
+        .footer-col {
+          padding: 40px 40px 40px 48px;
+          border-right: 1px solid var(--f-bdr);
+        }
+        .footer-col:last-child { border-right: none; }
+
+        .footer-col-label {
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          opacity: 0.6;
+          margin-bottom: 20px;
+          display: block;
+        }
+
+        /* Brand col */
+        .footer-brand-name {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 36px;
+          letter-spacing: 3px;
+          color: var(--f-text);
+          line-height: 1;
+          display: block;
+          margin-bottom: 4px;
+        }
+        .footer-brand-name span { color: var(--red); }
+        .footer-brand-role {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          display: block;
+          margin-bottom: 20px;
+        }
+        .footer-brand-loc {
+          font-size: 9px;
+          letter-spacing: 1.5px;
+          color: var(--f-mid);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          opacity: 0.5;
+        }
+        .footer-brand-loc::before {
+          content: '◆';
+          font-size: 5px;
+          color: var(--red);
+        }
+
+        /* Nav col */
+        .footer-nav {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .footer-nav a {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          text-decoration: none;
+          padding: 7px 0;
+          border-bottom: 1px solid transparent;
+          transition: color 0.2s, border-color 0.2s;
+        }
+        .footer-nav a::before {
+          content: '→';
+          font-size: 10px;
+          color: var(--red);
+          opacity: 0;
+          transition: opacity 0.2s;
+        }
+        .footer-nav a:hover { color: var(--f-text); }
+        .footer-nav a:hover::before { opacity: 1; }
+
+        /* Socials col */
+        .footer-socials {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .footer-social-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 0;
+          border-bottom: 1px solid var(--f-bdr);
+          text-decoration: none;
+          transition: border-color 0.2s;
+        }
+        .footer-social-link:last-child { border-bottom: none; }
+        .footer-social-link:hover { border-bottom-color: rgba(240,236,227,0.25); }
+
+        .social-name {
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          transition: color 0.2s;
+        }
+        .footer-social-link:hover .social-name { color: var(--f-text); }
+
+        .social-arrow {
+          font-size: 10px;
+          color: var(--f-mid);
+          opacity: 0;
+          transform: translateX(-4px);
+          transition: opacity 0.2s, transform 0.2s;
+        }
+        .footer-social-link:hover .social-arrow { opacity: 1; transform: translateX(0); }
+
+        /* Status col */
+        .avail-pill {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #2ecc71;
+          margin-bottom: 20px;
+        }
+        .avail-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: #2ecc71;
+          animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+        .footer-status-text {
+          font-size: 10px;
+          line-height: 1.9;
+          color: var(--f-mid);
+          font-weight: 300;
+        }
+
+        /* ── Bottom bar ── */
+        .footer-bottom {
+          padding: 18px 48px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .footer-copy {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          opacity: 0.4;
+        }
+        .footer-top-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--f-mid);
+          opacity: 0.4;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: 'DM Mono', monospace;
+          transition: opacity 0.2s;
+          padding: 0;
+        }
+        .footer-top-btn:hover { opacity: 1; }
+        .footer-top-btn .arr {
+          display: inline-block;
+          transition: transform 0.2s;
+        }
+        .footer-top-btn:hover .arr { transform: translateY(-3px); }
+
+        /* ── Responsive ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+          .footer-cta {
+            padding: 64px 36px 48px;
+            gap: 40px;
+          }
+          .footer-cta-headline {
+            font-size: clamp(48px, 8vw, 90px);
+          }
+          .footer-mid {
+            grid-template-columns: 1fr 1fr;
+          }
+          .footer-col {
+            padding: 36px 36px;
+            border-right: 1px solid var(--f-bdr);
+            border-bottom: 1px solid var(--f-bdr);
+          }
+        }
+
+        /* Tablet: 768-1024px */
+        @media (max-width: 768px) {
+          .footer-cta {
+            padding: 56px 28px 40px;
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .footer-cta-headline {
+            font-size: clamp(40px, 10vw, 72px);
+          }
+          .footer-cta-sub {
+            font-size: 11px;
+            max-width: 100%;
+          }
+          .email-addr {
+            font-size: 12px;
+          }
+          .footer-mid {
+            grid-template-columns: 1fr;
+          }
+          .footer-col {
+            padding: 32px 28px;
+            border-right: none;
+            border-bottom: 1px solid var(--f-bdr);
+          }
+          .footer-brand-name {
+            font-size: 32px;
+          }
+          .footer-bottom {
+            padding: 20px 28px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+        }
+
+        /* Mobile: below 768px */
+        @media (max-width: 640px) {
+          .footer-cta {
+            padding: 48px 20px 36px;
+            grid-template-columns: 1fr;
+            gap: 28px;
+          }
+          .footer-cta-headline {
+            font-size: clamp(32px, 12vw, 56px);
+            letter-spacing: 1px;
+          }
+          .footer-cta-headline em {
+            font-size: 0.58em;
+            margin-top: 6px;
+          }
+          .footer-cta-sub {
+            font-size: 10px;
+            line-height: 1.8;
+            max-width: 100%;
+          }
+          .email-block {
+            padding: 16px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+          .email-label {
+            font-size: 7px;
+          }
+          .email-addr {
+            font-size: 11px;
+          }
+          .email-action,
+          .email-copied {
+            font-size: 8px;
+          }
+          .footer-mid {
+            grid-template-columns: 1fr;
+          }
+          .footer-col {
+            padding: 28px 20px;
+            border-right: none;
+            border-bottom: 1px solid var(--f-bdr);
+          }
+          .footer-col-label {
+            font-size: 7px;
+            margin-bottom: 16px;
+          }
+          .footer-brand-name {
+            font-size: 28px;
+            letter-spacing: 2px;
+          }
+          .footer-brand-role {
+            font-size: 8px;
+          }
+          .footer-brand-loc {
+            font-size: 8px;
+          }
+          .footer-nav a {
+            font-size: 9px;
+            padding: 6px 0;
+          }
+          .social-name {
+            font-size: 9px;
+          }
+          .avail-pill {
+            font-size: 8px;
+          }
+          .footer-status-text {
+            font-size: 9px;
+            line-height: 1.8;
+          }
+          .footer-bottom {
+            padding: 16px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+          .footer-copy {
+            font-size: 8px;
+          }
+          .footer-top-btn {
+            font-size: 8px;
+          }
+        }
+
+        /* Very small: below 380px */
+        @media (max-width: 380px) {
+          .footer-cta {
+            padding: 40px 16px 32px;
+          }
+          .footer-cta-headline {
+            font-size: 28px;
+          }
+          .footer-cta-sub {
+            font-size: 9px;
+          }
+          .email-block {
+            padding: 14px 16px;
+          }
+          .email-addr {
+            font-size: 10px;
+          }
+          .footer-col {
+            padding: 24px 16px;
+          }
+          .footer-brand-name {
+            font-size: 24px;
+            letter-spacing: 1px;
+          }
+          .footer-bottom {
+            padding: 14px 16px;
+          }
+          .footer-copy {
+            font-size: 7px;
+          }
+        }
+      `}</style>
+
+      <footer className="footer">
+        {/* Big CTA */}
+        <div className="footer-cta">
+          <div>
+            <h2 className="footer-cta-headline">
+              Let's build
+              <em>something real.</em>
+            </h2>
           </div>
 
-          <Button
-            variant="ghost"
-            onClick={scrollToTop}
-            className="group mt-4 md:mt-0 text-slate-400 hover:text-white hover:bg-white/5"
-          >
-            Back to Top
-            <ArrowUp className="ml-2 h-4 w-4 group-hover:-translate-y-1 transition-transform" />
-          </Button>
+          <div className="footer-cta-right">
+            <p className="footer-cta-sub">
+              Available for freelance projects and full-time roles. I'm most
+              useful when the problem is messy and the interface needs to make
+              it simple.
+            </p>
+
+            <button type="button" className="email-block" onClick={copyEmail}>
+              <div>
+                <span className="email-label">Email</span>
+                <span className="email-addr">{EMAIL}</span>
+              </div>
+              {copied ? (
+                <span className="email-copied">✓ Copied</span>
+              ) : (
+                <span className="email-action">Copy →</span>
+              )}
+            </button>
+          </div>
         </div>
-      </div>
-    </footer>
+
+        {/* Middle */}
+        <div className="footer-mid">
+          {/* Brand */}
+          <div className="footer-col">
+            <span className="footer-col-label">Designer</span>
+            <span className="footer-brand-name">
+              Arkaprava<span>.</span>
+            </span>
+            <span className="footer-brand-role">
+              UI/UX Designer · Aspiring Design Lead
+            </span>
+            <span className="footer-brand-loc">
+              West Bengal, India · Remote
+            </span>
+          </div>
+
+          {/* Nav */}
+          <div className="footer-col">
+            <span className="footer-col-label">Navigate</span>
+            <ul className="footer-nav">
+              {quickLinks.map((l) => (
+                <li key={l.name}>
+                  <a href={l.href}>{l.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Socials */}
+          <div className="footer-col">
+            <span className="footer-col-label">Find me on</span>
+            <div className="footer-socials">
+              {socials.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-link"
+                  onMouseEnter={() => setHovSoc(s.name)}
+                  onMouseLeave={() => setHovSoc(null)}
+                >
+                  <span className="social-name">{s.name}</span>
+                  <span className="social-arrow">↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Status */}
+          <div className="footer-col">
+            <span className="footer-col-label">Status</span>
+            <div className="avail-pill">
+              <span className="avail-dot" />
+              Open to work
+            </div>
+            <p className="footer-status-text">
+              Actively looking for product design roles and freelance projects.
+              Response time: within 24 hrs.
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="footer-bottom">
+          <span className="footer-copy">
+            © 2025 Arkaprava Santra — All rights reserved
+          </span>
+          <button type="button" className="footer-top-btn" onClick={scrollTop}>
+            Back to top <span className="arr">↑</span>
+          </button>
+        </div>
+      </footer>
+    </>
   );
 };
 

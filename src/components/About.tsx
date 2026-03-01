@@ -1,286 +1,767 @@
-import React, { useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Download,
-  Figma,
-  Palette,
-  Code,
-  Smartphone,
-  Heart,
-  Zap,
-  Sparkles,
-} from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useState } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+const tools = ["Figma", "Framer", "Webflow", "Canva", "Cursor"];
+
+const values = [
+  {
+    word: "Empathy",
+    desc: "Every decision starts with understanding the person using the product — their needs, frustrations, and context.",
+  },
+  {
+    word: "Function",
+    desc: "Aesthetics earn nothing without utility. I design for clarity first, then refine for beauty.",
+  },
+  {
+    word: "Elegance",
+    desc: "The right solution feels inevitable. I pursue simplicity that doesn't sacrifice depth.",
+  },
+];
+
+const interests = ["Reading", "Guitar", "Painting", "Photography"];
 
 const About = () => {
-  const tools = [
-    {
-      name: "Figma",
-      icon: Figma,
-      color: "text-purple-600",
-      bg: "bg-purple-50",
-    },
-    {
-      name: "Adobe XD",
-      icon: Palette,
-      color: "text-pink-600",
-      bg: "bg-pink-50",
-    },
-    { name: "React", icon: Code, color: "text-blue-600", bg: "bg-blue-50" },
-    {
-      name: "Framer",
-      icon: Smartphone,
-      color: "text-green-600",
-      bg: "bg-green-50",
-    },
-  ];
-
-  const values = [
-    { name: "Empathy", icon: Heart, color: "text-rose-500", bg: "bg-rose-50" },
-    { name: "Function", icon: Zap, color: "text-amber-500", bg: "bg-amber-50" },
-    {
-      name: "Elegance",
-      icon: Sparkles,
-      color: "text-violet-500",
-      bg: "bg-violet-50",
-    },
-  ];
-
-  // Refs for animation
-  const sectionRef = useRef(null);
-  const leftColRef = useRef(null);
-  const rightColRef = useRef(null);
-  const headerRef = useRef(null);
-  const valuesRef = useRef([]);
-  const toolsRef = useRef([]);
-  const buttonRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Left column
-      gsap.from(leftColRef.current, {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: leftColRef.current,
-          start: "top 80%",
-        },
-      });
-      // Header
-      gsap.from(headerRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        delay: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: headerRef.current,
-          start: "top 85%",
-        },
-      });
-      // Core values
-      valuesRef.current.forEach((el, i) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          duration: 0.7,
-          delay: i * 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-          },
-        });
-      });
-      // Button
-      gsap.from(buttonRef.current, {
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.7,
-        ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: buttonRef.current,
-          start: "top 95%",
-        },
-      });
-      // Right column
-      gsap.from(rightColRef.current, {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: rightColRef.current,
-          start: "top 80%",
-        },
-      });
-      // Tools
-      toolsRef.current.forEach((el, i) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          duration: 0.7,
-          delay: i * 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-          },
-        });
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  const [hoveredValue, setHoveredValue] = useState(null);
 
   return (
-    <section
-      id="about"
-      className="py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50/30"
-      ref={sectionRef}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
-          {/* Left Content */}
-          <div className="space-y-12" ref={leftColRef}>
-            {/* Header */}
-            <div className="space-y-6" ref={headerRef}>
-              <div className="inline-block">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 bg-clip-text text-transparent leading-tight">
-                  About Me
-                </h2>
-                <div className="w-20 h-1 bg-gradient-to-r from-violet-500 to-purple-500 rounded-full mt-4"></div>
-              </div>
-              <div className="space-y-6">
-                <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                  Hey! I'm{" "}
-                  <span className="text-slate-900 font-semibold">Arka</span> — a
-                  UI/UX designer who blends creativity with logic to craft
-                  human-centered digital experiences.
-                </p>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  With a background in Computer Science and a passion for
-                  design, I combine logic and creativity to build functional,
-                  user-first experiences. I focus on clarity, consistency, and
-                  solving real problems through clean interfaces.
-                </p>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  Outside of design, I enjoy painting and playing the acoustic
-                  guitar — hobbies that inspire my artistic sense. My go-to
-                  tools include Figma, Adobe XD, Tailwind CSS, React, and
-                  Notion.
-                </p>
-              </div>
-            </div>
-            {/* Core Values */}
-            <div className="space-y-8">
-              <h3 className="text-2xl font-bold text-slate-900">Core Values</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {values.map((value, i) => (
-                  <div
-                    key={value.name}
-                    className="group cursor-pointer"
-                    ref={(el) => (valuesRef.current[i] = el)}
-                  >
-                    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 text-center">
-                      <div
-                        className={`w-16 h-16 ${value.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <value.icon className={`w-8 h-8 ${value.color}`} />
-                      </div>
-                      <span className="text-base font-semibold text-slate-900 block">
-                        {value.name}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* CTA Button */}
-            <div className="pt-4" ref={buttonRef}>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="group border-2 border-violet-500 text-violet-600 hover:bg-violet-500 hover:text-white px-10 py-6 text-lg font-semibold rounded-2xl transition-all duration-300 hover:shadow-lg hover:scale-105"
-              >
-                <a
-                  href="/Resume/Arkprava Resume.pdf"
-                  download="Arkaprava Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Download className="mr-3 h-5 w-5 group-hover:animate-bounce" />
-                  Download Resume
-                </a>
-              </Button>
-            </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+
+        :root {
+          --ink: #111010;
+          --paper: #f0ece3;
+          --red: #c0392b;
+          --mid: #6b6560;
+          --border: rgba(17,16,16,0.1);
+        }
+
+        :root.dark {
+          --ink: #f0ece3;
+          --paper: #0f0e0d;
+          --red: #ff5247;
+          --mid: #9b9490;
+          --border: rgba(240,236,227,0.1);
+        }
+
+        .about-section {
+          background: var(--paper);
+          font-family: 'DM Mono', monospace;
+        }
+
+        /* ── Header ── */
+        .about-header {
+          padding: 72px 48px 56px;
+          border-bottom: 1px solid var(--border);
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: end;
+          gap: 32px;
+        }
+        .about-eyebrow {
+          font-size: 10px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--red);
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .about-eyebrow::before {
+          content: '';
+          width: 28px; height: 1px;
+          background: var(--red);
+          display: block;
+          flex-shrink: 0;
+        }
+        .about-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(52px, 7vw, 96px);
+          line-height: 0.9;
+          letter-spacing: 2px;
+          color: var(--ink);
+        }
+        .about-title-italic {
+          font-family: 'DM Serif Display', serif;
+          font-style: italic;
+          color: var(--red);
+          font-size: 0.55em;
+          display: block;
+          letter-spacing: 0;
+          line-height: 1.3;
+          margin-top: 6px;
+        }
+        .about-header-meta {
+          text-align: right;
+        }
+        .about-header-meta-num {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 64px;
+          line-height: 1;
+          color: var(--ink);
+          opacity: 0.07;
+          letter-spacing: 2px;
+        }
+        .about-header-meta-label {
+          font-size: 9px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--mid);
+          margin-top: -8px;
+        }
+
+        /* ── Main grid ── */
+        .about-body {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          border-bottom: 1px solid var(--border);
+        }
+
+        /* ── Left: bio ── */
+        .about-left {
+          padding: 56px 48px;
+          border-right: 1px solid var(--border);
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .bio-block {}
+        .bio-label {
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.6;
+          margin-bottom: 16px;
+          display: block;
+        }
+        .bio-text {
+          font-size: 13px;
+          line-height: 2;
+          color: var(--ink);
+          font-weight: 300;
+          opacity: 0.75;
+        }
+        .bio-text strong { font-weight: 500; opacity: 1; color: var(--ink); }
+
+        /* Values */
+        .values-block {}
+        .values-label {
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.6;
+          margin-bottom: 16px;
+          display: block;
+        }
+        .value-item {
+          padding: 20px 0;
+          border-top: 1px solid var(--border);
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: start;
+          gap: 16px;
+          cursor: default;
+          transition: background 0.2s;
+        }
+        .value-item:last-child { border-bottom: 1px solid var(--border); }
+        .value-word {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 28px;
+          letter-spacing: 2px;
+          color: var(--ink);
+          line-height: 1;
+          transition: color 0.2s;
+        }
+        .value-item:hover .value-word { color: var(--red); }
+        .value-desc {
+          font-size: 10px;
+          line-height: 1.8;
+          color: var(--mid);
+          max-width: 280px;
+          font-weight: 300;
+          overflow: hidden;
+          max-height: 0;
+          opacity: 0;
+          transition: max-height 0.35s ease, opacity 0.3s ease;
+        }
+        .value-item:hover .value-desc { max-height: 80px; opacity: 1; }
+        .value-arrow {
+          font-size: 18px;
+          color: var(--mid);
+          opacity: 0.3;
+          margin-top: 4px;
+          transition: opacity 0.2s, transform 0.2s;
+          flex-shrink: 0;
+        }
+        .value-item:hover .value-arrow { opacity: 1; transform: translateX(4px); }
+
+        /* CTA */
+        .about-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: var(--ink);
+          color: var(--paper);
+          padding: 14px 32px;
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: transform 0.2s;
+          width: fit-content;
+        }
+        .about-cta::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--red);
+          transform: translateX(-101%);
+          transition: transform 0.38s cubic-bezier(0.77,0,0.175,1);
+        }
+        .about-cta:hover::after { transform: translateX(0); }
+        .about-cta:hover { transform: translateY(-2px); }
+        .about-cta span { position: relative; z-index: 1; }
+
+        /* ── Right: tools + interests ── */
+        .about-right {
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Education block */
+        .edu-block {
+          padding: 40px 48px;
+          border-bottom: 1px solid var(--border);
+        }
+        .block-label {
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.6;
+          margin-bottom: 20px;
+          display: block;
+        }
+        .edu-degree {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 26px;
+          letter-spacing: 2px;
+          color: var(--ink);
+          line-height: 1.1;
+          display: block;
+        }
+        .edu-school {
+          font-size: 10px;
+          letter-spacing: 1.5px;
+          color: var(--mid);
+          text-transform: uppercase;
+          margin-top: 6px;
+          display: block;
+        }
+        .edu-year {
+          font-size: 9px;
+          letter-spacing: 2px;
+          color: var(--mid);
+          opacity: 0.5;
+          margin-top: 4px;
+          display: block;
+        }
+
+        /* Tools */
+        .tools-block {
+          padding: 40px 48px;
+          border-bottom: 1px solid var(--border);
+        }
+        .tools-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .tool-tag {
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          padding: 8px 16px;
+          border: 1px solid var(--border);
+          color: var(--ink);
+          opacity: 0.55;
+          transition: all 0.2s;
+          position: relative;
+          overflow: hidden;
+        }
+        .tool-tag::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--ink);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.25s ease;
+          z-index: 0;
+        }
+        .tool-tag:hover { opacity: 1; color: var(--paper); border-color: var(--ink); }
+        .tool-tag:hover::after { transform: scaleX(1); }
+        .tool-tag span { position: relative; z-index: 1; }
+
+        /* Interests */
+        .interests-block {
+          padding: 40px 48px;
+          border-bottom: 1px solid var(--border);
+        }
+        .interests-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0;
+        }
+        .interest-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 18px 10px 0;
+          font-size: 10px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.5;
+          transition: opacity 0.2s;
+        }
+        .interest-item:hover { opacity: 1; }
+        .interest-item::before {
+          content: '◆';
+          font-size: 5px;
+          color: var(--red);
+        }
+
+        /* Recognition */
+        .rec-block {
+          padding: 32px 48px;
+          background: var(--ink);
+        }
+        .rec-inner {
+          display: flex;
+          gap: 14px;
+          align-items: flex-start;
+        }
+        .rec-star {
+          font-size: 16px;
+          flex-shrink: 0;
+          color: var(--paper);
+          opacity: 0.4;
+          margin-top: 2px;
+        }
+        .rec-copy {
+          font-size: 10px;
+          line-height: 1.8;
+          color: var(--paper);
+          opacity: 0.6;
+          letter-spacing: 0.5px;
+          font-weight: 300;
+        }
+        .rec-copy strong { opacity: 1; font-weight: 500; }
+
+        /* Footer */
+        .about-footer {
+          padding: 22px 48px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .foot-note {
+          font-size: 9px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.35;
+        }
+        .foot-link {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--ink);
+          text-decoration: none;
+          opacity: 0.45;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          transition: opacity 0.2s, gap 0.2s;
+        }
+        .foot-link:hover { opacity: 1; gap: 14px; }
+
+        /* ── Responsive ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+          .about-header {
+            padding: 56px 32px 40px;
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .about-title {
+            font-size: clamp(48px, 8vw, 80px);
+          }
+          .about-header-meta {
+            text-align: left;
+          }
+          .about-body {
+            grid-template-columns: 1fr;
+          }
+          .about-left {
+            padding: 40px 32px;
+            border-right: none;
+            border-bottom: 1px solid var(--border);
+          }
+          .about-right {
+            border-top: none;
+          }
+          .edu-block,
+          .tools-block,
+          .interests-block,
+          .rec-block,
+          .about-footer {
+            padding-left: 32px;
+            padding-right: 32px;
+          }
+        }
+
+        /* Tablet: 768-1024px */
+        @media (max-width: 768px) {
+          .about-header {
+            padding: 48px 24px 36px;
+            gap: 20px;
+          }
+          .about-title {
+            font-size: clamp(40px, 10vw, 68px);
+          }
+          .about-eyebrow {
+            font-size: 9px;
+            margin-bottom: 16px;
+          }
+          .about-header-meta-num {
+            font-size: 48px;
+          }
+          .bio-text {
+            font-size: 12px;
+            line-height: 1.8;
+            opacity: 0.8;
+          }
+          .values-block {
+            gap: 8px;
+          }
+          .value-item {
+            padding: 16px 0;
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+          .value-word {
+            font-size: 24px;
+          }
+          .value-desc {
+            display: none;
+          }
+          .value-arrow {
+            display: none;
+          }
+          .about-left {
+            padding: 32px 24px;
+            gap: 32px;
+          }
+          .edu-block,
+          .tools-block,
+          .interests-block,
+          .rec-block {
+            padding: 28px 24px;
+          }
+          .about-footer {
+            padding: 18px 24px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+          .edu-degree {
+            font-size: 22px;
+          }
+          .about-cta {
+            padding: 12px 28px;
+            font-size: 9px;
+          }
+        }
+
+        /* Mobile: below 768px */
+        @media (max-width: 640px) {
+          .about-section {
+            padding: 0;
+          }
+          .about-header {
+            padding: 40px 20px 32px;
+            gap: 16px;
+          }
+          .about-title {
+            font-size: clamp(32px, 12vw, 52px);
+            letter-spacing: 1px;
+          }
+          .about-eyebrow {
+            font-size: 8px;
+            margin-bottom: 14px;
+            gap: 10px;
+          }
+          .about-eyebrow::before {
+            width: 20px;
+          }
+          .bio-label {
+            font-size: 7px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+          }
+          .bio-text {
+            font-size: 11px;
+            line-height: 1.7;
+            opacity: 0.75;
+          }
+          .about-left {
+            padding: 28px 20px;
+            gap: 28px;
+          }
+          .value-item {
+            padding: 14px 0;
+          }
+          .value-word {
+            font-size: 20px;
+          }
+          .block-label {
+            font-size: 7px;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+          }
+          .edu-degree {
+            font-size: 18px;
+            letter-spacing: 1px;
+          }
+          .edu-school {
+            font-size: 9px;
+            margin-top: 4px;
+          }
+          .edu-block,
+          .tools-block,
+          .interests-block,
+          .rec-block {
+            padding: 24px 20px;
+          }
+          .tools-grid {
+            gap: 6px;
+          }
+          .tool-tag {
+            font-size: 8px;
+            padding: 6px 12px;
+          }
+          .interests-row {
+            gap: 0;
+          }
+          .interest-item {
+            padding: 8px 14px 8px 0;
+            font-size: 9px;
+            letter-spacing: 1px;
+          }
+          .rec-copy {
+            font-size: 9px;
+            line-height: 1.7;
+          }
+          .about-footer {
+            padding: 16px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+          .foot-note {
+            font-size: 8px;
+            letter-spacing: 2px;
+          }
+          .foot-link {
+            font-size: 8px;
+            width: 100%;
+          }
+          .about-cta {
+            padding: 10px 24px;
+            font-size: 8px;
+            letter-spacing: 2px;
+          }
+        }
+
+        /* Very small: below 380px */
+        @media (max-width: 380px) {
+          .about-header {
+            padding: 32px 16px 28px;
+          }
+          .about-title {
+            font-size: 28px;
+          }
+          .about-eyebrow {
+            font-size: 7px;
+            gap: 8px;
+          }
+          .bio-text {
+            font-size: 10px;
+          }
+          .about-left {
+            padding: 24px 16px;
+            gap: 24px;
+          }
+          .edu-block,
+          .tools-block,
+          .interests-block,
+          .rec-block {
+            padding: 20px 16px;
+          }
+          .about-footer {
+            padding: 14px 16px;
+          }
+          .about-cta {
+            padding: 10px 20px;
+            font-size: 7px;
+          }
+        }
+      `}</style>
+
+      <section id="about" className="about-section">
+        {/* Header */}
+        <div className="about-header">
+          <div>
+            <div className="about-eyebrow">Background & Philosophy</div>
+            <h2 className="about-title">
+              About
+              <span className="about-title-italic">
+                The person behind the work.
+              </span>
+            </h2>
           </div>
-          {/* Right Content - Tools */}
-          <div className="space-y-12" ref={rightColRef}>
-            <div className="space-y-8">
-              <div className="text-center lg:text-left">
-                <h3 className="text-3xl font-bold text-slate-900 mb-4">
-                  Tools I Work With
-                </h3>
-                <p className="text-lg text-slate-600">
-                  My favorite tools for creating amazing experiences
-                </p>
+          <div className="about-header-meta">
+            <div className="about-header-meta-num">01</div>
+            <div className="about-header-meta-label">Designer</div>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="about-body">
+          {/* LEFT */}
+          <div className="about-left">
+            <div className="bio-block">
+              <span className="bio-label">Who I am</span>
+              <p className="bio-text">
+                Hey — I'm <strong>Arkaprava Santra</strong>, a UI/UX Designer
+                based in Kolkata, India. I have a{" "}
+                <strong>B.Tech in Computer Science</strong> which gives me an
+                unusual lens: I understand both the design problem and the
+                technical constraints it lives within. I don't just make things
+                look good — I make them <strong>work better</strong> for the
+                people using them.
+              </p>
+            </div>
+
+            <div className="bio-block">
+              <span className="bio-label">How I work</span>
+              <p className="bio-text">
+                My process starts with research — talking to users, mapping
+                flows, identifying where things break down. From there I move
+                fast: sketches, wireframes, high-fidelity prototypes. I'm{" "}
+                <strong>certified in UI/UX Design</strong>
+                and obsessed with the gap between a good interface and a great
+                one.
+              </p>
+            </div>
+
+            {/* Values */}
+            <div className="values-block">
+              <span className="values-label">
+                Core values — hover to expand
+              </span>
+              {values.map((v) => (
+                <div className="value-item" key={v.word}>
+                  <div>
+                    <div className="value-word">{v.word}</div>
+                    <div className="value-desc">{v.desc}</div>
+                  </div>
+                  <div className="value-arrow">→</div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <a
+              href="https://drive.google.com/file/d/105k-AMdMViNQbjw9XIkaBlg_HTAM0sQU/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="about-cta"
+            >
+              <span>↓ View / Download Résumé</span>
+            </a>
+          </div>
+
+          {/* RIGHT */}
+          <div className="about-right">
+            {/* Education */}
+            <div className="edu-block">
+              <span className="block-label">Education</span>
+              <span className="edu-degree">B.Tech · Computer Science</span>
+              <span className="edu-school">
+                Budge Budge Institute of Technology, Kolkata
+              </span>
+              <span className="edu-year">
+                2020 – 2024 · Certified in UI/UX Design, EventBeep
+              </span>
+            </div>
+
+            {/* Tools */}
+            <div className="tools-block">
+              <span className="block-label">Design Toolbox</span>
+              <div className="tools-grid">
+                {tools.map((t) => (
+                  <span key={t} className="tool-tag">
+                    <span>{t}</span>
+                  </span>
+                ))}
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {tools.map((tool, i) => (
-                  <div
-                    key={tool.name}
-                    className="group cursor-pointer"
-                    style={{ animationDelay: `${i * 0.1}s` }}
-                    ref={(el) => (toolsRef.current[i] = el)}
-                  >
-                    <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:scale-105 hover:-translate-y-2 transition-all duration-500">
-                      <div className="flex flex-col items-center text-center space-y-6">
-                        <div
-                          className={`w-20 h-20 ${tool.bg} rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm`}
-                        >
-                          <tool.icon className={`w-10 h-10 ${tool.color}`} />
-                        </div>
-                        <div>
-                          <h4 className="text-xl font-bold text-slate-900 mb-2">
-                            {tool.name}
-                          </h4>
-                          <p className="text-sm text-slate-500 font-medium uppercase tracking-wide">
-                            Design Tool
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+            </div>
+
+            {/* Interests */}
+            <div className="interests-block">
+              <span className="block-label">Outside of design</span>
+              <div className="interests-row">
+                {interests.map((i) => (
+                  <div key={i} className="interest-item">
+                    {i}
                   </div>
                 ))}
               </div>
             </div>
-            {/* Decorative Element */}
-            <div className="hidden lg:block relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-100 via-purple-50 to-blue-100 rounded-3xl blur-3xl opacity-30"></div>
-              <div className="relative bg-white/60 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-                <div className="text-center space-y-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-violet-500 to-purple-500 rounded-2xl mx-auto flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-white" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-slate-900">
-                    Always Learning
-                  </h4>
-                  <p className="text-sm text-slate-600">
-                    Constantly exploring new design trends and technologies
-                  </p>
-                </div>
+
+            {/* Recognition */}
+            <div className="rec-block">
+              <div className="rec-inner">
+                <span className="rec-star">✦</span>
+                <p className="rec-copy">
+                  Recognized by <strong>Fabricio Teixeira</strong> (UX
+                  Collective founder) for clarity in problem framing and
+                  solution logic — AI Knowledge Base, 2025.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+
+        {/* Footer */}
+        <div className="about-footer">
+          <span className="foot-note">Kolkata, IN · Open to remote work</span>
+          <a href="mailto:arkapravasantra17@gmail.com" className="foot-link">
+            arkapravasantra17@gmail.com →
+          </a>
+        </div>
+      </section>
+    </>
   );
 };
 

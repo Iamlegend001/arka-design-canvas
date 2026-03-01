@@ -31,7 +31,7 @@ const Navigation = () => {
       gsap.fromTo(
         mobileMenuRef.current,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
       );
     }
   }, [isOpen]);
@@ -72,8 +72,9 @@ const Navigation = () => {
                 </a>
               ))}
               <a
-                href="/Resume/Arkprava Resume.pdf"
-                download="Arkaprava Resume.pdf"
+                href="https://drive.google.com/file/d/105k-AMdMViNQbjw9XIkaBlg_HTAM0sQU/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
               >
                 <Download className="w-4 h-4 mr-2" />
@@ -117,8 +118,9 @@ const Navigation = () => {
               ))}
               <div className="px-3 py-2">
                 <a
-                  href="/Resume/Arkprava Resume.pdf"
-                  download="Arkaprava Resume.pdf"
+                  href="https://drive.google.com/file/d/105k-AMdMViNQbjw9XIkaBlg_HTAM0sQU/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
                 >
                   <Download className="w-4 h-4 mr-2" />

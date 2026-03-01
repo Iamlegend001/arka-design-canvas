@@ -1,378 +1,695 @@
 import React, { useRef, useEffect, useState } from "react";
-import {
-  Figma,
-  Palette,
-  Code,
-  Smartphone,
-  FileText,
-  Zap,
-  Globe,
-  Github,
-  ArrowRight,
-  Play,
-  Pause,
-} from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 
-gsap.registerPlugin(ScrollTrigger);
+const technologies = [
+  { name: "Figma", category: "Interface Design", primary: true },
+  { name: "Framer", category: "Motion & Prototyping" },
+  { name: "Webflow", category: "Web Builder" },
+  { name: "Canva", category: "Visual Design" },
+  { name: "Cursor", category: "AI-Assisted Dev" },
+  { name: "Notion", category: "Documentation" },
+  { name: "Tailwind CSS", category: "CSS Framework" },
+  { name: "React", category: "Frontend Framework" },
+  { name: "GitHub", category: "Version Control" },
+];
+
+// Tripled for seamless loop
+const track = [...technologies, ...technologies, ...technologies];
 
 const TechStack = () => {
-  const scrollRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const railRef = useRef(null);
+  const posRef = useRef(0);
+  const rafRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
 
-  const headerRef = useRef(null);
-  const playPauseRef = useRef(null);
-  const techCardRefs = useRef([]);
-  const bottomIndicatorRef = useRef(null);
-  const sectionRef = useRef(null);
-
-  // Enhanced color palette with better contrast and saturation
-  const technologies = [
-    {
-      name: "Figma",
-      icon: Figma,
-      color: "text-purple-700",
-      bg: "bg-purple-100",
-      description: "Interface Design",
-      gradient: "from-purple-600 to-purple-700",
-      shadow: "shadow-purple-500/30",
-    },
-    {
-      name: "Adobe XD",
-      icon: Palette,
-      color: "text-pink-700",
-      bg: "bg-pink-100",
-      description: "Prototyping",
-      gradient: "from-pink-600 to-pink-700",
-      shadow: "shadow-pink-500/30",
-    },
-    {
-      name: "React",
-      icon: Code,
-      color: "text-blue-700",
-      bg: "bg-blue-100",
-      description: "Frontend Framework",
-      gradient: "from-blue-600 to-blue-700",
-      shadow: "shadow-blue-500/30",
-    },
-    {
-      name: "Tailwind CSS",
-      icon: Zap,
-      color: "text-cyan-700",
-      bg: "bg-cyan-100",
-      description: "CSS Framework",
-      gradient: "from-cyan-600 to-cyan-700",
-      shadow: "shadow-cyan-500/30",
-    },
-    {
-      name: "Notion",
-      icon: FileText,
-      color: "text-slate-700",
-      bg: "bg-slate-100",
-      description: "Documentation",
-      gradient: "from-slate-600 to-slate-700",
-      shadow: "shadow-slate-500/30",
-    },
-    {
-      name: "Framer",
-      icon: Smartphone,
-      color: "text-emerald-700",
-      bg: "bg-emerald-100",
-      description: "Motion Design",
-      gradient: "from-emerald-600 to-emerald-700",
-      shadow: "shadow-emerald-500/30",
-    },
-    {
-      name: "Webflow",
-      icon: Globe,
-      color: "text-indigo-700",
-      bg: "bg-indigo-100",
-      description: "Web Builder",
-      gradient: "from-indigo-600 to-indigo-700",
-      shadow: "shadow-indigo-500/30",
-    },
-    {
-      name: "Next.js",
-      icon: ArrowRight,
-      color: "text-slate-800",
-      bg: "bg-slate-100",
-      description: "React Framework",
-      gradient: "from-slate-700 to-slate-800",
-      shadow: "shadow-slate-500/30",
-    },
-    {
-      name: "GitHub",
-      icon: Github,
-      color: "text-slate-800",
-      bg: "bg-slate-100",
-      description: "Version Control",
-      gradient: "from-slate-700 to-slate-800",
-      shadow: "shadow-slate-500/30",
-    },
-  ];
-
-  // Quadruple the array for smoother infinite scroll on wide screens
-  const duplicatedTechs = [
-    ...technologies,
-    ...technologies,
-    ...technologies,
-    ...technologies,
-  ];
+  // Keep ref in sync so the rAF loop can read it without stale closure
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
+    const el = railRef.current;
+    if (!el) return;
 
-    let animationId;
-    let scrollPosition = 0;
-    const scrollSpeed = 0.6; // Slightly slower for better readability
+    const SPEED = 0.55; // px per frame
 
-    const animate = () => {
-      if (isPlaying) {
-        scrollPosition += scrollSpeed;
-        // Reset when we've scrolled past the first set length
-        // We use scrollWidth / 4 because we quadrupled the array
-        if (scrollPosition >= scrollContainer.scrollWidth / 4) {
-          scrollPosition = 0;
-        }
-        scrollContainer.scrollLeft = scrollPosition;
+    const tick = () => {
+      if (!pausedRef.current) {
+        posRef.current += SPEED;
+        // reset after one full set width
+        const setW = el.scrollWidth / 3;
+        if (posRef.current >= setW) posRef.current -= setW;
+        el.style.transform = `translateX(-${posRef.current}px)`;
       }
-      animationId = requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isPlaying]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(headerRef.current, {
-        opacity: 0,
-        y: -30,
-        duration: 1,
-        ease: "power4.out",
-        scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
-      });
-
-      gsap.from(playPauseRef.current, {
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.8,
-        ease: "back.out(1.7)",
-        scrollTrigger: { trigger: playPauseRef.current, start: "top 90%" },
-      });
-
-      // Animate cards staggering in
-      gsap.from(".tech-card-anim", {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.05,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: scrollRef.current,
-          start: "top 85%",
-        },
-      });
-
-      gsap.from(bottomIndicatorRef.current, {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.5,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: bottomIndicatorRef.current,
-          start: "top 95%",
-        },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
-  // Initialize Lenis
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
   return (
-    <section
-      className="py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-indigo-50/30"
-      ref={sectionRef}
-    >
-      {/* --- Background Elements --- */}
-      {/* 1. Base Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-white to-purple-50/50"></div>
-
-      {/* 2. Grid Pattern Overlay (CSS Grid) */}
-      <div
-        className="absolute inset-0 opacity-[0.3]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(to right, #cbd5e1 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-          maskImage:
-            "radial-gradient(ellipse at center, black 40%, transparent 80%)",
-        }}
-      ></div>
-
-      {/* 3. Ambient Glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300/30 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-300/30 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"></div>
-
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 z-10">
-        {/* --- Header --- */}
-        <div className="text-center mb-16 md:mb-20" ref={headerRef}>
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/70 border border-purple-200/50 shadow-sm backdrop-blur-md mb-8">
-            <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
-            <span className="text-xs font-semibold text-purple-700 uppercase tracking-[0.15em] leading-none">
-              Tech Stack
-            </span>
-          </div>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-[-0.02em] text-slate-900 mb-6 leading-[1.1]">
-            My Design{" "}
-            <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              Arsenal
-            </span>
-          </h2>
-
-          <p className="text-base md:text-lg lg:text-xl text-slate-600 max-w-2xl mx-auto leading-[1.7] font-normal">
-            A curated collection of tools and technologies I use to craft
-            exceptional digital experiences.
-          </p>
-        </div>
-
-        {/* --- Controls --- */}
-        <div className="flex justify-center mb-12" ref={playPauseRef}>
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="group relative inline-flex items-center gap-2.5 px-6 py-3 bg-white/90 backdrop-blur-md border border-slate-200/60 rounded-full text-slate-700 hover:text-purple-700 hover:border-purple-300/60 transition-all duration-300 shadow-sm hover:shadow-lg"
-          >
-            <div
-              className={`absolute inset-0 bg-purple-50/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-            ></div>
-            <div className="relative flex items-center gap-2.5">
-              {isPlaying ? (
-                <Pause className="w-4 h-4 fill-current" />
-              ) : (
-                <Play className="w-4 h-4 fill-current ml-0.5" />
-              )}
-              <span className="text-sm font-semibold tracking-tight">
-                {isPlaying ? "Pause Scroll" : "Resume Scroll"}
-              </span>
-            </div>
-          </button>
-        </div>
-
-        {/* --- Marquee Area --- */}
-        <div className="relative -mx-6 lg:-mx-12">
-          {/* Fade Edges */}
-          <div className="absolute left-0 top-0 w-24 md:w-48 h-full bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent z-20 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 w-24 md:w-48 h-full bg-gradient-to-l from-slate-50 via-slate-50/90 to-transparent z-20 pointer-events-none"></div>
-
-          <div
-            ref={scrollRef}
-            className="flex overflow-hidden gap-6 pb-12 pt-4 pl-4"
-            onMouseEnter={() => setIsPlaying(false)}
-            onMouseLeave={() => setIsPlaying(true)}
-          >
-            {duplicatedTechs.map((tech, index) => (
-              <div
-                key={`${tech.name}-${index}`}
-                className="tech-card-anim flex-shrink-0 group relative"
-                style={{ width: "240px" }}
-              >
-                {/* Card Container */}
-                <div
-                  className="relative h-full bg-white/70 backdrop-blur-xl border border-slate-200/60 rounded-[2rem] p-6 transition-all duration-500
-                              hover:-translate-y-2 hover:bg-white/90 hover:border-slate-300/80
-                              shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:shadow-[0_20px_50px_rgb(0,0,0,0.12)]"
-                >
-                  {/* Hover Gradient Border Effect */}
-                  <div
-                    className={`absolute inset-0 rounded-[2rem] border-2 border-transparent bg-gradient-to-br ${tech.gradient} opacity-0 group-hover:opacity-100 [mask:linear-gradient(#fff_0_0)_padding-box,linear-gradient(#fff_0_0)] [-webkit-mask-composite:destination-out] mask-composite:exclude pointer-events-none transition-opacity duration-500`}
-                  ></div>
-
-                  {/* Hover Inner Glow */}
-                  <div
-                    className={`absolute inset-0 rounded-[2rem] bg-gradient-to-br ${tech.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                  ></div>
-
-                  <div className="relative flex flex-col items-center text-center z-10">
-                    {/* Icon Container */}
-                    <div
-                      className={`w-20 h-20 mb-6 rounded-2xl ${tech.bg} flex items-center justify-center
-                                   group-hover:scale-110 transition-transform duration-500 ease-out
-                                   border border-white/70 shadow-sm group-hover:shadow-md`}
-                    >
-                      <tech.icon
-                        className={`w-10 h-10 ${tech.color} transition-all duration-300`}
-                        strokeWidth={2}
-                      />
-                    </div>
-
-                    {/* Text Content */}
-                    <div className="space-y-1.5">
-                      <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-tight">
-                        {tech.name}
-                      </h3>
-                      <p className="text-xs font-semibold text-slate-600 uppercase tracking-[0.1em] opacity-90 group-hover:opacity-100 transition-opacity leading-relaxed">
-                        {tech.description}
-                      </p>
-                    </div>
-
-                    {/* Decorative Pill */}
-                    <div
-                      className={`mt-6 w-12 h-1.5 rounded-full bg-slate-200 overflow-hidden`}
-                    >
-                      <div
-                        className={`w-full h-full bg-gradient-to-r ${tech.gradient} -translate-x-full group-hover:translate-x-0 transition-transform duration-500`}
-                      ></div>
-                    </div>
-                  </div>
-
-                  {/* Shine Effect */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-0 pointer-events-none rounded-[2rem]"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* --- Footer Indicator --- */}
-        <div className="flex justify-center mt-6" ref={bottomIndicatorRef}>
-          <div className="flex items-center gap-3 px-5 py-2.5 bg-white/60 backdrop-blur-md border border-slate-200/50 rounded-full shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-600"></span>
-            </span>
-            <span className="text-xs text-slate-600 font-semibold tracking-tight">
-              Hover cards to pause & explore
-            </span>
-          </div>
-        </div>
-      </div>
-
+    <>
       <style>{`
-        @keyframes shimmer {
-          100% {
-            transform: translateX(100%);
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+
+        :root {
+          --ink: #111010;
+          --paper: #f0ece3;
+          --red: #c0392b;
+          --mid: #6b6560;
+          --border: rgba(17,16,16,0.1);
+        }
+
+        :root.dark {
+          --ink: #f0ece3;
+          --paper: #0f0e0d;
+          --red: #ff5247;
+          --mid: #9b9490;
+          --border: rgba(240,236,227,0.1);
+        }
+
+        .ts-section {
+          background: var(--paper);
+          font-family: 'DM Mono', monospace;
+          overflow: hidden;
+        }
+
+        /* ── Header ── */
+        .ts-header {
+          padding: 72px 48px 56px;
+          border-bottom: 1px solid var(--border);
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: end;
+          gap: 32px;
+        }
+        .ts-eyebrow {
+          font-size: 10px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--red);
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .ts-eyebrow::before {
+          content: '';
+          width: 28px; height: 1px;
+          background: var(--red);
+          display: block;
+          flex-shrink: 0;
+        }
+        .ts-title {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: clamp(52px, 7vw, 96px);
+          line-height: 0.9;
+          letter-spacing: 2px;
+          color: var(--ink);
+        }
+        .ts-title-italic {
+          font-family: 'DM Serif Display', serif;
+          font-style: italic;
+          color: var(--red);
+          font-size: 0.55em;
+          display: block;
+          letter-spacing: 0;
+          line-height: 1.3;
+          margin-top: 6px;
+        }
+        .ts-meta { text-align: right; }
+        .ts-meta-num {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 64px;
+          line-height: 1;
+          color: var(--ink);
+          opacity: 0.07;
+          letter-spacing: 2px;
+        }
+        .ts-meta-label {
+          font-size: 9px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--mid);
+          margin-top: -8px;
+        }
+
+        /* ── Marquee wrapper ── */
+        .ts-marquee-outer {
+          border-bottom: 1px solid var(--border);
+          position: relative;
+          padding: 52px 0;
+        }
+        /* fade edges */
+        .ts-marquee-outer::before,
+        .ts-marquee-outer::after {
+          content: '';
+          position: absolute;
+          top: 0; bottom: 0;
+          width: 120px;
+          z-index: 10;
+          pointer-events: none;
+        }
+        .ts-marquee-outer::before {
+          left: 0;
+          background: linear-gradient(to right, var(--paper), transparent);
+        }
+        .ts-marquee-outer::after {
+          right: 0;
+          background: linear-gradient(to left, var(--paper), transparent);
+        }
+
+        .ts-marquee-clip {
+          overflow: hidden;
+        }
+        .ts-rail {
+          display: flex;
+          gap: 16px;
+          width: max-content;
+          will-change: transform;
+        }
+
+        /* ── Tool card ── */
+        .ts-card {
+          flex-shrink: 0;
+          border: 1px solid var(--border);
+          padding: 24px 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          min-width: 200px;
+          position: relative;
+          overflow: hidden;
+          transition: border-color 0.2s, background 0.2s;
+          cursor: default;
+        }
+        .ts-card::before {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 2px;
+          background: var(--red);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .ts-card:hover { background: rgba(17,16,16,0.025); border-color: rgba(17,16,16,0.22); }
+        .ts-card:hover::before { transform: scaleX(1); }
+        .ts-card.primary { border-color: rgba(17,16,16,0.2); }
+
+        .ts-card-name {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 28px;
+          letter-spacing: 2px;
+          color: var(--ink);
+          line-height: 1;
+          transition: color 0.2s;
+        }
+        .ts-card:hover .ts-card-name { color: var(--ink); }
+        .ts-card.primary .ts-card-name { color: var(--red); }
+
+        .ts-card-cat {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.55;
+        }
+
+        /* primary badge */
+        .ts-card-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 8px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--red);
+          margin-top: 4px;
+          opacity: 0.8;
+        }
+        .ts-card-badge::before {
+          content: '◆';
+          font-size: 5px;
+        }
+
+        /* ── List view ── */
+        .ts-list {
+          border-bottom: 1px solid var(--border);
+        }
+        .ts-list-head {
+          display: grid;
+          grid-template-columns: 56px 1fr 1fr auto;
+          padding: 14px 48px;
+          border-bottom: 1px solid var(--border);
+          background: rgba(17,16,16,0.02);
+        }
+        .ts-list-head span {
+          font-size: 8px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.6;
+        }
+        .ts-list-row {
+          display: grid;
+          grid-template-columns: 56px 1fr 1fr auto;
+          padding: 18px 48px;
+          border-bottom: 1px solid var(--border);
+          align-items: center;
+          transition: background 0.2s;
+          position: relative;
+          overflow: hidden;
+        }
+        .ts-list-row::before {
+          content: '';
+          position: absolute;
+          left: 0; top: 0; bottom: 0;
+          width: 3px;
+          background: var(--red);
+          transform: scaleY(0);
+          transform-origin: bottom;
+          transition: transform 0.25s;
+        }
+        .ts-list-row:hover { background: rgba(17,16,16,0.025); }
+        .ts-list-row:hover::before { transform: scaleY(1); }
+        .ts-list-row:last-child { border-bottom: none; }
+
+        .ts-row-idx {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 16px;
+          letter-spacing: 2px;
+          color: var(--ink);
+          opacity: 0.15;
+          transition: opacity 0.2s, color 0.2s;
+        }
+        .ts-list-row:hover .ts-row-idx { opacity: 1; color: var(--red); }
+
+        .ts-row-name {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 24px;
+          letter-spacing: 2px;
+          color: var(--ink);
+          line-height: 1;
+        }
+        .ts-row-cat {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.55;
+        }
+        .ts-row-primary {
+          font-size: 8px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--red);
+          opacity: 0;
+        }
+        .ts-list-row.is-primary .ts-row-primary { opacity: 0.8; }
+
+        /* ── Controls bar ── */
+        .ts-controls {
+          padding: 20px 48px;
+          border-bottom: 1px solid var(--border);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .ts-pause-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: none;
+          border: 1px solid var(--border);
+          padding: 8px 18px;
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--ink);
+          cursor: pointer;
+          opacity: 0.55;
+          transition: all 0.2s;
+        }
+        .ts-pause-btn:hover { opacity: 1; border-color: rgba(17,16,16,0.3); }
+        .ts-pause-btn .dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: var(--red);
+          animation: blink 2s infinite;
+        }
+        .ts-pause-btn.is-paused .dot { animation: none; opacity: 0.3; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .ts-hint {
+          font-size: 9px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.35;
+        }
+
+        /* ── Footer ── */
+        .ts-footer {
+          padding: 22px 48px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .ts-foot-note {
+          font-size: 9px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: var(--mid);
+          opacity: 0.35;
+        }
+        .ts-cta {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: var(--ink);
+          color: var(--paper);
+          padding: 12px 28px;
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          text-decoration: none;
+          position: relative;
+          overflow: hidden;
+          transition: transform 0.2s;
+        }
+        .ts-cta::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: var(--red);
+          transform: translateX(-101%);
+          transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
+        }
+        .ts-cta:hover::after { transform: translateX(0); }
+        .ts-cta:hover { transform: translateY(-1px); }
+        .ts-cta span { position: relative; z-index: 1; }
+
+        /* ── Responsive ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+          .ts-header {
+            padding: 64px 36px 48px;
+            gap: 28px;
+          }
+          .ts-title {
+            font-size: clamp(48px, 8vw, 90px);
+          }
+          .ts-marquee-outer {
+            padding: 48px 0;
+          }
+          .ts-marquee-outer::before,
+          .ts-marquee-outer::after {
+            width: 100px;
+          }
+          .ts-card {
+            min-width: 180px;
+            padding: 20px 28px;
+          }
+          .ts-card-name {
+            font-size: 24px;
+          }
+          .ts-controls,
+          .ts-list-head,
+          .ts-list-row,
+          .ts-footer {
+            padding-left: 36px;
+            padding-right: 36px;
+          }
+        }
+
+        /* Tablet: 768-1024px */
+        @media (max-width: 768px) {
+          .ts-header {
+            padding: 56px 28px 40px;
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .ts-title {
+            font-size: clamp(40px, 10vw, 72px);
+          }
+          .ts-marquee-outer {
+            padding: 40px 0;
+          }
+          .ts-marquee-outer::before,
+          .ts-marquee-outer::after {
+            width: 80px;
+          }
+          .ts-card {
+            min-width: 160px;
+            padding: 18px 24px;
+            gap: 4px;
+          }
+          .ts-card-name {
+            font-size: 20px;
+            letter-spacing: 1px;
+          }
+          .ts-card-cat {
+            font-size: 8px;
+          }
+          .ts-controls,
+          .ts-list-head,
+          .ts-list-row,
+          .ts-footer {
+            padding-left: 28px;
+            padding-right: 28px;
+          }
+          .ts-pause-btn {
+            font-size: 8px;
+            padding: 6px 16px;
+          }
+          .ts-cta {
+            font-size: 9px;
+            padding: 10px 24px;
+          }
+        }
+
+        /* Mobile: below 768px */
+        @media (max-width: 640px) {
+          .ts-section {
+            padding: 0;
+          }
+          .ts-header {
+            padding: 48px 20px 36px;
+            gap: 20px;
+          }
+          .ts-title {
+            font-size: clamp(32px, 12vw, 56px);
+            letter-spacing: 1px;
+          }
+          .ts-eyebrow {
+            font-size: 9px;
+            margin-bottom: 14px;
+          }
+          .ts-eyebrow::before {
+            width: 20px;
+          }
+          .ts-marquee-outer {
+            padding: 36px 0;
+            border-bottom: 1px solid var(--border);
+          }
+          .ts-marquee-outer::before,
+          .ts-marquee-outer::after {
+            width: 60px;
+          }
+          .ts-card {
+            min-width: 140px;
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+          }
+          .ts-card-name {
+            font-size: 18px;
+            letter-spacing: 1px;
+          }
+          .ts-card-cat {
+            font-size: 7px;
+            letter-spacing: 1px;
+          }
+          .ts-card-badge {
+            font-size: 7px;
+          }
+          .ts-controls {
+            padding: 16px 20px;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+          }
+          .ts-pause-btn {
+            width: 100%;
+            font-size: 8px;
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            justify-content: center;
+          }
+          .ts-hint {
+            font-size: 8px;
+            text-align: center;
+            opacity: 0.4;
+          }
+          .ts-list-head {
+            display: none;
+          }
+          .ts-list-row {
+            padding: 16px 20px;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            align-items: flex-start;
+          }
+          .ts-row-idx {
+            display: none;
+          }
+          .ts-row-name {
+            font-size: 18px;
+            letter-spacing: 1px;
+          }
+          .ts-row-cat {
+            font-size: 8px;
+            opacity: 0.6;
+          }
+          .ts-row-primary {
+            font-size: 7px;
+            display: inline;
+          }
+          .ts-footer {
+            padding: 16px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+          .ts-foot-note {
+            font-size: 8px;
+          }
+          .ts-cta {
+            width: 100%;
+            justify-content: center;
+            font-size: 8px;
+            padding: 12px 20px;
+          }
+        }
+
+        /* Very small: below 380px */
+        @media (max-width: 380px) {
+          .ts-header {
+            padding: 40px 16px 32px;
+          }
+          .ts-title {
+            font-size: 28px;
+          }
+          .ts-marquee-outer {
+            padding: 32px 0;
+          }
+          .ts-marquee-outer::before,
+          .ts-marquee-outer::after {
+            width: 50px;
+          }
+          .ts-card {
+            min-width: 120px;
+            padding: 14px 16px;
+          }
+          .ts-controls {
+            padding: 14px 16px;
+          }
+          .ts-list-row {
+            padding: 14px 16px;
+          }
+          .ts-footer {
+            padding: 14px 16px;
           }
         }
       `}</style>
-    </section>
+
+      <section className="ts-section">
+        {/* Header */}
+        <div className="ts-header">
+          <div>
+            <div className="ts-eyebrow">Design Toolbox</div>
+            <h2 className="ts-title">
+              Tech Stack
+              <span className="ts-title-italic">
+                The tools that power the work.
+              </span>
+            </h2>
+          </div>
+          <div className="ts-meta">
+            <div className="ts-meta-num">09</div>
+            <div className="ts-meta-label">Tools</div>
+          </div>
+        </div>
+
+        {/* Controls bar */}
+        <div className="ts-controls">
+          <button
+            type="button"
+            className={`ts-pause-btn ${paused ? "is-paused" : ""}`}
+            onClick={() => setPaused((p) => !p)}
+          >
+            <span className="dot" />
+            {paused ? "Resume scroll" : "Pause scroll"}
+          </button>
+          <span className="ts-hint">Hover marquee to pause</span>
+        </div>
+
+        {/* Marquee */}
+        <div
+          className="ts-marquee-outer"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="ts-marquee-clip">
+            <div className="ts-rail" ref={railRef}>
+              {track.map((t, i) => (
+                <div
+                  key={i}
+                  className={`ts-card ${t.primary ? "primary" : ""}`}
+                >
+                  <div className="ts-card-name">{t.name}</div>
+                  <div className="ts-card-cat">{t.category}</div>
+                  {t.primary && (
+                    <div className="ts-card-badge">Primary tool</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* List view */}
+        <div className="ts-list">
+          <div className="ts-list-head">
+            <span>#</span>
+            <span>Tool</span>
+            <span>Category</span>
+            <span>Role</span>
+          </div>
+          {technologies.map((t, i) => (
+            <div
+              key={t.name}
+              className={`ts-list-row ${t.primary ? "is-primary" : ""}`}
+            >
+              <div className="ts-row-idx">{String(i + 1).padStart(2, "0")}</div>
+              <div className="ts-row-name">{t.name}</div>
+              <div className="ts-row-cat">{t.category}</div>
+              <div className="ts-row-primary">Primary</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="ts-footer">
+          <span className="ts-foot-note">Tools used in live projects</span>
+          <a href="#contact" className="ts-cta">
+            <span>Start a project →</span>
+          </a>
+        </div>
+      </section>
+    </>
   );
 };
 

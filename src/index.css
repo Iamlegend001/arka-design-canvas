@@ -100,6 +100,15 @@ All colors MUST be HSL.
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
     width: 100%;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  :root.dark body {
+    @apply bg-gray-950 text-gray-100;
+    background-color: #0f0e0d;
+    color: #f0ece3;
   }
 
   html {
@@ -161,12 +170,15 @@ All colors MUST be HSL.
   }
 
   .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .hover-lift:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
       0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 }
