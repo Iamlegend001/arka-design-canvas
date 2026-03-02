@@ -72,7 +72,7 @@ const Navigation = () => {
                 </a>
               ))}
               <a
-                href="https://drive.google.com/file/d/105k-AMdMViNQbjw9XIkaBlg_HTAM0sQU/view?usp=sharing"
+                href="https://drive.google.com/file/d/1kLvg3UuEbi7b_luPddZkr4gLL6dA5NPv/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
@@ -118,7 +118,7 @@ const Navigation = () => {
               ))}
               <div className="px-3 py-2">
                 <a
-                  href="https://drive.google.com/file/d/105k-AMdMViNQbjw9XIkaBlg_HTAM0sQU/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1kLvg3UuEbi7b_luPddZkr4gLL6dA5NPv/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
