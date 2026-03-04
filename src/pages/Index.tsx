@@ -33,112 +33,59 @@ const ScrollProgress = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        height: "2px",
-        background: "rgba(17,16,16,0.07)",
-        zIndex: 99999,
-        pointerEvents: "none",
-      }}
-    >
+    <div className="fixed top-0 left-0 right-0 h-[2px] bg-[rgba(17,16,16,0.07)] z-[99999] pointer-events-none">
       <div
         ref={barRef}
-        style={{
-          height: "100%",
-          width: "0%",
-          background: "var(--red, #c0392b)",
-          transition: "width 0.08s linear",
-        }}
+        className="h-full w-0 bg-[var(--red,#c0392b)] transition-[width] duration-75 ease-linear"
       />
     </div>
   );
 };
 
 /* ─── Section Divider ─── */
-const SectionDivider = ({ label }: { label: string }) => (
-  <div className="section-divider">
-    <style>{`
-      .section-divider {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 0 48px;
-        height: 40px;
-        border-top: 1px solid rgba(17,16,16,0.07);
-        border-bottom: 1px solid rgba(17,16,16,0.07);
-        background: var(--paper, #f0ece3);
-        overflow: hidden;
-        position: relative;
+const SectionDivider = ({ label }: { label: string }) => {
+  const id = label.replace(/\s+/g, "-").toLowerCase();
+  return (
+    <div
+      id={id}
+      className={
+        "flex items-center gap-5 h-10 px-12 relative overflow-hidden " +
+        "bg-[hsl(var(--portfolio-bg))] border-t border-b border-[rgba(17,16,16,0.07)] " +
+        "dark:border-[rgba(240,236,227,0.07)]"
       }
-      :root.dark .section-divider {
-        border-color: rgba(240,236,227,0.07);
-      }
-      .section-divider-label {
-        font-family: 'DM Mono', monospace;
-        font-size: 8px;
-        letter-spacing: 3.5px;
-        text-transform: uppercase;
-        color: var(--mid, #6b6560);
-        opacity: 0.35;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-      .section-divider-line {
-        flex: 1;
-        height: 1px;
-        background: rgba(17,16,16,0.08);
-      }
-      :root.dark .section-divider-line {
-        background: rgba(240,236,227,0.08);
-      }
-      .section-divider-ticker {
-        display: flex;
-        gap: 48px;
-        overflow: hidden;
-        flex: 3;
-      }
-      .section-divider-ticker-inner {
-        display: flex;
-        gap: 48px;
-        animation: ticker 18s linear infinite;
-        white-space: nowrap;
-      }
-      .section-divider-ticker-item {
-        font-family: 'DM Mono', monospace;
-        font-size: 8px;
-        letter-spacing: 2.5px;
-        text-transform: uppercase;
-        color: var(--mid, #6b6560);
-        opacity: 0.2;
-        flex-shrink: 0;
-      }
-      @keyframes ticker {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
-      }
-      @media (max-width: 640px) {
-        .section-divider { padding: 0 16px; }
-        .section-divider-ticker { display: none; }
-      }
-    `}</style>
-
-    <span className="section-divider-label">{label}</span>
-    <div className="section-divider-line" />
-    <div className="section-divider-ticker" aria-hidden>
-      <div className="section-divider-ticker-inner">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <span key={i} className="section-divider-ticker-item">
-            Arkaprava Santra · UI/UX Designer · Kolkata IN ·
-          </span>
-        ))}
+    >
+      <span
+        className={
+          "whitespace-nowrap flex-shrink-0 uppercase text-[8px] tracking-[3.5px] " +
+          'font-["DM Mono",monospace] text-[hsl(var(--portfolio-gray))] opacity-35'
+        }
+      >
+        {label}
+      </span>
+      <div
+        className={
+          "flex-1 h-px bg-[rgba(17,16,16,0.08)] " +
+          "dark:bg-[rgba(240,236,227,0.08)]"
+        }
+      />
+      <div className="flex gap-12 overflow-hidden flex-[3]">
+        <div className="flex gap-12 whitespace-nowrap animate-[ticker_18s_linear_infinite]">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span
+              key={i}
+              className={
+                'uppercase text-[8px] tracking-[2.5px] font-["DM Mono",monospace] ' +
+                "text-[hsl(var(--portfolio-gray))] opacity-20 flex-shrink-0"
+              }
+            >
+              Arkaprava Santra · UI/UX Designer · Kolkata IN ·
+            </span>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 /* ─── Back to Top ─── */
 const BackToTop = () => {
@@ -150,56 +97,22 @@ const BackToTop = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const baseClasses =
+    "fixed z-[9000] bg-[hsl(var(--portfolio-dark))] text-[hsl(var(--portfolio-surface))] " +
+    'flex items-center justify-center w-11 h-11 rounded-full font-["DM Mono",monospace] ' +
+    "text-[16px] cursor-pointer transition-transform duration-200 opacity-0 translate-y-3 pointer-events-none";
+
+  const visibleClasses = "opacity-100 pointer-events-auto translate-y-0";
+
   return (
-    <>
-      <style>{`
-        .btt-btn {
-          position: fixed;
-          bottom: 36px;
-          right: 36px;
-          z-index: 9000;
-          background: var(--ink, #111010);
-          color: var(--paper, #f0ece3);
-          border: none;
-          width: 44px; height: 44px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          font-family: 'DM Mono', monospace;
-          font-size: 16px;
-          transition: transform 0.25s, opacity 0.3s, background 0.2s;
-          opacity: 0;
-          pointer-events: none;
-          transform: translateY(12px);
-        }
-        .btt-btn.btt-visible {
-          opacity: 1;
-          pointer-events: auto;
-          transform: translateY(0);
-        }
-        .btt-btn::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: var(--red, #c0392b);
-          transform: translateY(101%);
-          transition: transform 0.3s cubic-bezier(0.77,0,0.175,1);
-        }
-        .btt-btn:hover::after { transform: translateY(0); }
-        .btt-btn span { position: relative; z-index: 1; line-height: 1; }
-        @media (max-width: 640px) {
-          .btt-btn { bottom: 20px; right: 16px; }
-        }
-      `}</style>
-      <button
-        className={`btt-btn${visible ? " btt-visible" : ""}`}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="Back to top"
-      >
-        <span>↑</span>
-      </button>
-    </>
+    <button
+      className={`${baseClasses} ${visible ? visibleClasses : ""}`}
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Back to top"
+    >
+      <span className="relative z-10 leading-none">↑</span>
+      <span className="absolute inset-0 bg-[hsl(var(--portfolio-violet))] rounded-full transform translate-y-full transition-transform duration-300 ease-in-out" />
+    </button>
   );
 };
 
@@ -235,52 +148,6 @@ const Index = () => {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
-
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-          --ink: #111010;
-          --paper: #f0ece3;
-          --red: #c0392b;
-          --mid: #6b6560;
-        }
-        :root.dark {
-          --ink: #f0ece3;
-          --paper: #0f0e0d;
-          --red: #ff5247;
-          --mid: #9b9490;
-        }
-
-        html { scroll-behavior: auto; } /* Lenis handles this */
-
-        body {
-          background: var(--paper);
-          color: var(--ink);
-          -webkit-font-smoothing: antialiased;
-        }
-
-        /* Noise grain overlay for depth */
-        body::before {
-          content: '';
-          position: fixed;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-          background-size: 180px 180px;
-          opacity: 0.022;
-          pointer-events: none;
-          z-index: 99998;
-        }
-
-        .page-wrap {
-          min-height: 100vh;
-          background: var(--paper);
-          position: relative;
-        }
-      `}</style>
-
-      {/* Fixed chrome */}
       <ScrollProgress />
       <BackToTop />
       <Cursor />

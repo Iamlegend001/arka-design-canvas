@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDarkMode } from "../contexts/useDarkMode";
 
 const Cursor = () => {
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
@@ -7,26 +8,10 @@ const Cursor = () => {
   const [isBig, setIsBig] = useState(false);
   const [visible, setVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [isDark, setIsDark] = useState(
-    document.documentElement.classList.contains("dark"),
-  );
+  // track dark mode via context instead of DOM mutation
+  // no theme tracking needed
 
-  useEffect(() => {
-    // Listen for dark mode changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.attributeName === "class" &&
-          mutation.target === document.documentElement
-        ) {
-          setIsDark(document.documentElement.classList.contains("dark"));
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, { attributes: true });
-    return () => observer.disconnect();
-  }, []);
+  const { isDark } = useDarkMode();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -104,9 +89,9 @@ const Cursor = () => {
   return (
     <>
       <style>{`
+        /* cursor uses a fixed red color */
         :root {
           --red: #c0392b;
-          /* other colors can be defined by other components */
         }
 
         @media (pointer: fine) {
@@ -169,20 +154,16 @@ const Cursor = () => {
       `}</style>
       {/* noise and glow layers behind pointer */}
       <div className="noise-layer" />
-      <div
-        className="glow"
-        style={{
-          background: isDark
+      <style>{`
+        .cursor.dynamic { left: ${cursorPos.x}px; top: ${cursorPos.y}px; }
+        .glow.dynamic { background: ${
+          isDark
             ? `radial-gradient(500px circle at ${mousePos.x}% ${mousePos.y}%, rgba(255,82,71,0.06), transparent 65%)`
-            : `radial-gradient(500px circle at ${mousePos.x}% ${mousePos.y}%, rgba(192,57,43,0.07), transparent 65%)`,
-        }}
-      />
-      {visible && (
-        <div
-          className={`cursor ${isBig ? "big" : ""}`}
-          style={{ left: cursorPos.x, top: cursorPos.y }}
-        />
-      )}
+            : `radial-gradient(500px circle at ${mousePos.x}% ${mousePos.y}%, rgba(192,57,43,0.07), transparent 65%)`
+        }`}</style>
+
+      <div className="glow dynamic" />
+      {visible && <div className={`cursor ${isBig ? "big" : ""} dynamic`} />}
     </>
   );
 };

@@ -1,8 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useState } from "react";
 
 const experiences = [
   {
@@ -20,9 +16,10 @@ const experiences = [
     ],
     skills: ["UI/UX Design", "Interaction Design", "Figma", "Design Systems"],
     index: "01",
+    color: "#818cf8",
   },
   {
-    company: "eStatus Genuine Infra Pvt. Ltd.",
+    company: "eStatus Genuine Infra",
     role: "Product Designer Intern",
     duration: "Nov 2025 – Feb 2026",
     type: "Internship",
@@ -31,16 +28,12 @@ const experiences = [
       "Contributing to product design strategy and UI improvements for infrastructure tooling.",
     impact: [
       "Redesigned information layouts to strengthen hierarchy and legibility.",
-      "Collaborated on product workflows to improve feature discoverability and usability.",
+      "Collaborated on product workflows to improve feature discoverability.",
       "Delivered production-ready UI aligned with business and stakeholder goals.",
     ],
-    skills: [
-      "Product Design",
-      "Information Architecture",
-      "UI Design",
-      "Prototyping",
-    ],
+    skills: ["Product Design", "Information Architecture", "UI Design", "Prototyping"],
     index: "02",
+    color: "#67e8f9",
   },
   {
     company: "Events Fare",
@@ -52,488 +45,416 @@ const experiences = [
       "Designing interfaces for an event platform focused on conversion and frictionless flows.",
     impact: [
       "Improved navigation clarity across dashboard and booking experiences.",
-      "Designed modern, conversion-focused UI components for critical funnels.",
-      "Applied UX principles around hierarchy, spacing, and consistency to tighten the system.",
+      "Designed modern, conversion-focused UI for critical funnels.",
+      "Applied UX principles around hierarchy, spacing, and consistency.",
     ],
     skills: ["Dashboard UX", "Conversion Design", "Wireframing", "UI Systems"],
     index: "03",
+    color: "#a78bfa",
   },
 ];
 
 const Experience = () => {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const headerRef = useRef<HTMLDivElement | null>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (headerRef.current) {
-        gsap.from(headerRef.current.children, {
-          opacity: 0,
-          y: 24,
-          duration: 0.9,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 85%",
-          },
-        });
-      }
-
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-        gsap.from(card, {
-          opacity: 0,
-          y: 40,
-          duration: 0.85,
-          delay: i * 0.07,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 92%",
-          },
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const [active, setActive] = useState(null);
 
   return (
-    <section id="experience" ref={sectionRef} className="exp-section">
+    <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
-        /* ── TOKENS (inherit from Hero :root, re-declared for safety) ── */
-        .exp-section {
-          background: var(--paper, #f0ece3);
-          border-top: 1px solid rgba(17,16,16,0.1);
-          padding: 96px 0;
-        }
-
-        .exp-inner {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 48px;
-        }
-
-        /* ── HEADER ── */
-        .exp-header {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          align-items: end;
-          gap: 24px;
-          margin-bottom: 72px;
-          padding-bottom: 48px;
-          border-bottom: 1px solid rgba(17,16,16,0.1);
-        }
-
-        .exp-eyebrow {
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--red, #c0392b);
-          display: inline-flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 20px;
-        }
-        .exp-eyebrow::before {
-          content: '';
-          width: 28px; height: 1px;
-          background: var(--red, #c0392b);
-          display: block;
-          flex-shrink: 0;
-        }
-
-        .exp-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(48px, 6vw, 86px);
-          line-height: 0.92;
-          letter-spacing: 2px;
-          color: var(--ink, #111010);
-          margin: 0;
-        }
-
-        .exp-title-italic {
-          font-family: 'DM Serif Display', serif;
-          font-style: italic;
-          font-size: clamp(18px, 2.5vw, 36px);
-          color: var(--red, #c0392b);
-          display: block;
-          line-height: 1.2;
-          margin-top: 8px;
-          font-weight: 400;
-        }
-
-        .exp-subtitle {
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
-          line-height: 2;
-          color: var(--mid, #6b6560);
-          max-width: 480px;
-          margin-top: 20px;
-          font-weight: 300;
-        }
-
-        .exp-meta-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(64px, 8vw, 104px);
-          line-height: 1;
-          color: var(--ink, #111010);
-          opacity: 0.06;
-          letter-spacing: 2px;
-          display: block;
-          text-align: right;
-        }
-
-        .exp-meta-label {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid, #6b6560);
-          text-align: right;
-          margin-top: -6px;
-          display: block;
-        }
-
-        /* ── TIMELINE TRACK ── */
-        .exp-timeline {
+        .ex-root {
+          min-height: 100vh;
+          background: #080b14;
+          font-family: 'DM Sans', sans-serif;
           position: relative;
-          display: flex;
-          flex-direction: column;
-          gap: 0;
+          overflow: hidden;
+          color: #fff;
         }
 
-        .exp-timeline::before {
+        .ex-bg-orb-1 {
+          position: absolute; top: 0; right: 0;
+          width: 600px; height: 500px;
+          background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 65%);
+          filter: blur(90px); pointer-events: none; z-index: 0;
+        }
+        .ex-bg-orb-2 {
+          position: absolute; bottom: -10%; left: -5%;
+          width: 500px; height: 400px;
+          background: radial-gradient(ellipse, rgba(6,182,212,0.09) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .ex-bg-grid {
+          position: absolute; inset: 0; z-index: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+          background-size: 60px 60px;
+          mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
+        }
+
+        .ex-inner {
+          position: relative; z-index: 2;
+          max-width: 1160px; margin: 0 auto;
+          padding: 80px 48px 100px;
+        }
+
+        /* Header */
+        .ex-header {
+          display: flex; align-items: flex-end;
+          justify-content: space-between;
+          margin-bottom: 72px;
+          opacity: 0; animation: exFadeUp 0.7s ease forwards 0.1s;
+        }
+        .ex-eyebrow {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+        }
+        .ex-eyebrow-line {
+          width: 32px; height: 1px;
+          background: linear-gradient(90deg, #818cf8, #67e8f9);
+        }
+        .ex-eyebrow-text {
+          font-size: 11px; font-weight: 500; color: #818cf8;
+          letter-spacing: 2.5px; text-transform: uppercase;
+        }
+        .ex-title {
+          font-family: 'Syne', sans-serif; font-weight: 800;
+          font-size: clamp(42px, 5.5vw, 72px);
+          line-height: 1; letter-spacing: -2px; color: #fff;
+        }
+        .ex-title-accent {
+          background: linear-gradient(135deg, #818cf8 0%, #67e8f9 60%, #a78bfa 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .ex-subtitle {
+          font-size: 14px; line-height: 1.7;
+          color: rgba(255,255,255,0.35); font-weight: 300;
+          max-width: 420px; margin-top: 14px;
+        }
+        .ex-header-num {
+          font-family: 'Syne', sans-serif; font-size: 120px; font-weight: 800;
+          line-height: 1; color: rgba(255,255,255,0.03);
+          letter-spacing: -4px; user-select: none;
+        }
+
+        /* Timeline */
+        .ex-timeline {
+          position: relative;
+          display: flex; flex-direction: column; gap: 20px;
+          opacity: 0; animation: exFadeUp 0.7s ease forwards 0.25s;
+        }
+
+        /* Vertical line */
+        .ex-timeline::before {
           content: '';
           position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
+          left: 0; top: 24px; bottom: 24px;
           width: 1px;
-          background: linear-gradient(to bottom, rgba(17,16,16,0.12) 0%, rgba(17,16,16,0.04) 100%);
+          background: linear-gradient(to bottom,
+            rgba(129,140,248,0.3) 0%,
+            rgba(103,232,249,0.2) 50%,
+            rgba(167,139,250,0.1) 100%
+          );
         }
 
-        /* ── CARD ── */
-        .exp-card {
+        /* Card */
+        .ex-card {
           position: relative;
-          padding: 44px 0 44px 52px;
-          border-bottom: 1px solid rgba(17,16,16,0.08);
+          padding-left: 48px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 20px;
+          padding: 32px 36px 32px 64px;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 48px;
-          transition: background 0.25s;
+          gap: 40px;
+          transition: all 0.25s; cursor: default;
+          overflow: hidden;
         }
-        .exp-card:last-child { border-bottom: none; }
-        .exp-card:hover { background: rgba(17,16,16,0.018); }
-
-        /* Timeline dot */
-        .exp-card::before {
+        .ex-card::after {
           content: '';
           position: absolute;
-          left: -4px;
-          top: 52px;
-          width: 9px; height: 9px;
+          top: 0; left: 0; bottom: 0; width: 3px;
+          background: var(--card-color, #818cf8);
+          opacity: 0; transition: opacity 0.25s;
+          border-radius: 20px 0 0 20px;
+        }
+        .ex-card:hover {
+          background: rgba(255,255,255,0.05);
+          border-color: rgba(255,255,255,0.12);
+          transform: translateX(4px);
+        }
+        .ex-card:hover::after { opacity: 1; }
+
+        /* Timeline dot */
+        .ex-dot {
+          position: absolute;
+          left: -6px; top: 40px;
+          width: 13px; height: 13px;
           border-radius: 50%;
-          background: var(--paper, #f0ece3);
-          border: 2px solid rgba(17,16,16,0.2);
-          transition: border-color 0.25s, background 0.25s;
+          border: 2px solid rgba(255,255,255,0.15);
+          background: #080b14;
+          transition: all 0.25s;
+          z-index: 2;
         }
-        .exp-card:hover::before {
-          border-color: var(--red, #c0392b);
-          background: var(--red, #c0392b);
+        .ex-card:hover .ex-dot {
+          border-color: var(--card-color, #818cf8);
+          background: var(--card-color, #818cf8);
+          box-shadow: 0 0 12px var(--card-color, #818cf8);
         }
 
-        /* ── LEFT PANE ── */
-        .exp-card-left {}
+        /* Left pane */
+        .ex-left {}
 
-        .exp-card-index {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
-          letter-spacing: 3px;
-          color: var(--mid, #6b6560);
-          opacity: 0.5;
-          margin-bottom: 16px;
+        .ex-card-idx {
+          font-size: 10px; font-weight: 500;
+          color: rgba(255,255,255,0.2);
+          letter-spacing: 2px; margin-bottom: 14px;
           display: block;
         }
 
-        .exp-card-company {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(28px, 3.5vw, 46px);
-          letter-spacing: 2px;
-          color: var(--ink, #111010);
-          line-height: 0.95;
-          margin-bottom: 6px;
+        .ex-company {
+          font-family: 'Syne', sans-serif; font-weight: 800;
+          font-size: clamp(22px, 3vw, 32px);
+          color: #fff; letter-spacing: -0.5px;
+          line-height: 1; margin-bottom: 6px;
         }
 
-        .exp-card-role {
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--mid, #6b6560);
-          margin-bottom: 20px;
+        .ex-role {
+          font-size: 12px; font-weight: 400;
+          color: rgba(255,255,255,0.35);
+          letter-spacing: 0.5px; text-transform: uppercase;
+          margin-bottom: 18px;
         }
 
-        .exp-card-summary {
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
-          line-height: 1.9;
-          color: var(--mid, #6b6560);
-          font-weight: 300;
-          max-width: 380px;
-          margin-bottom: 28px;
+        .ex-summary {
+          font-size: 13px; line-height: 1.75;
+          color: rgba(255,255,255,0.45); font-weight: 300;
+          max-width: 360px; margin-bottom: 22px;
         }
 
-        .exp-card-pills {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 6px;
+        .ex-pills {
+          display: flex; flex-wrap: wrap; gap: 7px;
         }
-
-        .exp-pill {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          padding: 5px 12px;
-          border: 1px solid rgba(17,16,16,0.18);
-          color: var(--ink, #111010);
-          opacity: 0.5;
+        .ex-pill {
+          font-size: 10px; font-weight: 400;
+          padding: 5px 13px; border-radius: 100px;
+          border: 1px solid rgba(255,255,255,0.08);
+          color: rgba(255,255,255,0.35);
+          background: rgba(255,255,255,0.03);
           transition: all 0.2s;
         }
-        .exp-pill:hover { opacity: 1; border-color: var(--ink, #111010); }
+        .ex-card:hover .ex-pill {
+          border-color: rgba(255,255,255,0.14);
+          color: rgba(255,255,255,0.6);
+        }
 
-        /* ── RIGHT PANE ── */
-        .exp-card-right {
-          display: flex;
-          flex-direction: column;
+        /* Right pane */
+        .ex-right {
+          display: flex; flex-direction: column;
           justify-content: space-between;
         }
 
-        .exp-card-meta {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          margin-bottom: 32px;
+        .ex-meta {
+          display: flex; flex-direction: column; gap: 8px;
+          margin-bottom: 28px;
         }
-
-        .exp-meta-row {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 1.5px;
-          color: var(--mid, #6b6560);
-          opacity: 0.6;
-        }
-        .exp-meta-row::before {
-          content: '';
-          width: 16px; height: 1px;
-          background: rgba(17,16,16,0.2);
-          flex-shrink: 0;
-        }
-
-        .exp-impact-label {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid, #6b6560);
-          opacity: 0.5;
-          margin-bottom: 14px;
-        }
-
-        .exp-impact-list {
-          list-style: none;
-          padding: 0; margin: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .exp-impact-item {
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
-          line-height: 1.8;
-          color: var(--mid, #6b6560);
+        .ex-meta-row {
+          display: flex; align-items: center; gap: 10px;
+          font-size: 12px; color: rgba(255,255,255,0.35);
           font-weight: 300;
-          display: flex;
-          gap: 12px;
-          align-items: flex-start;
         }
-        .exp-impact-item::before {
-          content: '—';
-          color: var(--red, #c0392b);
-          flex-shrink: 0;
-          margin-top: 1px;
-          font-size: 9px;
-          opacity: 0.7;
-        }
-
-        /* ── FOOTER ROW ── */
-        .exp-card-footer {
-          margin-top: 28px;
-          padding-top: 20px;
-          border-top: 1px solid rgba(17,16,16,0.07);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .exp-type-badge {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: var(--ink, #111010);
-          opacity: 0.35;
-          display: flex;
-          align-items: center;
-          gap: 7px;
-        }
-        .exp-type-badge::before {
+        .ex-meta-row::before {
           content: '';
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #27ae60;
+          width: 14px; height: 1px;
+          background: rgba(255,255,255,0.15);
+          flex-shrink: 0;
         }
 
-        .exp-scan-line {
-          width: 36px; height: 1px;
-          background: rgba(17,16,16,0.12);
-          overflow: hidden;
-          position: relative;
+        .ex-impact-label {
+          font-size: 9px; letter-spacing: 2.5px;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.2);
+          margin-bottom: 14px; display: block;
         }
-        .exp-scan-line::after {
+
+        .ex-impact-list {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-direction: column; gap: 12px;
+        }
+        .ex-impact-item {
+          font-size: 12px; line-height: 1.75;
+          color: rgba(255,255,255,0.4); font-weight: 300;
+          display: flex; gap: 12px; align-items: flex-start;
+        }
+        .ex-impact-bullet {
+          width: 4px; height: 4px; border-radius: 50%;
+          background: var(--card-color, #818cf8);
+          flex-shrink: 0; margin-top: 7px;
+        }
+
+        /* Card footer */
+        .ex-card-foot {
+          margin-top: 24px; padding-top: 18px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .ex-badge {
+          display: flex; align-items: center; gap: 7px;
+          font-size: 10px; color: rgba(255,255,255,0.25);
+          letter-spacing: 0.5px;
+        }
+        .ex-badge-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #4ade80;
+          box-shadow: 0 0 8px #4ade80;
+          animation: exPulse 2s infinite;
+        }
+        @keyframes exPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+        .ex-scan {
+          width: 32px; height: 1px;
+          background: rgba(255,255,255,0.1);
+          overflow: hidden; position: relative;
+        }
+        .ex-scan::after {
           content: '';
           position: absolute;
-          top: 0; left: -100%;
-          width: 100%; height: 100%;
-          background: var(--red, #c0392b);
-          animation: exp-scan 2.2s linear infinite;
+          top: 0; left: -100%; width: 100%; height: 100%;
+          background: var(--card-color, #818cf8);
+          animation: exScan 2s linear infinite;
         }
-        @keyframes exp-scan { to { left: 100%; } }
+        @keyframes exScan { to { left: 100%; } }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 1023px) {
-          .exp-inner { padding: 0 24px; }
-          .exp-section { padding: 72px 0; }
-          .exp-card { grid-template-columns: 1fr; gap: 28px; padding: 36px 0 36px 40px; }
-          .exp-card-right { border-top: 1px solid rgba(17,16,16,0.07); padding-top: 24px; }
+        /* Footer */
+        .ex-footer {
+          margin-top: 56px; padding-top: 32px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          display: flex; justify-content: space-between; align-items: center;
+          opacity: 0; animation: exFadeUp 0.7s ease forwards 0.5s;
         }
-        @media (max-width: 768px) {
-          .exp-inner { padding: 0 20px; }
-          .exp-section { padding: 56px 0; }
-          .exp-header { grid-template-columns: 1fr; }
-          .exp-meta-num, .exp-meta-label { text-align: left; }
-          .exp-card { padding: 28px 0 28px 32px; gap: 20px; }
-          .exp-header { margin-bottom: 48px; padding-bottom: 32px; }
+        .ex-foot-note {
+          font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px;
+        }
+        .ex-cta {
+          display: inline-flex; align-items: center; gap: 10px;
+          background: linear-gradient(135deg, #6366f1, #8b5cf6);
+          border: none; border-radius: 100px;
+          color: #fff; font-family: 'DM Sans', sans-serif;
+          font-size: 14px; font-weight: 500; padding: 13px 28px;
+          cursor: pointer; text-decoration: none;
+          transition: all 0.25s;
+          box-shadow: 0 8px 32px rgba(99,102,241,0.35);
+        }
+        .ex-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(99,102,241,0.5); }
+
+        @keyframes exFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 900px) {
+          .ex-inner { padding: 56px 24px 72px; }
+          .ex-header { margin-bottom: 48px; }
+          .ex-header-num { display: none; }
+          .ex-card { grid-template-columns: 1fr; gap: 24px; padding: 28px 28px 28px 52px; }
+          .ex-right { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; }
+          .ex-timeline::before { left: 16px; }
+          .ex-dot { left: 10px; }
         }
         @media (max-width: 640px) {
-          .exp-inner { padding: 0 16px; }
-          .exp-section { padding: 48px 0; }
-          .exp-card { padding: 24px 0 24px 24px; }
-          .exp-card-company { font-size: clamp(22px, 7vw, 32px); }
-          .exp-card-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+          .ex-inner { padding: 40px 20px 56px; }
+          .ex-title { font-size: 38px; }
+          .ex-card { padding: 24px 20px 24px 44px; }
+          .ex-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
         }
-
-        /* ── DARK MODE ── */
-        :root.dark .exp-section { border-top-color: rgba(240,236,227,0.1); }
-        :root.dark .exp-header { border-bottom-color: rgba(240,236,227,0.1); }
-        :root.dark .exp-timeline::before { background: linear-gradient(to bottom, rgba(240,236,227,0.1) 0%, rgba(240,236,227,0.03) 100%); }
-        :root.dark .exp-card { border-bottom-color: rgba(240,236,227,0.07); }
-        :root.dark .exp-card:hover { background: rgba(240,236,227,0.025); }
-        :root.dark .exp-card::before { background: var(--paper); border-color: rgba(240,236,227,0.2); }
-        :root.dark .exp-pill { border-color: rgba(240,236,227,0.15); }
-        :root.dark .exp-pill:hover { border-color: rgba(240,236,227,0.5); }
-        :root.dark .exp-meta-row::before { background: rgba(240,236,227,0.15); }
-        :root.dark .exp-card-footer { border-top-color: rgba(240,236,227,0.07); }
-        :root.dark .exp-card-right { border-top-color: rgba(240,236,227,0.07); }
-        :root.dark .exp-scan-line { background: rgba(240,236,227,0.1); }
-        :root.dark .metric-cell:hover { background: #1a1917; }
       `}</style>
 
-      <div className="exp-inner">
-        {/* ── HEADER ── */}
-        <div ref={headerRef} className="exp-header">
-          <div>
-            <div className="exp-eyebrow">Experience</div>
-            <h2 className="exp-title">
-              Work History
-              <span className="exp-title-italic">
-                Clarity, craft, and conversion focus.
-              </span>
-            </h2>
-            <p className="exp-subtitle">
-              Product thinking meets UX depth — shipping experiences that are
-              clear, scalable, and built for real users.
-            </p>
-          </div>
-          <div>
-            <span className="exp-meta-num">0{experiences.length}</span>
-            <span className="exp-meta-label">Internships</span>
-          </div>
-        </div>
+      <section id="experience" className="ex-root">
+        <div className="ex-bg-orb-1" />
+        <div className="ex-bg-orb-2" />
+        <div className="ex-bg-grid" />
 
-        {/* ── TIMELINE ── */}
-        <div className="exp-timeline">
-          {experiences.map((exp, i) => (
-            <div
-              key={exp.company}
-              className="exp-card"
-              ref={(el) => {
-                if (el) cardsRef.current[i] = el;
-              }}
-            >
-              {/* ── LEFT ── */}
-              <div className="exp-card-left">
-                <span className="exp-card-index">{exp.index}</span>
-                <div className="exp-card-company">{exp.company}</div>
-                <div className="exp-card-role">{exp.role}</div>
-                <p className="exp-card-summary">{exp.summary}</p>
-                <div className="exp-card-pills">
-                  {exp.skills.map((s) => (
-                    <span key={s} className="exp-pill">
-                      {s}
-                    </span>
-                  ))}
-                </div>
+        <div className="ex-inner">
+          {/* Header */}
+          <div className="ex-header">
+            <div>
+              <div className="ex-eyebrow">
+                <div className="ex-eyebrow-line" />
+                <span className="ex-eyebrow-text">Experience</span>
               </div>
-
-              {/* ── RIGHT ── */}
-              <div className="exp-card-right">
-                <div>
-                  <div className="exp-card-meta">
-                    <div className="exp-meta-row">{exp.duration}</div>
-                    <div className="exp-meta-row">{exp.location}</div>
-                  </div>
-
-                  <div className="exp-impact-label">Key Impact</div>
-                  <ul className="exp-impact-list">
-                    {exp.impact.map((point) => (
-                      <li key={point} className="exp-impact-item">
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="exp-card-footer">
-                  <span className="exp-type-badge">{exp.type}</span>
-                  <div className="exp-scan-line" />
-                </div>
-              </div>
+              <h2 className="ex-title">
+                Work <span className="ex-title-accent">History</span>
+              </h2>
+              <p className="ex-subtitle">
+                Product thinking meets UX depth — shipping experiences that are
+                clear, scalable, and built for real users.
+              </p>
             </div>
-          ))}
+            <div className="ex-header-num">0{experiences.length}</div>
+          </div>
+
+          {/* Timeline */}
+          <div className="ex-timeline">
+            {experiences.map((exp, i) => (
+              <div
+                key={exp.company}
+                className="ex-card"
+                style={{ "--card-color": exp.color }}
+                onMouseEnter={() => setActive(i)}
+                onMouseLeave={() => setActive(null)}
+              >
+                <div className="ex-dot" />
+
+                {/* Left */}
+                <div className="ex-left">
+                  <span className="ex-card-idx">{exp.index}</span>
+                  <div className="ex-company">{exp.company}</div>
+                  <div className="ex-role">{exp.role}</div>
+                  <p className="ex-summary">{exp.summary}</p>
+                  <div className="ex-pills">
+                    {exp.skills.map((s) => (
+                      <span key={s} className="ex-pill">{s}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right */}
+                <div className="ex-right">
+                  <div>
+                    <div className="ex-meta">
+                      <div className="ex-meta-row">{exp.duration}</div>
+                      <div className="ex-meta-row">{exp.location}</div>
+                    </div>
+                    <span className="ex-impact-label">Key Impact</span>
+                    <ul className="ex-impact-list">
+                      {exp.impact.map((point) => (
+                        <li key={point} className="ex-impact-item">
+                          <div className="ex-impact-bullet" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="ex-card-foot">
+                    <div className="ex-badge">
+                      <div className="ex-badge-dot" />
+                      {exp.type}
+                    </div>
+                    <div className="ex-scan" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer */}
+          <div className="ex-footer">
+            <span className="ex-foot-note">All positions — live shipped work</span>
+            <a href="#contact" className="ex-cta">Start a project →</a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

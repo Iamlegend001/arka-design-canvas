@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download } from "lucide-react";
+import DarkModeToggle from "./DarkModeToggle";
 import gsap from "gsap";
 
 const Navigation = () => {
@@ -71,6 +72,7 @@ const Navigation = () => {
                   {item.name}
                 </a>
               ))}
+              <DarkModeToggle />
               <a
                 href="https://drive.google.com/file/d/1kLvg3UuEbi7b_luPddZkr4gLL6dA5NPv/view?usp=sharing"
                 target="_blank"
@@ -116,6 +118,9 @@ const Navigation = () => {
                   {item.name}
                 </a>
               ))}
+              <div className="px-3 py-2 flex items-center justify-center">
+                <DarkModeToggle />
+              </div>
               <div className="px-3 py-2">
                 <a
                   href="https://drive.google.com/file/d/1kLvg3UuEbi7b_luPddZkr4gLL6dA5NPv/view?usp=sharing"

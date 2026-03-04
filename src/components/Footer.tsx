@@ -8,11 +8,7 @@ const quickLinks = [
 ];
 
 const socials = [
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/arkapravadevux/",
-    short: "LI",
-  },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/arkapravadevux/", short: "LI" },
   { name: "GitHub", href: "https://github.com/Iamlegend001", short: "GH" },
   { name: "Dribbble", href: "https://dribbble.com/imkuttu123", short: "DR" },
   { name: "Twitter", href: "https://x.com/DevLegend008", short: "TW" },
@@ -22,7 +18,6 @@ const EMAIL = "arkapravasantra17@gmail.com";
 
 const Footer = () => {
   const [copied, setCopied] = useState(false);
-  const [hovSoc, setHovSoc] = useState(null);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(EMAIL);
@@ -35,611 +30,400 @@ const Footer = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
-        :root {
-          --ink:    #111010;
-          --paper:  #f0ece3;
-          --red:    #c0392b;
-          --mid:    #6b6560;
-          --border: rgba(17,16,16,0.1);
-          /* footer uses inverted palette */
-          --f-bg:   #0e0d0d;
-          --f-text: #f0ece3;
-          --f-mid:  rgba(240,236,227,0.45);
-          --f-bdr:  rgba(240,236,227,0.1);
+        /* ── Root ── */
+        .ft-root {
+          background: #080b14;
+          font-family: 'DM Sans', sans-serif;
+          color: #fff;
+          position: relative;
+          overflow: hidden;
         }
 
-        :root.dark {
-          --ink:    #f0ece3;
-          --paper:  #0f0e0d;
-          --red:    #ff5247;
-          --mid:    #9b9490;
-          --border: rgba(240,236,227,0.1);
-          /* footer inverts back to light in dark mode */
-          --f-bg:   #f0ece3;
-          --f-text: #111010;
-          --f-mid:  rgba(17,16,16,0.45);
-          --f-bdr:  rgba(17,16,16,0.1);
+        /* ── Background ── */
+        .ft-bg-orb-1 {
+          position: absolute; bottom: 0; right: 0;
+          width: 600px; height: 500px;
+          background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .ft-bg-orb-2 {
+          position: absolute; top: 0; left: 0;
+          width: 500px; height: 400px;
+          background: radial-gradient(ellipse, rgba(6,182,212,0.09) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .ft-bg-grid {
+          position: absolute; inset: 0; z-index: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+          background-size: 60px 60px;
+          mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
         }
 
-        .footer {
-          background: var(--f-bg);
-          font-family: 'DM Mono', monospace;
-          color: var(--f-text);
+        /* ── Inner ── */
+        .ft-inner {
+          position: relative; z-index: 2;
+          max-width: 1160px; margin: 0 auto;
+          padding: 0 48px;
         }
 
-        /* ── Big CTA ── */
-        .footer-cta {
-          padding: 80px 48px 64px;
-          border-bottom: 1px solid var(--f-bdr);
+        /* ── CTA Block ── */
+        .ft-cta {
+          padding: 80px 0 64px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 48px;
+          gap: 56px;
           align-items: end;
         }
 
-        .footer-cta-headline {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(56px, 8vw, 110px);
-          line-height: 0.9;
-          letter-spacing: 2px;
-          color: var(--f-text);
+        .ft-cta-headline {
+          font-family: 'Syne', sans-serif; font-weight: 800;
+          font-size: clamp(42px, 5.5vw, 72px);
+          line-height: 1; letter-spacing: -2px; color: #fff;
+          margin: 0;
         }
-        .footer-cta-headline em {
-          font-family: 'DM Serif Display', serif;
-          font-style: italic;
-          color: var(--red);
-          font-size: 0.62em;
+        .ft-cta-headline-accent {
+          background: linear-gradient(135deg, #818cf8 0%, #67e8f9 60%, #a78bfa 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
           display: block;
-          line-height: 1.2;
-          letter-spacing: 0;
-          margin-top: 8px;
         }
 
-        .footer-cta-right {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          align-items: flex-start;
+        .ft-cta-right {
+          display: flex; flex-direction: column; gap: 20px;
         }
-        .footer-cta-sub {
-          font-size: 12px;
-          line-height: 1.9;
-          color: var(--f-mid);
-          max-width: 340px;
-          font-weight: 300;
+        .ft-cta-eyebrow {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 4px;
+        }
+        .ft-cta-eyebrow-line {
+          width: 32px; height: 1px;
+          background: linear-gradient(90deg, #818cf8, #67e8f9);
+        }
+        .ft-cta-eyebrow-text {
+          font-size: 11px; font-weight: 500; color: #818cf8;
+          letter-spacing: 2.5px; text-transform: uppercase;
+        }
+        .ft-cta-sub {
+          font-size: 13px; font-weight: 300;
+          color: rgba(255,255,255,0.35);
+          line-height: 1.75; margin: 0;
+          max-width: 360px;
         }
 
-        /* Email copy block */
-        .email-block {
-          border: 1px solid var(--f-bdr);
-          padding: 20px 24px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 16px;
-          cursor: pointer;
-          width: 100%;
-          position: relative;
-          overflow: hidden;
-          transition: border-color 0.2s;
-          background: none;
+        /* Email block */
+        .ft-email-block {
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 14px;
+          padding: 20px 22px;
+          display: flex; align-items: center;
+          justify-content: space-between; gap: 16px;
+          cursor: pointer; width: 100%;
+          position: relative; overflow: hidden;
+          transition: border-color 0.25s, background 0.25s;
           text-align: left;
         }
-        .email-block:hover { border-color: rgba(240,236,227,0.3); }
+        .ft-email-block::before {
+          content: ''; position: absolute;
+          top: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, #818cf8, #67e8f9);
+          opacity: 0; transition: opacity 0.25s;
+        }
+        .ft-email-block:hover {
+          border-color: rgba(255,255,255,0.15);
+          background: rgba(255,255,255,0.055);
+        }
+        .ft-email-block:hover::before { opacity: 1; }
 
-        .email-block::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: var(--red);
-          transform: translateY(101%);
-          transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
-          z-index: 0;
+        .ft-email-label {
+          font-size: 9px; font-weight: 500;
+          letter-spacing: 2.5px; text-transform: uppercase;
+          color: rgba(255,255,255,0.25); display: block; margin-bottom: 6px;
         }
-        .email-block:hover::after { transform: translateY(0); }
-
-        .email-label {
-          font-size: 8px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          display: block;
-          margin-bottom: 4px;
-          position: relative;
-          z-index: 1;
+        .ft-email-addr {
+          font-size: 15px; font-weight: 400;
+          color: rgba(255,255,255,0.8); letter-spacing: 0.2px;
         }
-        .email-addr {
-          font-size: 13px;
-          letter-spacing: 0.5px;
-          color: var(--f-text);
-          font-weight: 400;
-          position: relative;
-          z-index: 1;
-        }
-        .email-action {
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          position: relative;
-          z-index: 1;
+        .ft-email-action {
+          font-size: 9px; font-weight: 500;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(255,255,255,0.25); flex-shrink: 0;
           transition: color 0.2s;
-          flex-shrink: 0;
         }
-        .email-block:hover .email-action { color: var(--f-text); }
-        .email-copied {
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: #2ecc71;
-          position: relative;
-          z-index: 1;
-          flex-shrink: 0;
+        .ft-email-block:hover .ft-email-action { color: #818cf8; }
+        .ft-email-copied {
+          font-size: 9px; font-weight: 500;
+          letter-spacing: 2px; text-transform: uppercase;
+          color: #34d399; flex-shrink: 0;
         }
 
-        /* ── Middle row ── */
-        .footer-mid {
+        /* ── Mid Grid ── */
+        .ft-mid {
           display: grid;
           grid-template-columns: 1.4fr 1fr 1fr 1fr;
-          border-bottom: 1px solid var(--f-bdr);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .footer-col {
-          padding: 40px 40px 40px 48px;
-          border-right: 1px solid var(--f-bdr);
+        .ft-col {
+          padding: 40px 36px 40px 0;
+          border-right: 1px solid rgba(255,255,255,0.06);
+          padding-right: 36px;
         }
-        .footer-col:last-child { border-right: none; }
+        .ft-col:first-child { padding-left: 0; }
+        .ft-col:last-child { border-right: none; padding-right: 0; }
+        .ft-col + .ft-col { padding-left: 36px; }
 
-        .footer-col-label {
-          font-size: 8px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          opacity: 0.6;
-          margin-bottom: 20px;
-          display: block;
+        .ft-col-label {
+          font-size: 9px; font-weight: 500;
+          letter-spacing: 2.5px; text-transform: uppercase;
+          color: rgba(255,255,255,0.2); display: block; margin-bottom: 20px;
         }
 
         /* Brand col */
-        .footer-brand-name {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 36px;
-          letter-spacing: 3px;
-          color: var(--f-text);
-          line-height: 1;
-          display: block;
-          margin-bottom: 4px;
+        .ft-brand-name {
+          font-family: 'Syne', sans-serif; font-weight: 800;
+          font-size: 32px; letter-spacing: -1px;
+          color: #fff; line-height: 1; display: block; margin-bottom: 6px;
         }
-        .footer-brand-name span { color: var(--red); }
-        .footer-brand-role {
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          display: block;
-          margin-bottom: 20px;
+        .ft-brand-accent {
+          background: linear-gradient(135deg, #818cf8, #67e8f9);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .footer-brand-loc {
-          font-size: 9px;
-          letter-spacing: 1.5px;
-          color: var(--f-mid);
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          opacity: 0.5;
+        .ft-brand-role {
+          font-size: 10px; font-weight: 400;
+          letter-spacing: 1.5px; text-transform: uppercase;
+          color: rgba(255,255,255,0.25); display: block; margin-bottom: 18px;
         }
-        .footer-brand-loc::before {
-          content: '◆';
-          font-size: 5px;
-          color: var(--red);
+        .ft-brand-loc {
+          font-size: 11px; font-weight: 300;
+          color: rgba(255,255,255,0.2);
+          display: flex; align-items: center; gap: 8px;
+        }
+        .ft-brand-loc-dot {
+          width: 5px; height: 5px; border-radius: 50%;
+          background: #818cf8; opacity: 0.5; flex-shrink: 0;
         }
 
         /* Nav col */
-        .footer-nav {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-        .footer-nav a {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 10px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          text-decoration: none;
-          padding: 7px 0;
+        .ft-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+        .ft-nav a {
+          display: flex; align-items: center; gap: 10px;
+          font-size: 13px; font-weight: 400;
+          color: rgba(255,255,255,0.3);
+          text-decoration: none; padding: 7px 0;
           border-bottom: 1px solid transparent;
-          transition: color 0.2s, border-color 0.2s;
+          transition: color 0.2s;
+          position: relative;
         }
-        .footer-nav a::before {
-          content: '→';
-          font-size: 10px;
-          color: var(--red);
-          opacity: 0;
-          transition: opacity 0.2s;
+        .ft-nav-arrow {
+          font-size: 11px; color: #818cf8;
+          opacity: 0; transform: translateX(-4px);
+          transition: opacity 0.2s, transform 0.2s;
         }
-        .footer-nav a:hover { color: var(--f-text); }
-        .footer-nav a:hover::before { opacity: 1; }
+        .ft-nav a:hover { color: #fff; }
+        .ft-nav a:hover .ft-nav-arrow { opacity: 1; transform: translateX(0); }
 
         /* Socials col */
-        .footer-socials {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-        .footer-social-link {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 10px 0;
-          border-bottom: 1px solid var(--f-bdr);
+        .ft-socials { display: flex; flex-direction: column; }
+        .ft-social-link {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 11px 0;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
           text-decoration: none;
           transition: border-color 0.2s;
         }
-        .footer-social-link:last-child { border-bottom: none; }
-        .footer-social-link:hover { border-bottom-color: rgba(240,236,227,0.25); }
-
-        .social-name {
-          font-size: 10px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          transition: color 0.2s;
+        .ft-social-link:last-child { border-bottom: none; }
+        .ft-social-link:hover { border-bottom-color: rgba(255,255,255,0.1); }
+        .ft-social-name {
+          font-size: 13px; font-weight: 400;
+          color: rgba(255,255,255,0.3); transition: color 0.2s;
         }
-        .footer-social-link:hover .social-name { color: var(--f-text); }
-
-        .social-arrow {
-          font-size: 10px;
-          color: var(--f-mid);
-          opacity: 0;
-          transform: translateX(-4px);
-          transition: opacity 0.2s, transform 0.2s;
+        .ft-social-link:hover .ft-social-name { color: #fff; }
+        .ft-social-arrow {
+          font-size: 12px; color: rgba(255,255,255,0.15);
+          opacity: 0; transform: translateX(-4px);
+          transition: opacity 0.2s, transform 0.2s, color 0.2s;
         }
-        .footer-social-link:hover .social-arrow { opacity: 1; transform: translateX(0); }
+        .ft-social-link:hover .ft-social-arrow {
+          opacity: 1; transform: translateX(0); color: #818cf8;
+        }
 
         /* Status col */
-        .avail-pill {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: #2ecc71;
-          margin-bottom: 20px;
+        .ft-avail-pill {
+          display: flex; align-items: center; gap: 8px;
+          font-size: 10px; font-weight: 500;
+          letter-spacing: 1.5px; text-transform: uppercase;
+          color: #34d399; margin-bottom: 16px;
         }
-        .avail-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #2ecc71;
-          animation: blink 2s infinite;
+        .ft-avail-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #34d399;
+          animation: ftPulse 2s infinite;
         }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-        .footer-status-text {
-          font-size: 10px;
-          line-height: 1.9;
-          color: var(--f-mid);
-          font-weight: 300;
+        @keyframes ftPulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+        .ft-status-text {
+          font-size: 12px; font-weight: 300;
+          color: rgba(255,255,255,0.25); line-height: 1.75;
         }
 
-        /* ── Bottom bar ── */
-        .footer-bottom {
-          padding: 18px 48px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        /* ── Bottom Bar ── */
+        .ft-bottom {
+          padding: 20px 0;
+          display: flex; justify-content: space-between; align-items: center;
         }
-        .footer-copy {
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          opacity: 0.4;
+        .ft-copy {
+          font-size: 10px; font-weight: 400;
+          letter-spacing: 1px; color: rgba(255,255,255,0.15);
         }
-        .footer-top-btn {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--f-mid);
-          opacity: 0.4;
-          background: none;
-          border: none;
-          cursor: pointer;
-          font-family: 'DM Mono', monospace;
-          transition: opacity 0.2s;
-          padding: 0;
+        .ft-top-btn {
+          display: flex; align-items: center; gap: 8px;
+          font-size: 10px; font-weight: 500;
+          letter-spacing: 1.5px; text-transform: uppercase;
+          color: rgba(255,255,255,0.2);
+          background: none; border: none; cursor: pointer;
+          font-family: 'DM Sans', sans-serif;
+          transition: color 0.2s; padding: 0;
         }
-        .footer-top-btn:hover { opacity: 1; }
-        .footer-top-btn .arr {
-          display: inline-block;
-          transition: transform 0.2s;
-        }
-        .footer-top-btn:hover .arr { transform: translateY(-3px); }
+        .ft-top-btn:hover { color: rgba(255,255,255,0.6); }
+        .ft-top-arr { transition: transform 0.2s; display: inline-block; }
+        .ft-top-btn:hover .ft-top-arr { transform: translateY(-3px); }
 
-        /* ── Responsive ───────────────────────────────────────────── */
+        /* ── Responsive ── */
         @media (max-width: 1024px) {
-          .footer-cta {
-            padding: 64px 36px 48px;
-            gap: 40px;
+          .ft-inner { padding: 0 36px; }
+          .ft-cta { padding: 64px 0 48px; gap: 40px; }
+          .ft-mid { grid-template-columns: 1fr 1fr; }
+          .ft-col {
+            padding: 32px 0 32px !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
           }
-          .footer-cta-headline {
-            font-size: clamp(48px, 8vw, 90px);
-          }
-          .footer-mid {
-            grid-template-columns: 1fr 1fr;
-          }
-          .footer-col {
-            padding: 36px 36px;
-            border-right: 1px solid var(--f-bdr);
-            border-bottom: 1px solid var(--f-bdr);
-          }
+          .ft-col:nth-child(odd) { padding-right: 24px !important; }
+          .ft-col:nth-child(even) { padding-left: 24px !important; border-left: 1px solid rgba(255,255,255,0.06); }
         }
-
-        /* Tablet: 768-1024px */
         @media (max-width: 768px) {
-          .footer-cta {
-            padding: 56px 28px 40px;
-            grid-template-columns: 1fr;
-            gap: 32px;
-          }
-          .footer-cta-headline {
-            font-size: clamp(40px, 10vw, 72px);
-          }
-          .footer-cta-sub {
-            font-size: 11px;
-            max-width: 100%;
-          }
-          .email-addr {
-            font-size: 12px;
-          }
-          .footer-mid {
-            grid-template-columns: 1fr;
-          }
-          .footer-col {
-            padding: 32px 28px;
-            border-right: none;
-            border-bottom: 1px solid var(--f-bdr);
-          }
-          .footer-brand-name {
-            font-size: 32px;
-          }
-          .footer-bottom {
-            padding: 20px 28px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-          }
+          .ft-cta { grid-template-columns: 1fr; gap: 32px; }
+          .ft-mid { grid-template-columns: 1fr; }
+          .ft-col { padding: 28px 0 !important; border-left: none !important; border-right: none !important; }
+          .ft-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
-
-        /* Mobile: below 768px */
         @media (max-width: 640px) {
-          .footer-cta {
-            padding: 48px 20px 36px;
-            grid-template-columns: 1fr;
-            gap: 28px;
-          }
-          .footer-cta-headline {
-            font-size: clamp(32px, 12vw, 56px);
-            letter-spacing: 1px;
-          }
-          .footer-cta-headline em {
-            font-size: 0.58em;
-            margin-top: 6px;
-          }
-          .footer-cta-sub {
-            font-size: 10px;
-            line-height: 1.8;
-            max-width: 100%;
-          }
-          .email-block {
-            padding: 16px 20px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
-          }
-          .email-label {
-            font-size: 7px;
-          }
-          .email-addr {
-            font-size: 11px;
-          }
-          .email-action,
-          .email-copied {
-            font-size: 8px;
-          }
-          .footer-mid {
-            grid-template-columns: 1fr;
-          }
-          .footer-col {
-            padding: 28px 20px;
-            border-right: none;
-            border-bottom: 1px solid var(--f-bdr);
-          }
-          .footer-col-label {
-            font-size: 7px;
-            margin-bottom: 16px;
-          }
-          .footer-brand-name {
-            font-size: 28px;
-            letter-spacing: 2px;
-          }
-          .footer-brand-role {
-            font-size: 8px;
-          }
-          .footer-brand-loc {
-            font-size: 8px;
-          }
-          .footer-nav a {
-            font-size: 9px;
-            padding: 6px 0;
-          }
-          .social-name {
-            font-size: 9px;
-          }
-          .avail-pill {
-            font-size: 8px;
-          }
-          .footer-status-text {
-            font-size: 9px;
-            line-height: 1.8;
-          }
-          .footer-bottom {
-            padding: 16px 20px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-          }
-          .footer-copy {
-            font-size: 8px;
-          }
-          .footer-top-btn {
-            font-size: 8px;
-          }
-        }
-
-        /* Very small: below 380px */
-        @media (max-width: 380px) {
-          .footer-cta {
-            padding: 40px 16px 32px;
-          }
-          .footer-cta-headline {
-            font-size: 28px;
-          }
-          .footer-cta-sub {
-            font-size: 9px;
-          }
-          .email-block {
-            padding: 14px 16px;
-          }
-          .email-addr {
-            font-size: 10px;
-          }
-          .footer-col {
-            padding: 24px 16px;
-          }
-          .footer-brand-name {
-            font-size: 24px;
-            letter-spacing: 1px;
-          }
-          .footer-bottom {
-            padding: 14px 16px;
-          }
-          .footer-copy {
-            font-size: 7px;
-          }
+          .ft-inner { padding: 0 20px; }
+          .ft-cta { padding: 48px 0 36px; }
+          .ft-cta-headline { font-size: 38px; }
+          .ft-email-addr { font-size: 13px; }
         }
       `}</style>
 
-      <footer className="footer">
-        {/* Big CTA */}
-        <div className="footer-cta">
-          <div>
-            <h2 className="footer-cta-headline">
-              Let's build
-              <em>something real.</em>
-            </h2>
+      <footer className="ft-root">
+        <div className="ft-bg-orb-1" />
+        <div className="ft-bg-orb-2" />
+        <div className="ft-bg-grid" />
+
+        <div className="ft-inner">
+
+          {/* CTA */}
+          <div className="ft-cta">
+            <div>
+              <h2 className="ft-cta-headline">
+                Let's build
+                <span className="ft-cta-headline-accent">something real.</span>
+              </h2>
+            </div>
+            <div className="ft-cta-right">
+              <div className="ft-cta-eyebrow">
+                <div className="ft-cta-eyebrow-line" />
+                <span className="ft-cta-eyebrow-text">Get in touch</span>
+              </div>
+              <p className="ft-cta-sub">
+                Available for freelance projects and full-time roles. Most useful
+                when the problem is messy and the interface needs to make it simple.
+              </p>
+              <button type="button" className="ft-email-block" onClick={copyEmail}>
+                <div>
+                  <span className="ft-email-label">Email</span>
+                  <span className="ft-email-addr">{EMAIL}</span>
+                </div>
+                {copied
+                  ? <span className="ft-email-copied">✓ Copied</span>
+                  : <span className="ft-email-action">Copy →</span>}
+              </button>
+            </div>
           </div>
 
-          <div className="footer-cta-right">
-            <p className="footer-cta-sub">
-              Available for freelance projects and full-time roles. I'm most
-              useful when the problem is messy and the interface needs to make
-              it simple.
-            </p>
+          {/* Mid */}
+          <div className="ft-mid">
+            {/* Brand */}
+            <div className="ft-col">
+              <span className="ft-col-label">Designer</span>
+              <span className="ft-brand-name">
+                Arka<span className="ft-brand-accent">prava.</span>
+              </span>
+              <span className="ft-brand-role">UI/UX Designer · Aspiring Design Lead</span>
+              <span className="ft-brand-loc">
+                <span className="ft-brand-loc-dot" />
+                West Bengal, India · Remote
+              </span>
+            </div>
 
-            <button type="button" className="email-block" onClick={copyEmail}>
-              <div>
-                <span className="email-label">Email</span>
-                <span className="email-addr">{EMAIL}</span>
+            {/* Nav */}
+            <div className="ft-col">
+              <span className="ft-col-label">Navigate</span>
+              <ul className="ft-nav">
+                {quickLinks.map((l) => (
+                  <li key={l.name}>
+                    <a href={l.href}>
+                      <span className="ft-nav-arrow">→</span>
+                      {l.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Socials */}
+            <div className="ft-col">
+              <span className="ft-col-label">Find me on</span>
+              <div className="ft-socials">
+                {socials.map((s) => (
+                  <a
+                    key={s.name}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ft-social-link"
+                  >
+                    <span className="ft-social-name">{s.name}</span>
+                    <span className="ft-social-arrow">↗</span>
+                  </a>
+                ))}
               </div>
-              {copied ? (
-                <span className="email-copied">✓ Copied</span>
-              ) : (
-                <span className="email-action">Copy →</span>
-              )}
+            </div>
+
+            {/* Status */}
+            <div className="ft-col">
+              <span className="ft-col-label">Status</span>
+              <div className="ft-avail-pill">
+                <span className="ft-avail-dot" />
+                Open to work
+              </div>
+              <p className="ft-status-text">
+                Actively looking for product design roles and freelance projects.
+                Response time: within 24 hrs.
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom */}
+          <div className="ft-bottom">
+            <span className="ft-copy">© 2025 Arkaprava Santra — All rights reserved</span>
+            <button type="button" className="ft-top-btn" onClick={scrollTop}>
+              Back to top <span className="ft-top-arr">↑</span>
             </button>
           </div>
-        </div>
 
-        {/* Middle */}
-        <div className="footer-mid">
-          {/* Brand */}
-          <div className="footer-col">
-            <span className="footer-col-label">Designer</span>
-            <span className="footer-brand-name">
-              Arkaprava<span>.</span>
-            </span>
-            <span className="footer-brand-role">
-              UI/UX Designer · Aspiring Design Lead
-            </span>
-            <span className="footer-brand-loc">
-              West Bengal, India · Remote
-            </span>
-          </div>
-
-          {/* Nav */}
-          <div className="footer-col">
-            <span className="footer-col-label">Navigate</span>
-            <ul className="footer-nav">
-              {quickLinks.map((l) => (
-                <li key={l.name}>
-                  <a href={l.href}>{l.name}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Socials */}
-          <div className="footer-col">
-            <span className="footer-col-label">Find me on</span>
-            <div className="footer-socials">
-              {socials.map((s) => (
-                <a
-                  key={s.name}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-link"
-                  onMouseEnter={() => setHovSoc(s.name)}
-                  onMouseLeave={() => setHovSoc(null)}
-                >
-                  <span className="social-name">{s.name}</span>
-                  <span className="social-arrow">↗</span>
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Status */}
-          <div className="footer-col">
-            <span className="footer-col-label">Status</span>
-            <div className="avail-pill">
-              <span className="avail-dot" />
-              Open to work
-            </div>
-            <p className="footer-status-text">
-              Actively looking for product design roles and freelance projects.
-              Response time: within 24 hrs.
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="footer-bottom">
-          <span className="footer-copy">
-            © 2025 Arkaprava Santra — All rights reserved
-          </span>
-          <button type="button" className="footer-top-btn" onClick={scrollTop}>
-            Back to top <span className="arr">↑</span>
-          </button>
         </div>
       </footer>
     </>

@@ -6,48 +6,56 @@ const skills = [
     name: "UI Design",
     desc: "Creating beautiful, intuitive interfaces that guide users naturally through a product.",
     tags: ["Visual Hierarchy", "Typography", "Color Systems"],
+    icon: "✦",
   },
   {
     index: "02",
     name: "UX Research",
     desc: "Talking to real users, mapping behaviour, and surfacing the insights that actually matter.",
     tags: ["Surveys", "Interviews", "Competitive Analysis"],
+    icon: "◎",
   },
   {
     index: "03",
     name: "Wireframing",
     desc: "Structuring information and layout before committing to high-fidelity — fast and decisive.",
     tags: ["Low-fi", "Flow Mapping", "Information Architecture"],
+    icon: "⬡",
   },
   {
     index: "04",
     name: "Interaction Design",
     desc: "Designing the moments between states — transitions, feedback, and micro-interactions.",
     tags: ["Prototyping", "Motion Logic", "State Design"],
+    icon: "◈",
   },
   {
     index: "05",
     name: "Design Systems",
     desc: "Building scalable component libraries that keep products consistent as they grow.",
     tags: ["Components", "Tokens", "Documentation"],
+    icon: "⊞",
   },
   {
     index: "06",
     name: "Usability Testing",
     desc: "Validating decisions with real users before shipping — so problems are found early.",
     tags: ["Testing", "Iteration", "Heuristics"],
+    icon: "◉",
   },
   {
     index: "07",
     name: "Responsive Design",
     desc: "Adapting layouts across every screen size without losing intent or hierarchy.",
     tags: ["Mobile-first", "Breakpoints", "Adaptive Layouts"],
+    icon: "▣",
   },
   {
     index: "08",
     name: "Prototyping",
     desc: "Making ideas testable and tangible — from paper sketches to interactive Figma flows.",
     tags: ["Figma", "Framer", "Interactive Flows"],
+    icon: "⬢",
   },
 ];
 
@@ -57,446 +65,257 @@ const Skills = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
-        :root {
-          --ink: #111010;
-          --paper: #f0ece3;
-          --red: #c0392b;
-          --mid: #6b6560;
-          --border: rgba(17,16,16,0.1);
+        .sk-root {
+          min-height: 100vh;
+          background: #080b14;
+          font-family: 'DM Sans', sans-serif;
+          position: relative;
+          overflow: hidden;
+          color: #fff;
         }
 
-        :root.dark {
-          --ink: #f0ece3;
-          --paper: #0f0e0d;
-          --red: #ff5247;
-          --mid: #9b9490;
-          --border: rgba(240,236,227,0.1);
+        .sk-bg-orb-1 {
+          position: absolute; top: -5%; left: -5%;
+          width: 550px; height: 450px;
+          background: radial-gradient(ellipse, rgba(99,102,241,0.13) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .sk-bg-orb-2 {
+          position: absolute; bottom: 0; right: -5%;
+          width: 500px; height: 400px;
+          background: radial-gradient(ellipse, rgba(6,182,212,0.10) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .sk-bg-grid {
+          position: absolute; inset: 0; z-index: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+          background-size: 60px 60px;
+          mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
         }
 
-        .skills-section {
-          background: var(--paper);
-          font-family: 'DM Mono', monospace;
+        .sk-inner {
+          position: relative; z-index: 2;
+          max-width: 1160px; margin: 0 auto;
+          padding: 80px 48px 100px;
         }
 
         /* Header */
-        .skills-header {
-          padding: 72px 48px 56px;
-          border-bottom: 1px solid var(--border);
-          display: grid;
-          grid-template-columns: 1fr auto;
-          align-items: end;
-          gap: 32px;
+        .sk-header {
+          display: flex; align-items: flex-end;
+          justify-content: space-between;
+          margin-bottom: 64px;
+          opacity: 0; animation: skFadeUp 0.7s ease forwards 0.1s;
         }
-        .skills-eyebrow {
-          font-size: 10px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--red);
-          margin-bottom: 20px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
+        .sk-eyebrow {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
         }
-        .skills-eyebrow::before {
-          content: '';
-          width: 28px; height: 1px;
-          background: var(--red);
-          display: block;
-          flex-shrink: 0;
+        .sk-eyebrow-line {
+          width: 32px; height: 1px;
+          background: linear-gradient(90deg, #818cf8, #67e8f9);
         }
-        .skills-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(52px, 7vw, 96px);
-          line-height: 0.9;
-          letter-spacing: 2px;
-          color: var(--ink);
+        .sk-eyebrow-text {
+          font-size: 11px; font-weight: 500; color: #818cf8;
+          letter-spacing: 2.5px; text-transform: uppercase;
         }
-        .skills-title-italic {
-          font-family: 'DM Serif Display', serif;
-          font-style: italic;
-          color: var(--red);
-          font-size: 0.55em;
-          display: block;
-          letter-spacing: 0;
-          line-height: 1.3;
-          margin-top: 6px;
+        .sk-title {
+          font-family: 'Syne', sans-serif; font-weight: 800;
+          font-size: clamp(42px, 5.5vw, 72px);
+          line-height: 1; letter-spacing: -2px; color: #fff;
         }
-        .skills-header-meta { text-align: right; }
-        .skills-header-meta-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 64px;
-          line-height: 1;
-          color: var(--ink);
-          opacity: 0.07;
-          letter-spacing: 2px;
+        .sk-title-accent {
+          background: linear-gradient(135deg, #818cf8 0%, #67e8f9 60%, #a78bfa 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .skills-header-meta-label {
-          font-size: 9px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid);
-          margin-top: -8px;
+        .sk-header-num {
+          font-family: 'Syne', sans-serif; font-size: 120px; font-weight: 800;
+          line-height: 1; color: rgba(255,255,255,0.03);
+          letter-spacing: -4px; user-select: none;
         }
 
-        /* Table head */
-        .skills-table-head {
-          display: grid;
-          grid-template-columns: 56px 1fr 1fr;
-          padding: 14px 48px;
-          border-bottom: 1px solid var(--border);
-          background: rgba(17,16,16,0.02);
-        }
-        .skills-table-head span {
-          font-size: 8px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.6;
-        }
-
-        /* Grid of skill rows — 2 columns */
-        .skills-grid {
+        /* Grid */
+        .sk-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          opacity: 0; animation: skFadeUp 0.7s ease forwards 0.2s;
         }
 
-        .skill-cell {
-          padding: 28px 48px;
-          border-bottom: 1px solid var(--border);
-          border-right: 1px solid var(--border);
-          display: grid;
-          grid-template-columns: 56px 1fr;
-          gap: 0 0;
-          align-items: start;
-          transition: background 0.2s;
-          cursor: default;
-          position: relative;
-          overflow: hidden;
+        .sk-card {
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 20px;
+          padding: 28px 32px;
+          position: relative; overflow: hidden;
+          transition: all 0.25s; cursor: default;
         }
-        .skill-cell:nth-child(even) { border-right: none; }
-        .skill-cell::before {
+        .sk-card::before {
           content: '';
-          position: absolute;
-          left: 0; top: 0; bottom: 0;
-          width: 3px;
-          background: var(--red);
-          transform: scaleY(0);
-          transform-origin: bottom;
-          transition: transform 0.25s ease;
+          position: absolute; top: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, #6366f1, #67e8f9);
+          opacity: 0; transition: opacity 0.25s;
         }
-        .skill-cell:hover { background: rgba(17,16,16,0.025); }
-        .skill-cell:hover::before { transform: scaleY(1); }
+        .sk-card:hover {
+          background: rgba(255,255,255,0.055);
+          border-color: rgba(255,255,255,0.13);
+          transform: translateY(-3px);
+          box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+        }
+        .sk-card:hover::before { opacity: 1; }
 
-        .skill-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 18px;
-          letter-spacing: 2px;
-          color: var(--ink);
-          opacity: 0.15;
-          transition: opacity 0.2s, color 0.2s;
-          padding-top: 3px;
-        }
-        .skill-cell:hover .skill-num { opacity: 1; color: var(--red); }
-
-        .skill-content {}
-        .skill-name {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px;
-          letter-spacing: 2px;
-          color: var(--ink);
-          line-height: 1;
-          display: block;
-          margin-bottom: 8px;
-        }
-        .skill-desc {
-          font-size: 10px;
-          line-height: 1.8;
-          color: var(--mid);
-          font-weight: 300;
+        .sk-card-top {
+          display: flex; align-items: flex-start;
+          justify-content: space-between;
           margin-bottom: 14px;
-          display: block;
         }
-        .skill-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 6px;
+        .sk-card-icon-wrap {
+          width: 44px; height: 44px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px;
+          color: rgba(129,140,248,0.6);
+          transition: all 0.25s;
+          flex-shrink: 0;
         }
-        .skill-tag {
-          font-size: 8px;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          padding: 3px 10px;
-          border: 1px solid var(--border);
-          color: var(--mid);
-          opacity: 0.7;
+        .sk-card:hover .sk-card-icon-wrap {
+          background: rgba(99,102,241,0.12);
+          border-color: rgba(129,140,248,0.3);
+          color: #818cf8;
+        }
+        .sk-card-num {
+          font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+          color: rgba(255,255,255,0.1); letter-spacing: 1px;
+          transition: color 0.2s;
+        }
+        .sk-card:hover .sk-card-num { color: rgba(129,140,248,0.5); }
+
+        .sk-card-name {
+          font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700;
+          color: rgba(255,255,255,0.85); letter-spacing: -0.5px;
+          line-height: 1.1; margin-bottom: 10px;
+          transition: color 0.2s;
+        }
+        .sk-card:hover .sk-card-name { color: #fff; }
+
+        .sk-card-desc {
+          font-size: 13px; line-height: 1.75;
+          color: rgba(255,255,255,0.4);
+          font-weight: 300; margin-bottom: 18px;
+        }
+
+        .sk-tags {
+          display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .sk-tag {
+          font-size: 10px; font-weight: 400;
+          padding: 4px 12px; border-radius: 100px;
+          border: 1px solid rgba(255,255,255,0.08);
+          color: rgba(255,255,255,0.35);
+          letter-spacing: 0.3px;
+          background: rgba(255,255,255,0.02);
           transition: all 0.2s;
         }
-        .skill-cell:hover .skill-tag {
-          border-color: rgba(17,16,16,0.2);
-          opacity: 1;
+        .sk-card:hover .sk-tag {
+          border-color: rgba(129,140,248,0.25);
+          color: rgba(129,140,248,0.7);
+          background: rgba(99,102,241,0.06);
         }
 
         /* Footer */
-        .skills-footer {
-          padding: 24px 48px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border-top: 1px solid var(--border);
+        .sk-footer {
+          margin-top: 48px; padding-top: 32px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          display: flex; justify-content: space-between; align-items: center;
+          opacity: 0; animation: skFadeUp 0.7s ease forwards 0.45s;
         }
-        .skills-foot-note {
-          font-size: 9px;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.35;
+        .sk-foot-note {
+          font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px;
         }
-        .skills-cta {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background: var(--ink);
-          color: var(--paper);
-          padding: 12px 28px;
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          text-decoration: none;
-          position: relative;
-          overflow: hidden;
-          transition: transform 0.2s;
+        .sk-cta {
+          display: inline-flex; align-items: center; gap: 10px;
+          background: linear-gradient(135deg, #6366f1, #8b5cf6);
+          border: none; border-radius: 100px;
+          color: #fff; font-family: 'DM Sans', sans-serif;
+          font-size: 14px; font-weight: 500; padding: 13px 28px;
+          cursor: pointer; text-decoration: none;
+          transition: all 0.25s;
+          box-shadow: 0 8px 32px rgba(99,102,241,0.35);
         }
-        .skills-cta::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: var(--red);
-          transform: translateX(-101%);
-          transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
-        }
-        .skills-cta:hover::after { transform: translateX(0); }
-        .skills-cta:hover { transform: translateY(-1px); }
-        .skills-cta span { position: relative; z-index: 1; }
+        .sk-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(99,102,241,0.5); }
 
-        /* ── Responsive ───────────────────────────────────────────── */
-        @media (max-width: 1024px) {
-          .skills-header {
-            padding: 64px 36px 48px;
-            gap: 28px;
-          }
-          .skills-title {
-            font-size: clamp(48px, 8vw, 90px);
-          }
-          .skills-table-head {
-            padding-left: 36px;
-            padding-right: 36px;
-          }
-          .skill-cell {
-            padding: 28px 36px;
-          }
-          .skills-footer {
-            padding: 20px 36px;
-          }
+        @keyframes skFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Tablet: 768-1024px */
-        @media (max-width: 768px) {
-          .skills-header {
-            padding: 56px 28px 40px;
-            grid-template-columns: 1fr;
-            gap: 24px;
-          }
-          .skills-title {
-            font-size: clamp(40px, 10vw, 72px);
-          }
-          .skills-table-head {
-            padding: 12px 28px;
-            grid-template-columns: 1fr;
-            gap: 0;
-          }
-          .skills-table-head span:nth-child(3) {
-            display: none;
-          }
-          .skills-grid {
-            grid-template-columns: 1fr;
-          }
-          .skill-cell {
-            padding: 24px 28px;
-            border-right: none;
-            grid-template-columns: 1fr;
-          }
-          .skill-num {
-            display: none;
-          }
-          .skill-desc {
-            font-size: 11px;
-          }
-          .skills-footer {
-            padding: 18px 28px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-          }
+        @media (max-width: 900px) {
+          .sk-inner { padding: 56px 24px 72px; }
+          .sk-header { margin-bottom: 40px; }
+          .sk-header-num { display: none; }
+          .sk-grid { grid-template-columns: 1fr; gap: 12px; }
         }
-
-        /* Mobile: below 768px */
         @media (max-width: 640px) {
-          .skills-section {
-            padding: 0;
-          }
-          .skills-header {
-            padding: 48px 20px 36px;
-            gap: 20px;
-          }
-          .skills-title {
-            font-size: clamp(32px, 12vw, 56px);
-            letter-spacing: 1px;
-          }
-          .skills-eyebrow {
-            font-size: 9px;
-            margin-bottom: 14px;
-          }
-          .skills-eyebrow::before {
-            width: 20px;
-          }
-          .skills-table-head {
-            display: none;
-          }
-          .skills-grid {
-            grid-template-columns: 1fr;
-          }
-          .skill-cell {
-            padding: 20px 20px;
-            border-bottom: 1px solid var(--border);
-            border-right: none;
-            grid-template-columns: 1fr;
-          }
-          .skill-num {
-            display: none;
-          }
-          .skill-name {
-            font-size: 20px;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-          }
-          .skill-desc {
-            font-size: 10px;
-            line-height: 1.7;
-            margin-bottom: 10px;
-          }
-          .skill-tags {
-            gap: 5px;
-          }
-          .skill-tag {
-            font-size: 7px;
-            padding: 2px 8px;
-            letter-spacing: 1px;
-          }
-          .skills-footer {
-            padding: 16px 20px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-          }
-          .skills-foot-note {
-            font-size: 8px;
-          }
-          .skills-cta {
-            width: 100%;
-            justify-content: center;
-            font-size: 8px;
-            padding: 10px 20px;
-          }
-        }
-
-        /* Very small: below 380px */
-        @media (max-width: 380px) {
-          .skills-header {
-            padding: 40px 16px 32px;
-          }
-          .skills-title {
-            font-size: 28px;
-          }
-          .skill-cell {
-            padding: 18px 16px;
-          }
-          .skills-footer {
-            padding: 14px 16px;
-          }
-          .skill-name {
-            font-size: 18px;
-          }
-          .skill-desc {
-            font-size: 9px;
-          }
-          .skill-tag {
-            font-size: 6px;
-            padding: 2px 6px;
-          }
+          .sk-inner { padding: 40px 20px 56px; }
+          .sk-title { font-size: 38px; }
+          .sk-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+          .sk-card { padding: 22px 24px; }
         }
       `}</style>
 
-      <section className="skills-section">
-        {/* Header */}
-        <div className="skills-header">
-          <div>
-            <div className="skills-eyebrow">Capabilities</div>
-            <h2 className="skills-title">
-              What I Do
-              <span className="skills-title-italic">
-                The craft behind the work.
-              </span>
-            </h2>
-          </div>
-          <div className="skills-header-meta">
-            <div className="skills-header-meta-num">08</div>
-            <div className="skills-header-meta-label">Disciplines</div>
-          </div>
-        </div>
+      <section className="sk-root">
+        <div className="sk-bg-orb-1" />
+        <div className="sk-bg-orb-2" />
+        <div className="sk-bg-grid" />
 
-        {/* Table head */}
-        <div className="skills-table-head">
-          <span>#</span>
-          <span>Skill</span>
-          <span>Tags</span>
-        </div>
+        <div className="sk-inner">
+          {/* Header */}
+          <div className="sk-header">
+            <div>
+              <div className="sk-eyebrow">
+                <div className="sk-eyebrow-line" />
+                <span className="sk-eyebrow-text">Capabilities</span>
+              </div>
+              <h2 className="sk-title">
+                What I <span className="sk-title-accent">Do</span>
+              </h2>
+            </div>
+            <div className="sk-header-num">08</div>
+          </div>
 
-        {/* Skills grid */}
-        <div className="skills-grid">
-          {skills.map((s) => (
-            <div
-              key={s.name}
-              className="skill-cell"
-              onMouseEnter={() => setHovered(s.index)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              <div className="skill-num">{s.index}</div>
-              <div className="skill-content">
-                <span className="skill-name">{s.name}</span>
-                <span className="skill-desc">{s.desc}</span>
-                <div className="skill-tags">
+          {/* Grid */}
+          <div className="sk-grid">
+            {skills.map((s) => (
+              <div
+                key={s.name}
+                className="sk-card"
+                onMouseEnter={() => setHovered(s.index)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                <div className="sk-card-top">
+                  <div className="sk-card-icon-wrap">{s.icon}</div>
+                  <span className="sk-card-num">{s.index}</span>
+                </div>
+                <div className="sk-card-name">{s.name}</div>
+                <div className="sk-card-desc">{s.desc}</div>
+                <div className="sk-tags">
                   {s.tags.map((t) => (
-                    <span key={t} className="skill-tag">
-                      {t}
-                    </span>
+                    <span key={t} className="sk-tag">{t}</span>
                   ))}
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Footer */}
-        <div className="skills-footer">
-          <span className="skills-foot-note">
-            All disciplines practiced in live projects
-          </span>
-          <a href="#contact" className="skills-cta">
-            <span>Let's work together →</span>
-          </a>
+          {/* Footer */}
+          <div className="sk-footer">
+            <span className="sk-foot-note">All disciplines practiced in live projects</span>
+            <a href="#contact" className="sk-cta">Let's work together →</a>
+          </div>
         </div>
       </section>
     </>

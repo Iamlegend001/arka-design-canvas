@@ -12,29 +12,29 @@ const DarkModeContext = createContext<DarkModeContextType | undefined>(
 export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isDark, setIsDark] = useState(() => {
-    // Check localStorage first
-    const stored = localStorage.getItem("darkMode");
-    if (stored !== null) {
-      return stored === "true";
-    }
-    // Fallback to system preference
+  // determine initial mode: localStorage > system > default light
+  const getInitial = () => {
+    if (typeof window === "undefined") return true;
+    const stored = localStorage.getItem("dark");
+    if (stored !== null) return stored === "true";
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+  };
+
+  const [isDark, setIsDark] = useState<boolean>(getInitial);
 
   useEffect(() => {
-    // Update localStorage
-    localStorage.setItem("darkMode", String(isDark));
-
-    // Update document class
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    const root = document.documentElement;
+    if (isDark) root.classList.add("dark");
+    else root.classList.remove("dark");
+    try {
+      localStorage.setItem("dark", isDark ? "true" : "false");
+    } catch (e) {
+      // localStorage may be unavailable (e.g. private mode)
+      console.warn("couldn't persist theme preference", e);
     }
   }, [isDark]);
 
-  const toggle = () => setIsDark((prev) => !prev);
+  const toggle = () => setIsDark((d) => !d);
 
   return (
     <DarkModeContext.Provider value={{ isDark, toggle }}>

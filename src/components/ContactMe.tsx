@@ -50,7 +50,7 @@ const ContactMe = () => {
     }
     setErrors({});
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 800));
+    await new Promise((r) => setTimeout(r, 900));
     setStatus("sent");
     setForm({ name: "", email: "", message: "" });
   };
@@ -60,703 +60,473 @@ const ContactMe = () => {
     if (errors[field]) setErrors((e) => ({ ...e, [field]: undefined }));
   };
 
+  const fields = [
+    {
+      id: "name",
+      label: "Name",
+      type: "text",
+      placeholder: "Your name",
+      tag: "input",
+    },
+    {
+      id: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "you@example.com",
+      tag: "input",
+    },
+    {
+      id: "message",
+      label: "Message",
+      type: null,
+      placeholder: "Tell me about your project...",
+      tag: "textarea",
+    },
+  ];
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
-        :root {
-          --ink:    #111010;
-          --paper:  #f0ece3;
-          --red:    #c0392b;
-          --mid:    #6b6560;
-          --border: rgba(17,16,16,0.1);
+        .ct-root {
+          min-height: 100vh;
+          background: #080b14;
+          font-family: 'DM Sans', sans-serif;
+          position: relative;
+          overflow: hidden;
+          color: #fff;
+        }
+        .ct-bg-orb-1 {
+          position: absolute; top: 0; right: 0;
+          width: 600px; height: 500px;
+          background: radial-gradient(ellipse, rgba(99,102,241,0.13) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .ct-bg-orb-2 {
+          position: absolute; bottom: 0; left: 0;
+          width: 500px; height: 400px;
+          background: radial-gradient(ellipse, rgba(6,182,212,0.10) 0%, transparent 65%);
+          filter: blur(80px); pointer-events: none; z-index: 0;
+        }
+        .ct-bg-orb-3 {
+          position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 700px; height: 300px;
+          background: radial-gradient(ellipse, rgba(139,92,246,0.06) 0%, transparent 70%);
+          filter: blur(60px); pointer-events: none; z-index: 0;
+        }
+        .ct-bg-grid {
+          position: absolute; inset: 0; z-index: 0;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+          background-size: 60px 60px;
+          mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent 100%);
+        }
+        .ct-inner {
+          position: relative; z-index: 2;
+          max-width: 1160px; margin: 0 auto;
+          padding: 80px 48px 100px;
         }
 
-        :root.dark {
-          --ink:    #f0ece3;
-          --paper:  #0f0e0d;
-          --red:    #ff5247;
-          --mid:    #9b9490;
-          --border: rgba(240,236,227,0.1);
-        }
-
-        .ct-section {
-          background: var(--paper);
-          font-family: 'DM Mono', monospace;
-        }
-
+        /* Header */
         .ct-header {
-          padding: 72px 48px 56px;
-          border-bottom: 1px solid var(--border);
-          display: grid;
-          grid-template-columns: 1fr auto;
-          align-items: end;
-          gap: 32px;
+          display: flex; align-items: flex-end;
+          justify-content: space-between;
+          margin-bottom: 64px;
+          opacity: 0; animation: ctFadeUp 0.7s ease forwards 0.1s;
         }
         .ct-eyebrow {
-          font-size: 10px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--red);
-          margin-bottom: 20px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
+          display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
         }
-        .ct-eyebrow::before {
-          content: '';
-          width: 28px; height: 1px;
-          background: var(--red);
-          display: block;
-          flex-shrink: 0;
+        .ct-eyebrow-line {
+          width: 32px; height: 1px;
+          background: linear-gradient(90deg, #818cf8, #67e8f9);
+        }
+        .ct-eyebrow-text {
+          font-size: 11px; font-weight: 500; color: #818cf8;
+          letter-spacing: 2.5px; text-transform: uppercase;
         }
         .ct-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(52px, 7vw, 96px);
-          line-height: 0.9;
-          letter-spacing: 2px;
-          color: var(--ink);
+          font-family: 'Syne', sans-serif; font-weight: 800;
+          font-size: clamp(42px, 5.5vw, 72px);
+          line-height: 1; letter-spacing: -2px; color: #fff; margin: 0;
         }
-        .ct-title-italic {
-          font-family: 'DM Serif Display', serif;
-          font-style: italic;
-          color: var(--red);
-          font-size: 0.55em;
-          display: block;
-          letter-spacing: 0;
-          line-height: 1.3;
-          margin-top: 6px;
+        .ct-title-accent {
+          background: linear-gradient(135deg, #818cf8 0%, #67e8f9 60%, #a78bfa 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .ct-meta { text-align: right; }
-        .ct-meta-sym {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 64px;
-          line-height: 1;
-          color: var(--ink);
-          opacity: 0.07;
-          letter-spacing: 2px;
+        .ct-header-sub {
+          margin-top: 14px; font-size: 13px;
+          color: rgba(255,255,255,0.25); font-weight: 300; line-height: 1.6;
         }
-        .ct-meta-label {
-          font-size: 9px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid);
-          margin-top: -8px;
+        .ct-header-num {
+          font-family: 'Syne', sans-serif; font-size: 120px; font-weight: 800;
+          line-height: 1; color: rgba(255,255,255,0.03);
+          letter-spacing: -4px; user-select: none;
         }
 
+        /* Body */
         .ct-body {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          border-bottom: 1px solid var(--border);
+          gap: 16px;
+          opacity: 0; animation: ctFadeUp 0.7s ease forwards 0.2s;
         }
 
-        /* LEFT */
+        /* Left panel */
         .ct-left {
-          border-right: 1px solid var(--border);
-          display: flex;
-          flex-direction: column;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 16px;
+          overflow: hidden;
+          display: flex; flex-direction: column;
+          position: relative;
+        }
+        .ct-left::before {
+          content: ''; position: absolute;
+          top: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, #818cf8, #67e8f9);
         }
         .ct-left-top {
-          padding: 40px 48px 32px;
-          border-bottom: 1px solid var(--border);
+          padding: 32px 32px 28px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .ct-avail {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 9px;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: #2ecc71;
-          margin-bottom: 16px;
+          display: flex; align-items: center; gap: 8px;
+          font-size: 9px; letter-spacing: 2.5px;
+          text-transform: uppercase; color: #4ade80;
+          margin-bottom: 20px; font-weight: 500;
         }
         .ct-avail-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #2ecc71;
-          animation: blink 2s infinite;
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #4ade80; animation: ctBlink 2s infinite;
         }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+        @keyframes ctBlink { 0%,100%{opacity:1} 50%{opacity:0.2} }
         .ct-intro {
-          font-size: 13px;
-          line-height: 2;
-          color: var(--mid);
-          font-weight: 300;
-          max-width: 380px;
+          font-size: 14px; line-height: 1.85;
+          color: rgba(255,255,255,0.4); font-weight: 300;
         }
-        .ct-intro strong { color: var(--ink); font-weight: 500; }
+        .ct-intro strong { color: rgba(255,255,255,0.8); font-weight: 500; }
 
-        .ct-method-head {
-          padding: 14px 48px;
-          border-bottom: 1px solid var(--border);
-          background: rgba(17,16,16,0.02);
+        .ct-methods-head {
           display: grid;
-          grid-template-columns: 110px 1fr auto;
-          gap: 12px;
+          grid-template-columns: 90px 1fr 24px;
+          gap: 12px; padding: 10px 32px;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .ct-method-head span {
-          font-size: 8px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.6;
+        .ct-methods-head span {
+          font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase;
+          color: rgba(255,255,255,0.15); font-weight: 400;
         }
         .ct-method-row {
           display: grid;
-          grid-template-columns: 110px 1fr auto;
-          align-items: center;
-          gap: 12px;
-          padding: 18px 48px;
-          border-bottom: 1px solid var(--border);
+          grid-template-columns: 90px 1fr 24px;
+          align-items: center; gap: 12px;
+          padding: 16px 32px;
+          border-bottom: 1px solid rgba(255,255,255,0.04);
           text-decoration: none;
           transition: background 0.2s;
-          position: relative;
-          overflow: hidden;
+          position: relative; overflow: hidden;
         }
+        .ct-method-row:last-child { border-bottom: none; }
         .ct-method-row::before {
-          content: '';
-          position: absolute;
-          left: 0; top: 0; bottom: 0;
-          width: 3px;
-          background: var(--red);
-          transform: scaleY(0);
-          transform-origin: bottom;
+          content: ''; position: absolute;
+          left: 0; top: 0; bottom: 0; width: 2px;
+          background: linear-gradient(180deg, #818cf8, #67e8f9);
+          transform: scaleY(0); transform-origin: bottom;
           transition: transform 0.25s;
         }
-        .ct-method-row:hover { background: rgba(17,16,16,0.025); }
+        .ct-method-row:hover { background: rgba(255,255,255,0.04); }
         .ct-method-row:hover::before { transform: scaleY(1); }
-        .ct-method-row:last-child { border-bottom: none; }
         .ct-method-label {
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.55;
+          font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+          color: rgba(255,255,255,0.2); font-weight: 500; transition: color 0.2s;
         }
+        .ct-method-row:hover .ct-method-label { color: #818cf8; }
         .ct-method-value {
-          font-size: 11px;
-          color: var(--ink);
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          font-size: 11px; color: rgba(255,255,255,0.55);
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+          transition: color 0.2s;
         }
+        .ct-method-row:hover .ct-method-value { color: rgba(255,255,255,0.85); }
         .ct-method-arrow {
-          font-size: 12px;
-          color: var(--mid);
-          opacity: 0;
-          transform: translateX(-4px);
+          font-size: 12px; color: rgba(255,255,255,0.15);
+          opacity: 0; transform: translateX(-4px);
           transition: opacity 0.2s, transform 0.2s;
         }
-        .ct-method-row:hover .ct-method-arrow { opacity: 1; transform: translateX(0); }
+        .ct-method-row:hover .ct-method-arrow { opacity: 1; transform: translateX(0); color: #818cf8; }
 
-        /* RIGHT — form */
+        /* Right panel */
         .ct-right {
-          padding: 48px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 16px;
+          padding: 32px;
+          display: flex; flex-direction: column;
+          position: relative; overflow: hidden;
         }
-        .ct-form-label {
-          font-size: 8px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.6;
-          margin-bottom: 28px;
-          display: block;
+        .ct-right::before {
+          content: ''; position: absolute;
+          top: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, #67e8f9, #a78bfa);
+        }
+        .ct-form-heading {
+          font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+          color: rgba(255,255,255,0.25); letter-spacing: 2.5px;
+          text-transform: uppercase; margin-bottom: 24px;
         }
         .ct-form { display: flex; flex-direction: column; gap: 0; }
 
         .ct-field {
-          border: 1px solid var(--border);
+          border: 1px solid rgba(255,255,255,0.07);
           margin-bottom: -1px;
           position: relative;
-          transition: border-color 0.2s;
+          background: rgba(255,255,255,0.02);
+          transition: border-color 0.2s, background 0.2s;
         }
-        .ct-field.is-focused { border-color: var(--ink); z-index: 2; }
-        .ct-field.has-error  { border-color: var(--red); z-index: 2; }
+        .ct-field:first-child { border-radius: 10px 10px 0 0; }
+        .ct-field:last-of-type { border-radius: 0 0 10px 10px; }
+        .ct-field.is-focused { border-color: rgba(129,140,248,0.4); z-index: 2; background: rgba(129,140,248,0.04); }
+        .ct-field.has-error  { border-color: rgba(248,113,113,0.4); z-index: 2; }
 
         .ct-field-label {
-          display: block;
-          font-size: 8px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.5;
-          padding: 12px 16px 0;
-          transition: opacity 0.2s;
+          display: block; font-size: 8px; letter-spacing: 2.5px;
+          text-transform: uppercase; color: rgba(255,255,255,0.2);
+          padding: 12px 16px 0; transition: color 0.2s;
         }
-        .ct-field.is-focused .ct-field-label { opacity: 1; color: var(--ink); }
-        .ct-field.has-error   .ct-field-label { color: var(--red); opacity: 1; }
+        .ct-field.is-focused .ct-field-label { color: #818cf8; }
+        .ct-field.has-error   .ct-field-label { color: #f87171; }
 
         .ct-input, .ct-textarea {
-          width: 100%;
-          background: transparent;
-          border: none;
-          outline: none;
-          font-family: 'DM Mono', monospace;
-          font-size: 13px;
-          color: var(--ink);
-          padding: 8px 16px 14px;
-          font-weight: 300;
-          resize: none;
-          display: block;
+          width: 100%; background: transparent; border: none; outline: none;
+          font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300;
+          color: rgba(255,255,255,0.85); padding: 8px 16px 14px; resize: none; display: block;
         }
-        .ct-input::placeholder, .ct-textarea::placeholder {
-          color: var(--mid);
-          opacity: 0.3;
-        }
+        .ct-input::placeholder, .ct-textarea::placeholder { color: rgba(255,255,255,0.15); }
         .ct-field-error {
-          font-size: 8px;
-          letter-spacing: 1.5px;
-          text-transform: uppercase;
-          color: var(--red);
-          padding: 0 16px 8px;
-          display: block;
+          font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+          color: #f87171; padding: 0 16px 8px; display: block;
         }
 
         .ct-submit {
-          margin-top: 16px;
-          background: var(--ink);
-          color: var(--paper);
-          padding: 16px 32px;
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 3px;
-          text-transform: uppercase;
-          border: none;
-          cursor: pointer;
-          position: relative;
-          overflow: hidden;
-          transition: transform 0.2s;
-          width: 100%;
+          margin-top: 14px;
+          display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+          background: linear-gradient(135deg, #6366f1, #8b5cf6);
+          border: none; border-radius: 100px;
+          color: #fff; font-family: 'DM Sans', sans-serif;
+          font-size: 14px; font-weight: 500; padding: 14px 32px;
+          cursor: pointer; transition: all 0.25s; width: 100%;
+          box-shadow: 0 8px 32px rgba(99,102,241,0.35);
         }
-        .ct-submit::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: var(--red);
-          transform: translateX(-101%);
-          transition: transform 0.38s cubic-bezier(0.77,0,0.175,1);
-        }
-        .ct-submit:not(:disabled):hover::after { transform: translateX(0); }
-        .ct-submit:not(:disabled):hover { transform: translateY(-1px); }
+        .ct-submit:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(99,102,241,0.5); }
         .ct-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-        .ct-submit span { position: relative; z-index: 1; }
+        .ct-submit-arrow { transition: transform 0.2s; }
+        .ct-submit:not(:disabled):hover .ct-submit-arrow { transform: translateX(4px); }
 
         /* Success */
         .ct-success {
-          border: 1px solid rgba(46,204,113,0.25);
-          background: rgba(46,204,113,0.04);
-          padding: 36px 32px;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
+          flex: 1; display: flex; flex-direction: column;
+          justify-content: center; gap: 16px;
+          border: 1px solid rgba(74,222,128,0.15);
+          background: rgba(74,222,128,0.04);
+          border-radius: 12px; padding: 40px 32px;
         }
         .ct-success-check {
-          font-size: 28px;
-          color: #2ecc71;
-          line-height: 1;
+          width: 48px; height: 48px; border-radius: 50%;
+          background: rgba(74,222,128,0.12);
+          border: 1px solid rgba(74,222,128,0.3);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px; color: #4ade80;
         }
         .ct-success-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 30px;
-          letter-spacing: 2px;
-          color: var(--ink);
-          line-height: 1;
+          font-family: 'Syne', sans-serif; font-size: 28px;
+          font-weight: 800; color: #fff; letter-spacing: -0.5px; line-height: 1;
         }
         .ct-success-sub {
-          font-size: 10px;
-          letter-spacing: 1px;
-          color: var(--mid);
-          line-height: 1.8;
+          font-size: 13px; font-weight: 300;
+          color: rgba(255,255,255,0.35); line-height: 1.7;
         }
 
         /* Footer */
         .ct-footer {
-          padding: 22px 48px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+          margin-top: 32px; padding-top: 32px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          display: flex; justify-content: space-between; align-items: center;
+          opacity: 0; animation: ctFadeUp 0.7s ease forwards 0.4s;
         }
         .ct-foot-note {
-          font-size: 9px;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.35;
+          font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 0.5px;
         }
         .ct-foot-status {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          font-size: 9px;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: var(--mid);
-          opacity: 0.45;
+          display: flex; align-items: center; gap: 7px;
+          font-size: 9px; font-weight: 500; letter-spacing: 2px;
+          text-transform: uppercase; color: #4ade80;
         }
-        .ct-foot-status::before {
-          content: '';
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          background: #2ecc71;
-          display: block;
+        .ct-foot-status-dot {
+          width: 5px; height: 5px; border-radius: 50%;
+          background: #4ade80; animation: ctBlink 2s infinite;
         }
 
-        /* ── Responsive ───────────────────────────────────────────── */
-        @media (max-width: 1024px) {
-          .ct-header {
-            padding: 64px 36px 48px;
-            gap: 28px;
-          }
-          .ct-title {
-            font-size: clamp(48px, 8vw, 90px);
-          }
-          .ct-body {
-            grid-template-columns: 1fr;
-          }
-          .ct-left-top {
-            padding: 36px 36px 28px;
-          }
-          .ct-method-head,
-          .ct-method-row {
-            padding-left: 36px;
-            padding-right: 36px;
-          }
-          .ct-right {
-            padding: 36px 36px 44px;
-          }
-          .ct-footer {
-            padding: 20px 36px;
-          }
+        @keyframes ctFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Tablet: 768-1024px */
-        @media (max-width: 768px) {
-          .ct-header {
-            padding: 56px 28px 40px;
-            grid-template-columns: 1fr;
-            gap: 24px;
-          }
-          .ct-title {
-            font-size: clamp(40px, 10vw, 72px);
-          }
-          .ct-intro {
-            font-size: 12px;
-            line-height: 1.8;
-          }
-          .ct-left-top {
-            padding: 32px 28px 24px;
-          }
-          .ct-method-head,
-          .ct-method-row {
-            padding-left: 28px;
-            padding-right: 28px;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-          }
-          .ct-method-row span:last-child {
-            display: inline;
-          }
-          .ct-right {
-            padding: 32px 28px 36px;
-          }
-          .ct-form-label {
-            margin-bottom: 24px;
-          }
-          .ct-footer {
-            padding: 18px 28px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-          }
+        @media (max-width: 900px) {
+          .ct-inner { padding: 56px 24px 72px; }
+          .ct-header { margin-bottom: 40px; }
+          .ct-header-num { display: none; }
+          .ct-body { grid-template-columns: 1fr; }
         }
-
-        /* Mobile: below 768px */
         @media (max-width: 640px) {
-          .ct-section {
-            padding: 0;
-          }
-          .ct-header {
-            padding: 48px 20px 36px;
-            gap: 20px;
-          }
-          .ct-title {
-            font-size: clamp(32px, 12vw, 56px);
-            letter-spacing: 1px;
-          }
-          .ct-eyebrow {
-            font-size: 9px;
-            margin-bottom: 14px;
-          }
-          .ct-eyebrow::before {
-            width: 20px;
-          }
-          .ct-intro {
-            font-size: 11px;
-            line-height: 1.7;
-            max-width: 100%;
-          }
-          .ct-avail {
-            font-size: 8px;
-            margin-bottom: 12px;
-          }
-          .ct-left-top {
-            padding: 28px 20px 24px;
-          }
-          .ct-body {
-            grid-template-columns: 1fr;
-          }
-          .ct-left {
-            border-right: none;
-          }
-          .ct-method-head {
-            display: none;
-          }
-          .ct-method-row {
-            padding: 16px 20px;
-            grid-template-columns: 1fr;
-            gap: 8px;
-            align-items: flex-start;
-          }
-          .ct-method-row:last-child {
-            border-bottom: none;
-          }
-          .ct-method-label {
-            font-size: 8px;
-            opacity: 0.6;
-          }
-          .ct-method-value {
-            font-size: 10px;
-            white-space: normal;
-            word-break: break-word;
-          }
-          .ct-method-arrow {
-            display: none;
-          }
-          .ct-right {
-            padding: 28px 20px 32px;
-            border-left: none;
-            border-top: 1px solid var(--border);
-          }
-          .ct-form-label {
-            font-size: 7px;
-            margin-bottom: 20px;
-          }
-          .ct-input, .ct-textarea {
-            padding: 10px 14px 12px;
-            font-size: 12px;
-          }
-          .ct-submit {
-            padding: 14px 28px;
-            font-size: 9px;
-            margin-top: 12px;
-          }
-          .ct-field-error {
-            padding: 0 14px 6px;
-            font-size: 7px;
-          }
-          .ct-success {
-            padding: 28px 24px;
-          }
-          .ct-success-check {
-            font-size: 24px;
-          }
-          .ct-success-title {
-            font-size: 24px;
-          }
-          .ct-success-sub {
-            font-size: 9px;
-          }
-          .ct-footer {
-            padding: 16px 20px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-          }
-          .ct-foot-note {
-            font-size: 8px;
-          }
-          .ct-foot-status {
-            font-size: 8px;
-          }
-        }
-
-        /* Very small: below 380px */
-        @media (max-width: 380px) {
-          .ct-header {
-            padding: 40px 16px 32px;
-          }
-          .ct-title {
-            font-size: 28px;
-          }
-          .ct-intro {
-            font-size: 10px;
-          }
-          .ct-left-top {
-            padding: 24px 16px 20px;
-          }
-          .ct-method-row {
-            padding: 14px 16px;
-          }
-          .ct-right {
-            padding: 24px 16px 28px;
-          }
-          .ct-input, .ct-textarea {
-            padding: 10px 12px;
-            font-size: 11px;
-          }
-          .ct-submit {
-            padding: 12px 24px;
-          }
-          .ct-footer {
-            padding: 14px 16px;
-          }
+          .ct-inner { padding: 40px 20px 56px; }
+          .ct-title { font-size: 38px; }
+          .ct-left-top { padding: 24px 22px 20px; }
+          .ct-methods-head { display: none; }
+          .ct-method-row { padding: 14px 22px; grid-template-columns: 80px 1fr 20px; }
+          .ct-right { padding: 24px 22px; }
+          .ct-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
         }
       `}</style>
 
-      <section id="contact" className="ct-section">
-        <div className="ct-header">
-          <div>
-            <div className="ct-eyebrow">Get in Touch</div>
-            <h2 className="ct-title">
-              Contact
-              <span className="ct-title-italic">Start a conversation.</span>
-            </h2>
-          </div>
-          <div className="ct-meta">
-            <div className="ct-meta-sym">↗</div>
-            <div className="ct-meta-label">Reach out</div>
-          </div>
-        </div>
+      <section id="contact" className="ct-root">
+        <div className="ct-bg-orb-1" />
+        <div className="ct-bg-orb-2" />
+        <div className="ct-bg-orb-3" />
+        <div className="ct-bg-grid" />
 
-        <div className="ct-body">
-          {/* LEFT */}
-          <div className="ct-left">
-            <div className="ct-left-top">
-              <div className="ct-avail">
-                <span className="ct-avail-dot" /> Available for work
+        <div className="ct-inner">
+          {/* Header */}
+          <div className="ct-header">
+            <div>
+              <div className="ct-eyebrow">
+                <div className="ct-eyebrow-line" />
+                <span className="ct-eyebrow-text">Get in Touch</span>
               </div>
-              <p className="ct-intro">
-                I'm open to <strong>freelance projects</strong>,{" "}
-                <strong>full-time roles</strong>, and conversations about
-                design. If you have a problem worth solving, I'd love to hear
-                about it.
+              <h2 className="ct-title">
+                Let's <span className="ct-title-accent">Connect</span>
+              </h2>
+              <p className="ct-header-sub">
+                Open to freelance, full-time roles and great conversations.
               </p>
             </div>
-
-            <div className="ct-method-head">
-              <span>Channel</span>
-              <span>Address</span>
-              <span />
-            </div>
-            {contactMethods.map((m) => (
-              <a
-                key={m.label}
-                href={m.href}
-                target={m.label !== "Email" ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="ct-method-row"
-              >
-                <span className="ct-method-label">{m.label}</span>
-                <span className="ct-method-value">{m.value}</span>
-                <span className="ct-method-arrow">↗</span>
-              </a>
-            ))}
+            <div className="ct-header-num">↗</div>
           </div>
 
-          {/* RIGHT */}
-          <div className="ct-right">
-            <span className="ct-form-label">Send a message</span>
-
-            {status === "sent" ? (
-              <div className="ct-success">
-                <div className="ct-success-check">✓</div>
-                <div className="ct-success-title">Message Received</div>
-                <p className="ct-success-sub">
-                  Thanks for reaching out. I'll get back to you within 24 hours.
+          {/* Body */}
+          <div className="ct-body">
+            {/* LEFT */}
+            <div className="ct-left">
+              <div className="ct-left-top">
+                <div className="ct-avail">
+                  <span className="ct-avail-dot" /> Available for work
+                </div>
+                <p className="ct-intro">
+                  I'm open to <strong>freelance projects</strong>,{" "}
+                  <strong>full-time roles</strong>, and conversations about
+                  design. If you have a problem worth solving, I'd love to hear
+                  about it.
                 </p>
               </div>
-            ) : (
-              <form className="ct-form" onSubmit={handleSubmit} noValidate>
-                {[
-                  {
-                    id: "name",
-                    label: "Name",
-                    type: "text",
-                    placeholder: "Your name",
-                    tag: "input",
-                  },
-                  {
-                    id: "email",
-                    label: "Email",
-                    type: "email",
-                    placeholder: "you@example.com",
-                    tag: "input",
-                  },
-                  {
-                    id: "message",
-                    label: "Message",
-                    type: null,
-                    placeholder: "Tell me about your project or idea...",
-                    tag: "textarea",
-                  },
-                ].map((f) => (
-                  <div
-                    key={f.id}
-                    className={`ct-field ${focused === f.id ? "is-focused" : ""} ${errors[f.id] ? "has-error" : ""}`}
-                  >
-                    <label className="ct-field-label" htmlFor={`ct-${f.id}`}>
-                      {f.label}
-                    </label>
-                    {f.tag === "input" ? (
-                      <input
-                        id={`ct-${f.id}`}
-                        type={f.type}
-                        className="ct-input"
-                        placeholder={f.placeholder}
-                        value={form[f.id]}
-                        onChange={(e) => handleChange(f.id, e.target.value)}
-                        onFocus={() => setFocused(f.id)}
-                        onBlur={() => setFocused(null)}
-                      />
-                    ) : (
-                      <textarea
-                        id={`ct-${f.id}`}
-                        className="ct-textarea"
-                        placeholder={f.placeholder}
-                        rows={5}
-                        value={form[f.id]}
-                        onChange={(e) => handleChange(f.id, e.target.value)}
-                        onFocus={() => setFocused(f.id)}
-                        onBlur={() => setFocused(null)}
-                      />
-                    )}
-                    {errors[f.id] && (
-                      <span className="ct-field-error">{errors[f.id]}</span>
-                    )}
-                  </div>
-                ))}
 
-                <button
-                  type="submit"
-                  className="ct-submit"
-                  disabled={status === "sending"}
+              <div className="ct-methods-head">
+                <span>Channel</span>
+                <span>Address</span>
+                <span />
+              </div>
+
+              {contactMethods.map((m) => (
+                <a
+                  key={m.label}
+                  href={m.href}
+                  target={m.label !== "Email" ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="ct-method-row"
                 >
-                  <span>
-                    {status === "sending" ? "Sending..." : "Send Message →"}
-                  </span>
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
+                  <span className="ct-method-label">{m.label}</span>
+                  <span className="ct-method-value">{m.value}</span>
+                  <span className="ct-method-arrow">↗</span>
+                </a>
+              ))}
+            </div>
 
-        <div className="ct-footer">
-          <span className="ct-foot-note">Response within 24 hours</span>
-          <span className="ct-foot-status">Currently open to work</span>
+            {/* RIGHT */}
+            <div className="ct-right">
+              <div className="ct-form-heading">Send a Message</div>
+
+              {status === "sent" ? (
+                <div className="ct-success">
+                  <div className="ct-success-check">✓</div>
+                  <div className="ct-success-title">Message Received</div>
+                  <p className="ct-success-sub">
+                    Thanks for reaching out. I'll get back to you within 24
+                    hours.
+                  </p>
+                </div>
+              ) : (
+                <form className="ct-form" onSubmit={handleSubmit} noValidate>
+                  {fields.map((f) => (
+                    <div
+                      key={f.id}
+                      className={`ct-field${focused === f.id ? " is-focused" : ""}${errors[f.id] ? " has-error" : ""}`}
+                    >
+                      <label className="ct-field-label" htmlFor={"ct-" + f.id}>
+                        {f.label}
+                      </label>
+                      {f.tag === "input" ? (
+                        <input
+                          id={"ct-" + f.id}
+                          type={f.type}
+                          className="ct-input"
+                          placeholder={f.placeholder}
+                          value={form[f.id]}
+                          onChange={(e) => handleChange(f.id, e.target.value)}
+                          onFocus={() => setFocused(f.id)}
+                          onBlur={() => setFocused(null)}
+                        />
+                      ) : (
+                        <textarea
+                          id={"ct-" + f.id}
+                          className="ct-textarea"
+                          placeholder={f.placeholder}
+                          rows={5}
+                          value={form[f.id]}
+                          onChange={(e) => handleChange(f.id, e.target.value)}
+                          onFocus={() => setFocused(f.id)}
+                          onBlur={() => setFocused(null)}
+                        />
+                      )}
+                      {errors[f.id] && (
+                        <span className="ct-field-error">{errors[f.id]}</span>
+                      )}
+                    </div>
+                  ))}
+
+                  <button
+                    type="submit"
+                    className="ct-submit"
+                    disabled={status === "sending"}
+                  >
+                    <span>
+                      {status === "sending" ? "Sending..." : "Send Message"}
+                    </span>
+                    <span className="ct-submit-arrow">→</span>
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="ct-footer">
+            <span className="ct-foot-note">Response within 24 hours</span>
+            <span className="ct-foot-status">
+              <span className="ct-foot-status-dot" />
+              Open to work
+            </span>
+          </div>
         </div>
       </section>
     </>

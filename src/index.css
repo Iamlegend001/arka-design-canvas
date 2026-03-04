@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
-All colors MUST be HSL.
+/*
+  Global stylesheet - keeps all custom CSS in a single location,
+  organized into logical sections. Most of the site is built with
+  Tailwind utility classes; the few bespoke patterns are defined
+  below and applied via the component files.
 */
 
+/* ------------------------------------------------------------
+   import fonts once at the top to avoid duplication
+   ------------------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap");
+
+/* ------------------------------------------------------------
+   design tokens (colors, radii, etc.). HSL values make them
+   easily themeable via the .dark class.
+   ------------------------------------------------------------ */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -49,14 +60,14 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Custom Portfolio Colors */
-    --portfolio-bg: 216 100% 97%; /* #F0F6FF */
-    --portfolio-dark: 222 47% 10%; /* #0F172A, very dark navy */
-    --portfolio-violet: 243 75% 59%; /* #6366F1, vivid indigo */
-    --portfolio-mint: 198 93% 60%; /* #38BDF8 */
-    --portfolio-gray: 215 19% 38%; /* #475569, darker slate */
-    --portfolio-primary: 221 70% 56%; /* #2563EB */
-    --portfolio-surface: 0 0% 100%; /* #FFFFFF */
+    /* custom portfolio colors */
+    --portfolio-bg: 216 100% 97%;
+    --portfolio-dark: 222 47% 10%;
+    --portfolio-violet: 243 75% 59%;
+    --portfolio-mint: 198 93% 60%;
+    --portfolio-gray: 215 19% 38%;
+    --portfolio-primary: 221 70% 56%;
+    --portfolio-surface: 0 0% 100%;
   }
 
   .dark {
@@ -90,25 +101,12 @@ All colors MUST be HSL.
   }
 }
 
+/* ------------------------------------------------------------
+   base resets and global utilities
+   ------------------------------------------------------------ */
 @layer base {
   * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-[hsl(var(--portfolio-bg))] text-[hsl(var(--portfolio-dark))] font-inter;
-    font-family: "Inter", sans-serif;
-    overflow-x: hidden;
-    width: 100%;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-  }
-
-  :root.dark body {
-    @apply bg-gray-950 text-gray-100;
-    background-color: #0f0e0d;
-    color: #f0ece3;
+    @apply border-border box-border;
   }
 
   html {
@@ -117,9 +115,16 @@ All colors MUST be HSL.
     width: 100%;
   }
 
-  /* Prevent horizontal overflow on all elements */
-  * {
-    box-sizing: border-box;
+  body {
+    @apply bg-[hsl(var(--portfolio-bg))] text-[hsl(var(--portfolio-dark))] font-inter;
+    overflow-x: hidden;
+    transition:
+      color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  :root.dark body {
+    @apply bg-gray-950 text-gray-100;
   }
 }
 
@@ -181,6 +186,42 @@ All colors MUST be HSL.
       0 20px 25px -5px rgba(0, 0, 0, 0.1),
       0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
+
+  .dark-mode-toggle {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-full border border-portfolio-gray text-portfolio-gray transition-colors duration-200;
+  }
+  .dark-mode-toggle:hover {
+    @apply bg-portfolio-violet text-white border-portfolio-violet;
+  }
+
+  .bg-grid {
+    background: #f5f0e8;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 27px,
+        #e8e0d0 27px,
+        #e8e0d0 28px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 27px,
+        #e8e0d0 27px,
+        #e8e0d0 28px
+      );
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
 }
 
 @keyframes fadeIn {
@@ -202,6 +243,27 @@ All colors MUST be HSL.
   50% {
     transform: translateY(-20px);
   }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* subtle noise overlay for texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 99998;
 }
 
 /* Smooth scrolling for navigation */

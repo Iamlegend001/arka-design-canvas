@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DarkModeProvider } from "@/contexts/DarkModeContext";
+import Cursor from "@/components/Cursor";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Lenis from "lenis";
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <DarkModeProvider>
+      <Cursor />
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
