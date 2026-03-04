@@ -583,7 +583,7 @@ const About = () => {
 
               {/* CTA */}
               <a
-                href="https://drive.google.com/file/d/1kLvg3UuEbi7b_luPddZkr4gLL6dA5NPv/view?usp=sharing"
+                href="https://drive.google.com/file/d/1P7Ml6Nj7A1xQaalQDgjvlRPg9cR8bK5K/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="ab-cta"
