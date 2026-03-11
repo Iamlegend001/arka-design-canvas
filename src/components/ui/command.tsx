@@ -21,9 +21,10 @@ const Command = React.forwardRef<
 ))
 Command.displayName = CommandPrimitive.displayName
 
-interface CommandDialogProps extends DialogProps {}
-
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+// We don't need a separate interface here since it adds no extra
+// properties beyond DialogProps. Using DialogProps directly avoids the
+// `no-empty-object-type` lint error.
+const CommandDialog: React.FC<DialogProps> = ({ children, ...props }) => {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0 shadow-lg">

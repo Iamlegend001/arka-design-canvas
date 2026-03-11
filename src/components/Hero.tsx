@@ -583,12 +583,12 @@ export default function Hero() {
             </div>
 
             <div className="hero-ctas">
-              <a href="https://drive.google.com/file/d/1P7Ml6Nj7A1xQaalQDgjvlRPg9cR8bK5K/view?usp=sharing" className="btn-primary">
+              <a href="https://drive.google.com/file/d/1hpfcOEcD6YPdwWaF8vHjoXnOtP5PS6jA/view?usp=sharing" className="btn-primary">
                 <span className="btn-icon">↓</span>
                 Download Resume
                 <span className="btn-sub">PDF · 1 page</span>
               </a>
-              <a href="https://drive.google.com/file/d/1COBi44IWRp15PkygkD8EiIejTnheBZeD/view?usp=sharing" className="btn-secondary">
+              <a href="https://drive.google.com/file/d/1b7fibLIn3HPg39f0siFqcogpPPmqG_DR/view?usp=sharing" className="btn-secondary">
                 <span className="btn-icon">↓</span>
                 Download CV
                 <span className="btn-sub">Full details</span>
