@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 
 const EMAIL = "arkapravasantra17@gmail.com";
+const WEB3FORMS_ACCESS_KEY = "303351ab-2fe2-4ba5-b29d-52b298f933d7";
 
 const contactMethods = [
   { label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
+  {
+    label: "Phone",
+    value: "+91-9609356564",
+    href: "tel:+919609356564",
+  },
   {
     label: "LinkedIn",
     value: "linkedin.com/in/arkapravadevux",
@@ -48,11 +54,34 @@ const ContactMe = () => {
       setErrors(errs);
       return;
     }
+
     setErrors({});
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus("sent");
-    setForm({ name: "", email: "", message: "" });
+
+    try {
+      const formData = new FormData();
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("message", form.message);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setStatus("sent");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+        console.error("Web3Forms error", data);
+      }
+    } catch (err) {
+      setStatus("error");
+      console.error("Form submit failed", err);
+    }
   };
 
   const handleChange = (field, val) => {
@@ -349,6 +378,17 @@ const ContactMe = () => {
           color: rgba(255,255,255,0.35); line-height: 1.7;
         }
 
+        .ct-form-error {
+          border: 1px solid rgba(248,113,113,0.25);
+          background: rgba(248,113,113,0.08);
+          border-radius: 12px;
+          padding: 16px 18px;
+          margin-bottom: 18px;
+          color: #f87171;
+          font-size: 13px;
+          line-height: 1.5;
+        }
+
         /* Footer */
         .ct-footer {
           margin-top: 32px; padding-top: 32px;
@@ -466,55 +506,67 @@ const ContactMe = () => {
                   </p>
                 </div>
               ) : (
-                <form className="ct-form" onSubmit={handleSubmit} noValidate>
-                  {fields.map((f) => (
-                    <div
-                      key={f.id}
-                      className={`ct-field${focused === f.id ? " is-focused" : ""}${errors[f.id] ? " has-error" : ""}`}
-                    >
-                      <label className="ct-field-label" htmlFor={"ct-" + f.id}>
-                        {f.label}
-                      </label>
-                      {f.tag === "input" ? (
-                        <input
-                          id={"ct-" + f.id}
-                          type={f.type}
-                          className="ct-input"
-                          placeholder={f.placeholder}
-                          value={form[f.id]}
-                          onChange={(e) => handleChange(f.id, e.target.value)}
-                          onFocus={() => setFocused(f.id)}
-                          onBlur={() => setFocused(null)}
-                        />
-                      ) : (
-                        <textarea
-                          id={"ct-" + f.id}
-                          className="ct-textarea"
-                          placeholder={f.placeholder}
-                          rows={5}
-                          value={form[f.id]}
-                          onChange={(e) => handleChange(f.id, e.target.value)}
-                          onFocus={() => setFocused(f.id)}
-                          onBlur={() => setFocused(null)}
-                        />
-                      )}
-                      {errors[f.id] && (
-                        <span className="ct-field-error">{errors[f.id]}</span>
-                      )}
+                <>
+                  {status === "error" && (
+                    <div className="ct-form-error">
+                      Something went wrong while sending your message. Please
+                      try again in a moment.
                     </div>
-                  ))}
+                  )}
 
-                  <button
-                    type="submit"
-                    className="ct-submit"
-                    disabled={status === "sending"}
-                  >
-                    <span>
-                      {status === "sending" ? "Sending..." : "Send Message"}
-                    </span>
-                    <span className="ct-submit-arrow">→</span>
-                  </button>
-                </form>
+                  <form className="ct-form" onSubmit={handleSubmit} noValidate>
+                    {fields.map((f) => (
+                      <div
+                        key={f.id}
+                        className={`ct-field${focused === f.id ? " is-focused" : ""}${errors[f.id] ? " has-error" : ""}`}
+                      >
+                        <label
+                          className="ct-field-label"
+                          htmlFor={"ct-" + f.id}
+                        >
+                          {f.label}
+                        </label>
+                        {f.tag === "input" ? (
+                          <input
+                            id={"ct-" + f.id}
+                            type={f.type}
+                            className="ct-input"
+                            placeholder={f.placeholder}
+                            value={form[f.id]}
+                            onChange={(e) => handleChange(f.id, e.target.value)}
+                            onFocus={() => setFocused(f.id)}
+                            onBlur={() => setFocused(null)}
+                          />
+                        ) : (
+                          <textarea
+                            id={"ct-" + f.id}
+                            className="ct-textarea"
+                            placeholder={f.placeholder}
+                            rows={5}
+                            value={form[f.id]}
+                            onChange={(e) => handleChange(f.id, e.target.value)}
+                            onFocus={() => setFocused(f.id)}
+                            onBlur={() => setFocused(null)}
+                          />
+                        )}
+                        {errors[f.id] && (
+                          <span className="ct-field-error">{errors[f.id]}</span>
+                        )}
+                      </div>
+                    ))}
+
+                    <button
+                      type="submit"
+                      className="ct-submit"
+                      disabled={status === "sending"}
+                    >
+                      <span>
+                        {status === "sending" ? "Sending..." : "Send Message"}
+                      </span>
+                      <span className="ct-submit-arrow">→</span>
+                    </button>
+                  </form>
+                </>
               )}
             </div>
           </div>

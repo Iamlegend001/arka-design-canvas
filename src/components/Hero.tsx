@@ -588,7 +588,7 @@ export default function Hero() {
                 Download Resume
                 <span className="btn-sub">PDF · 1 page</span>
               </a>
-              <a href="https://drive.google.com/file/d/1b7fibLIn3HPg39f0siFqcogpPPmqG_DR/view?usp=sharing" className="btn-secondary">
+              <a href="https://drive.google.com/file/d/1B2A1oPMDlnXXXXbL3Kg-2UZokN0QCFaX/view?usp=sharing" className="btn-secondary">
                 <span className="btn-icon">↓</span>
                 Download CV
                 <span className="btn-sub">Full details</span>
