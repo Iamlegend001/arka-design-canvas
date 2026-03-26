@@ -67,6 +67,17 @@ const Navigation = () => {
                 <a
                   key={item.name}
                   href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.querySelector(item.href);
+                    const lenis = (window as Window & { lenis?: Lenis }).lenis;
+                    if (el && lenis?.scrollTo) {
+                      lenis.scrollTo(el, { offset: -70 });
+                    } else if (el) {
+                      el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                    setIsOpen(false);
+                  }}
                   className="text-portfolio-gray hover:text-portfolio-violet transition-colors duration-200 font-medium"
                 >
                   {item.name}
@@ -77,7 +88,7 @@ const Navigation = () => {
                 href="https://drive.google.com/file/d/1kLvg3UuEbi7b_luPddZkr4gLL6dA5NPv/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200"
+                className="inline-flex items-center border border-portfolio-violet text-portfolio-violet hover:bg-portfolio-violet hover:text-white font-medium rounded px-4 py-2 transition-colors duration-200 pulse-button"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Resume
@@ -112,8 +123,18 @@ const Navigation = () => {
                 <a
                   key={item.name}
                   href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.querySelector(item.href);
+                    const lenis = (window as Window & { lenis?: Lenis }).lenis;
+                    if (el && lenis?.scrollTo) {
+                      lenis.scrollTo(el, { offset: -70 });
+                    } else if (el) {
+                      el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                    setIsOpen(false);
+                  }}
                   className="block px-3 py-2 text-portfolio-gray hover:text-portfolio-violet transition-colors duration-200"
-                  onClick={() => setIsOpen(false)}
                 >
                   {item.name}
                 </a>

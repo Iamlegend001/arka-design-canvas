@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,11 +12,25 @@ import Lenis from "lenis";
 
 const queryClient = new QueryClient();
 
-function App() {
-  useEffect(() => {
-    const lenis = new Lenis();
+type AppWindow = Window & { lenis?: Lenis | null };
 
-    function raf(time) {
+function App() {
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+      lerp: 0.08,
+      direction: "vertical",
+      gestureDirection: "vertical",
+    });
+
+    lenisRef.current = lenis;
+    (window as AppWindow).lenis = lenis;
+
+    function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
@@ -25,6 +39,8 @@ function App() {
 
     return () => {
       lenis.destroy();
+      lenisRef.current = null;
+      (window as AppWindow).lenis = null;
     };
   }, []);
 

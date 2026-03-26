@@ -121,6 +121,16 @@ const Index = () => {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // SEO updates (ensure dynamic title + meta always current)
+    document.title = "Arkaprava Santra | Portfolio";
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) {
+      desc.setAttribute(
+        "content",
+        "Arkaprava Santra is a UI/UX designer and frontend developer in Kolkata, crafting immersive, responsive and accessible product experiences.",
+      );
+    }
+
     // Page fade-in
     gsap.fromTo(
       pageRef.current,
@@ -143,7 +153,96 @@ const Index = () => {
     };
     requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
+    // GSAP ScrollTrigger fade-up for each section
+    gsap.utils.toArray<HTMLElement>(".scroll-segment").forEach((section) => {
+      gsap.fromTo(
+        section,
+        { autoAlpha: 0, y: 24, scale: 0.98 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 82%",
+            toggleActions: "play none none reverse",
+            markers: false,
+          },
+        },
+      );
+
+      if (section.id === "hero-section") {
+        gsap.fromTo(
+          section.querySelectorAll<HTMLElement>(".hero-title-char"),
+          { y: 28, opacity: 0, scale: 0.95 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.42,
+            ease: "power3.out",
+            stagger: 0.03,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              end: "top 40%",
+              toggleActions: "play none none reverse",
+              markers: false,
+            },
+          },
+        );
+
+        gsap.fromTo(
+          section.querySelectorAll<HTMLElement>(".hero-bio-word"),
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            ease: "power3.out",
+            stagger: 0.05,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              end: "top 40%",
+              toggleActions: "play none none reverse",
+              markers: false,
+            },
+          },
+        );
+      }
+
+      gsap.fromTo(
+        section.querySelectorAll<HTMLElement>(".text-animate"),
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            end: "top 40%",
+            toggleActions: "play none none reverse",
+            markers: false,
+          },
+          onComplete() {
+            section
+              .querySelectorAll(".text-animate")
+              .forEach((el) => el.classList.add("animated"));
+          },
+        },
+      );
+    });
+
+    return () => {
+      lenis.destroy();
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
   }, []);
 
   return (
@@ -154,28 +253,44 @@ const Index = () => {
 
       <div ref={pageRef} className="page-wrap">
         {/* <Navigation /> */}
-        <Hero />
+        <section className="scroll-segment" id="hero-section">
+          <Hero />
+        </section>
 
         <SectionDivider label="About" />
-        <About />
+        <section className="scroll-segment" id="about-section">
+          <About />
+        </section>
 
         <SectionDivider label="Tech Stack" />
-        <TechStack />
+        <section className="scroll-segment" id="techstack-section">
+          <TechStack />
+        </section>
 
         <SectionDivider label="Skills" />
-        <Skills />
+        <section className="scroll-segment" id="skills-section">
+          <Skills />
+        </section>
 
         <SectionDivider label="Experience" />
-        <Experience />
+        <section className="scroll-segment" id="experience-section">
+          <Experience />
+        </section>
 
         <SectionDivider label="UI Showcase" />
-        <UIShowcase />
+        <section className="scroll-segment" id="uishowcase-section">
+          <UIShowcase />
+        </section>
 
         <SectionDivider label="Case Studies" />
-        <CaseStudies />
+        <section className="scroll-segment" id="casestudies-section">
+          <CaseStudies />
+        </section>
 
         <SectionDivider label="Contact" />
-        <ContactMe />
+        <section className="scroll-segment" id="contact-section">
+          <ContactMe />
+        </section>
 
         <Footer />
       </div>
