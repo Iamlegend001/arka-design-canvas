@@ -651,17 +651,23 @@ export default function Hero() {
               <span className="eyebrow-text">UI/UX Designer · Kolkata, IN</span>
             </div>
 
-            <h1 className="hero-title text-animate" aria-label="Arkaprava Santra">
+            <h1
+              className="hero-title text-animate"
+              aria-label="Arkaprava Santra"
+            >
               <span className="hero-title-word" aria-hidden="true">
-                {'Arkaprava'.split('').map((char, idx) => (
+                {"Arkaprava".split("").map((char, idx) => (
                   <span key={`ark-${idx}`} className="hero-title-char">
                     {char}
                   </span>
                 ))}
               </span>
               <br />
-              <span className="hero-title-word gradient-text" aria-hidden="true">
-                {'Santra'.split('').map((char, idx) => (
+              <span
+                className="hero-title-word gradient-text"
+                aria-hidden="true"
+              >
+                {"Santra".split("").map((char, idx) => (
                   <span key={`san-${idx}`} className="hero-title-char">
                     {char}
                   </span>
@@ -669,12 +675,22 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p className="hero-bio text-animate" aria-label="I craft interfaces that feel effortless. From deep research to fast prototyping — I ship designs that reduce friction, not add it. B.Tech CS, certified in UI/UX Design.">
-              {"I craft interfaces that feel effortless. From deep research to fast prototyping — I ship designs that reduce friction, not add it. B.Tech CS, certified in UI/UX Design.".split(" ").map((word, idx, arr) => (
-                <span key={`bio-${idx}`} className="hero-bio-word" aria-hidden="true">
-                  {word}{idx < arr.length - 1 ? " " : ""}
-                </span>
-              ))}
+            <p
+              className="hero-bio text-animate"
+              aria-label="I craft interfaces that feel effortless. From deep research to fast prototyping — I ship designs that reduce friction, not add it. B.Tech CS, certified in UI/UX Design."
+            >
+              {"I craft interfaces that feel effortless. From deep research to fast prototyping — I ship designs that reduce friction, not add it. B.Tech CS, certified in UI/UX Design."
+                .split(" ")
+                .map((word, idx, arr) => (
+                  <span
+                    key={`bio-${idx}`}
+                    className="hero-bio-word"
+                    aria-hidden="true"
+                  >
+                    {word}
+                    {idx < arr.length - 1 ? " " : ""}
+                  </span>
+                ))}
             </p>
 
             <div className="hero-stats text-animate">
